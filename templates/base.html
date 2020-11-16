@@ -22,7 +22,7 @@
                     <div class="navbar-brand">
                         {% if current_user.is_authenticated %}
                         <div class="navbar-item">
-                            Logged in as: &nbsp; <b> {{current_user.get_key('username')}}</b>
+                            Logged in as: &nbsp; <b> {{current_user.dict['username']}}</b>
                         </div>
                         {% endif %}
                     </div>
