@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block content %}
+
+
+<h1 class="title">
+    Account Settings
+</h1>
+
+
+
+<table class="table" is-striped>
+    <tfoot>
+        <tr>
+            <th>Username</th>
+            <th>{{current_user.get_key('username')}}</th>
+        </tr>
+
+        <tr>
+            <th>Email</th>
+            <th>
+                <form method="POST" action="/update">
+                    <div class="field is-grouped">
+                        <div class="control ">
+                            <input type="text" {{ 'value='+current_user.get_key( 'email') if current_user.get_key( 'email') else ''}} name="updatedname" class="input">
+                        </div>
+                        <p class="control">
+                            <input type="submit" value="Update" class="button">
+                        </p>
+                </form>
+                </div>
+            </th>
+        </tr>
+
+        <tr>
+            <th>First Name</th>
+            <th>
+                <form method="POST" action="/update">
+                    <div class="field is-grouped">
+                        <div class="control ">
+                            <input type="text" {{ 'value='+current_user.get_key( 'first_name') if current_user.get_key( 'first_name') else ''}} name="updatedname" class="input">
+                        </div>
+                        <p class="control">
+                            <input type="submit" value="Update" class="button">
+                        </p>
+                </form>
+                </div>
+
+            </th>
+
+
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <th>
+                <form method="POST" action="/update">
+                    <div class="field is-grouped">
+                        <div class="control ">
+                            <input type="text" {{ 'value='+current_user.get_key( 'last_name') if current_user.get_key( 'last_name') else ''}} name="updatedname" class="input">
+                        </div>
+                        <p class="control">
+                            <input type="submit" value="Update" class="button">
+                        </p>
+                </form>
+                </div>
+
+            </th>
+        </tr>
+
+        <tr>
+            <th>Joined At</th>
+            <th>{{current_user.get_key('joined').strftime('%d-%m-%Y') }}</th>
+        </tr>
+
+    </tfoot>
+</table>
+
+{% endblock %}
