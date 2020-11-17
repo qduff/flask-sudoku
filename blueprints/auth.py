@@ -1,10 +1,11 @@
-from werkzeug.security import check_password_hash
-from models import User
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import login_user, UserMixin, LoginManager, login_required, current_user, logout_user
+from flask_login import login_user, login_required, current_user, logout_user
 from tinydb.queries import where
+from werkzeug.security import check_password_hash
 
 from db import open_db
+from models import User
+
 
 auth = Blueprint('auth', __name__)
 
