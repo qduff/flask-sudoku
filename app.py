@@ -14,7 +14,6 @@ def create_app():
     assets = Environment(app)
     
     assets.register('scss_all', 'sass/_basics.scss', 'sass/button.scss', filters='pyscss', output='static/css/all.css')
-    print('re')
     
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

@@ -1,11 +1,17 @@
+from werkzeug.security import check_password_hash
 from models import User
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, UserMixin, LoginManager, login_required, current_user, logout_user
-from tinydb.queries import Query
-from werkzeug.security import generate_password_hash
-from db import userdb, check_password_hash
+from tinydb.queries import where
+
+from db import open_db
 
 auth = Blueprint('auth', __name__)
+
+
+@open_db
+def dbsearch(db, key, value):
+    return db.search(where(key) == value)
 
 
 @auth.route('/login')
@@ -14,6 +20,22 @@ def login():
         return render_template('login.html')
     else:
         return redirect(url_for('auth.profile'))
+
+
+@auth.route('/loginguest')
+def loginguest():
+    if not current_user.is_authenticated:
+        return render_template('loginguest.html')
+    else:
+        return redirect(url_for('auth.profile'))
+
+
+@auth.route('/loginguest', methods=['POST'])
+def loginguest_post():
+    nick = request.form.get('nickname')
+    usermodel = User({'username': f"Guest: {nick}", 'guest': True})
+    login_user(usermodel, remember=False)
+    return redirect(url_for('auth.profile'))
 
 
 @auth.route('/login', methods=['POST'])
@@ -26,14 +48,15 @@ def login_post():
         flash('Username and password are required.')
         return redirect(url_for('auth.login'))
 
-    user = userdb.search(Query().username == username)
+    try:
+        user = dbsearch(key='username', value=username)
+    except:
+        user = False
+
     if user:
         credscorrect = check_password_hash(user[0]['password'], password)
     else:
         credscorrect = False
-
-    print(credscorrect)
-
 
     if not credscorrect:
         flash("Please check your login details and try again.")
@@ -51,31 +74,19 @@ def signup():
 
 @auth.route('/signup', methods=['POST'])
 def signup_post():
-    email = request.form.get('email')
     username = request.form.get('username')
     password = request.form.get('password')
 
     if not username or not password:
         return render_template('signup.html', message='A username and password is required')
 
-    usernameexistence, emailexistence = checkusernameexistence(username, email)
+    usernameexistence = dbsearch(key='username', value=username)
 
-    if usernameexistence and emailexistence:
-        flash('Username & E-Mail already exists')
-        return redirect(url_for('auth.signup'))
-
-    elif usernameexistence:
+    if usernameexistence:
         flash('Username already exists')
         return redirect(url_for('auth.signup'))
-    elif emailexistence:
-        flash('E-Mail already exists')
-        return redirect(url_for('auth.signup'))
 
-    # CREATEACCOUNT
-
-    createaccount(username, password, email, request.remote_addr)
-    # create a new user with the form data. Hash the password so the plaintext version isn't saved.
-    # print(email,username,password)
+    # CREATEACCOUNT - not yet reimplemented
 
     flash('Account created')
     return redirect(url_for('auth.login'))
