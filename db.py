@@ -9,16 +9,3 @@ def open_db(func):
         return a
     return open_db_wrapper
     
-@open_db
-def dothing(db):
-    return len(db)
-
-print(dothing())
-
-#userrow = userdb.search(where('username') == 'ds')
-#
-#if userrow:
-#    print(userrow)
-#else:
-#    print('jdhsdf')
-

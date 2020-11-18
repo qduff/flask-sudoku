@@ -10,23 +10,23 @@ def create_app():
     app.secret_key = 'secretweewooa8gn(^(_g0m9z8u2nnmxv!w$75yf5wx#3als9a)9hmdc&&=+za'
     app.debug=True
     
-    
+    #SASS assets
     assets = Environment(app)
-    
     assets.register('scss_all', 'sass/_basics.scss', 'sass/button.scss', filters='pyscss', output='static/css/all.css')
     
+    #Loginmanager init
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
     login_manager.login_message = 'You must login to access this page!'
     login_manager.init_app(app)
     
+    #User model
     from models import User
-
     @login_manager.user_loader
     def load_user(user_id):
         return User(user_id)
     
-    # blueprint for auth routes in our app
+    # blueprint for auth routes in app
     from blueprints.auth import auth as auth_blueprint
     app.register_blueprint(auth_blueprint)
 
