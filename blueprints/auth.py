@@ -36,10 +36,11 @@ def loginguest():
         usermodel = User({'username': f"{nick}", 'guest': True})
         login_user(usermodel, remember=False, duration=timedelta(hours=1))
         
-        #Redirect to profile page
-        return redirect(url_for('auth.profile'))
+        #Redirect to main page after guest login
+        return redirect(url_for('main.index'))
     else:
-        return redirect(url_for('auth.profile'))
+        #if already loggen in maybe check if guest idk?
+        return redirect(url_for('main.index'))
 
 
 @auth.route('/login', methods=['POST'])
@@ -66,6 +67,8 @@ def login_post():
     else:
         credscorrect = False
 
+    print(f"Login entered= {username=},{password=},{remember=},{user=},{credscorrect=}")
+
     if not credscorrect:
         #Refreshes page with message
         flash("Please check your login details and try again.")
@@ -74,7 +77,7 @@ def login_post():
         #Log in the user
         usermodel = User(user[0])
         login_user(usermodel, remember=remember)
-        return redirect(url_for('auth.profile'))
+        return redirect(url_for('main.index'))
 
 
 @auth.route('/signup')
@@ -88,11 +91,14 @@ def signup_post():
     username = request.form.get('username')
     password = request.form.get('password')
 
+    #Check presence of username and password
     if not username or not password:
         return render_template('signup.html', message='A username and password is required')
 
+    #Check if username already exists
     usernameexistence = dbsearch(key='username', value=username)
 
+    #If it does, flask warning and refresh.
     if usernameexistence:
         flash('Username already exists')
         return redirect(url_for('auth.signup'))

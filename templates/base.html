@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <title>Game Login</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
@@ -26,6 +26,9 @@
                         {% if current_user.is_authenticated %}
                         <div class="navbar-item">
                             Logged in as: &nbsp; <b> {{current_user.dict['username']}}</b>
+                            {% if current_user.is_guest() %}
+                            &nbsp; (guest)
+                            {% endif %}
                         </div>
                         {% endif %}
                     </div>
