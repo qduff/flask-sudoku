@@ -11,7 +11,7 @@ def create_app():
     
     #SASS assets
     assets = Environment(app)
-    assets.register('scss_all', 'sass/_basics.scss', 'sass/button.scss', filters='pyscss', output='static/css/all.css')
+    assets.register('scss_all', 'sass/main.scss', filters='pyscss', output='static/css/all.css') # you can add more scss files
     
     #Loginmanager init
     login_manager = LoginManager()
