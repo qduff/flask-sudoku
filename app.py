@@ -1,11 +1,10 @@
 from flask import Flask
-from flask_login import LoginManager , UserMixin
-from flask_sqlalchemy import SQLAlchemy
-from flask_assets import Environment, Bundle
+from flask_login import LoginManager 
+from flask_assets import Environment
 
-# init SQLAlchemy so we can use it later in our models
     
 def create_app():
+    #Create Flask App
     app = Flask(__name__)
     app.secret_key = 'secretweewooa8gn(^(_g0m9z8u2nnmxv!w$75yf5wx#3als9a)9hmdc&&=+za'
     app.debug=True
