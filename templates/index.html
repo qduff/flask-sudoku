@@ -1,9 +1,31 @@
 {% extends "base.html" %} {% block content %}
 
-<h1 class="title">
-    Main</h1>
-<h2 class="subtitle">
-    Main
-</h2>
+
+{% if not current_user.is_authenticated %}
+
+You must log in to host and play games
+
+<button class="button is-block is-info is-large is-fullwidth">
+    Log In with account
+  </button>
+
+<button class="button is-block is-info is-large is-fullwidth">
+    Sign up
+  </button>
+
+  <button class="button is-block is-info is-large is-fullwidth">
+      Continue as guest
+    </button>
+
+      {% endif %}
+
+      {% if current_user.is_authenticated %}
+      <button class="button is-block is-info is-large is-fullwidth">
+          Host game
+        </button>
+        <button class="button is-block is-info is-large is-fullwidth">
+            Join game
+          </button>
+        {% endif %}
 
 {% endblock %}

@@ -33,6 +33,9 @@ def create_app():
     from blueprints.main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from blueprints.game import game as game_blueprint
+    app.register_blueprint(game_blueprint)
+    
     return app
 
 

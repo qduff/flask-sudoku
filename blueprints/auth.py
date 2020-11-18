@@ -113,5 +113,7 @@ def logout():
 @auth.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
-
+    if not current_user.is_guest():
+        return render_template('profile.html')
+    else:   
+        return render_template('guesterror.html')
