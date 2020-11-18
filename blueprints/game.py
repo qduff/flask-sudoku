@@ -12,3 +12,5 @@ def hostgame():
 @login_required
 def joingame():
     return render_template('joingame.html')
+
+#Add joingame post and hostgame post
