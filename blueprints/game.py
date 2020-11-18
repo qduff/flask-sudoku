@@ -13,4 +13,4 @@ def hostgame():
 def joingame():
     return render_template('joingame.html')
 
-#Add joingame post and hostgame post
+#Add joingame POST and hostgame POST
