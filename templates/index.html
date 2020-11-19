@@ -38,7 +38,9 @@ You must first log in to host and play games
           {% endif %}
 
           {% if current_user.is_guest() %}
-            <button class="button is-block is-large is-fullwidth" style="color: grey;">
+          <a href="{{ url_for('auth.signup') }}" class="button">Button!</a>
+          
+            <button class="button is-block is-large is-fullwidth greybutton">
                 Host game
               </button>
               {% endif %}
