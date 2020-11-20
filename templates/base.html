@@ -6,19 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Game Login</title>
-
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" /> -->
+    <title>{% block title %}{% endblock %}</title>
 
     {% assets "scss_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
     {% endassets %}
-
 </head>
 
 <body>
-
-
     <header>
         <figure class="brand">
 
@@ -125,6 +120,9 @@
         {% block content %} {% endblock %}
     </div>
 
+<footer>
+    Footer
+</footer>
 
 </body>
 
