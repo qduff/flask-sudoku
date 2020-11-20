@@ -5,26 +5,28 @@
 
 
     {% if not current_user.is_authenticated %}
+    <h1>You must first log in to host and play games</h1>
 
-    You must first log in to host and play games
+    <div class="btn-group">
+    <a href="{{ url_for('auth.login') }}" class="button">
+        Log In with account
+    </a>
+    <br>
     
-    <form action="{{ url_for('auth.login') }}"> 
-        <button class="button is-block is-info is-fullwidth">
-            Log In with account
-        </button>
-    </form>
 
-    <form action="{{ url_for('auth.signup') }}"> 
-        <button class="button is-block is-info is-fullwidth">
-            Sign Up
-        </button>
-    </form>
 
-    <form action="{{ url_for('auth.loginguest') }}"> 
-        <button class="button is-block is-fullwidth">
-            Continue as a guest
-        </button>
-    </form>
+    <a href="{{ url_for('auth.signup') }}" class="button">
+        Sign Up
+    </a>
+    <br>
+    
+
+
+    <a href="{{ url_for('auth.loginguest') }}" class="buttonalt">
+        Continue as a guest
+    </a>
+    
+    </div>
 
     {% endif %}
 

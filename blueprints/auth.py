@@ -49,6 +49,7 @@ def loginguest():
 
 @auth.route('/login', methods=['POST'])
 def login_post():
+    
     #Get form contents
     username = request.form.get('username')
     password = request.form.get('password')
