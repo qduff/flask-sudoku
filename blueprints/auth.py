@@ -94,8 +94,15 @@ def signup_post():
     password = request.form.get('password')
 
     # Check presence of username and password
-    if not username or not password:
-        return render_template('signup.html', message='A username and password is required')
+    if not username and not password:
+        flash('A username and password is required')
+        return render_template('signup.html')
+    if not username:
+        flash('A username is required')
+        return render_template('signup.html')
+    if not password:
+        flash('A password is required')
+        return render_template('signup.html')
 
     # Check if username already exists
     usernameexistence = dbsearch(key='username', value=username)
@@ -104,6 +111,10 @@ def signup_post():
     if usernameexistence:
         flash('Username already exists')
         return redirect(url_for('auth.signup'))
+    
+    if len(password) < 8:
+        flash('Password must be at least eight characters long')
+        return render_template('signup.html')
 
     # ! CREATEACCOUNT - not yet reimplemented
 
