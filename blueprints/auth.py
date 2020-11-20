@@ -4,20 +4,28 @@ from tinydb.queries import where
 from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import timedelta
 import random
-from db import open_db
 from models import User
 
 
 auth = Blueprint('auth', __name__)
 
 
+from tinydb import TinyDB
+
+
 @open_db
 def dbsearch(db, key, value):
-    return db.search(where(key) == value)
+    db = TinyDB('users.json')
+    resp =  db.search(where(key) == value)
+    db.close()
+    return resp
 
 @open_db
 def dbadduser(db, username, password):
-    return  db.insert({'username':username,'password':generate_password_hash(password,'sha256')})
+    db = TinyDB('users.json')
+    resp =   db.insert({'username':username,'password':generate_password_hash(password,'sha256')})
+    db.close()
+    return resp
 
 @auth.route('/login')
 def login():
