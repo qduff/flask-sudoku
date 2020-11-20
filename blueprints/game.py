@@ -17,6 +17,11 @@ def hostgame():
 @login_required
 def joingame():
     return render_template('joingame.html')
+
+@game.route('/sudoku')
+@login_required
+def sudoku():
+    return render_template('sudoku.html')
     
 
 #Add joingame POST and hostgame POST
