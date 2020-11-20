@@ -36,7 +36,6 @@
 
                 {% if current_user.is_authenticated %}
                     {% if not current_user.is_guest() %}
-
                         <a href="{{ url_for('game.hostgame') }}">
                             <li>Host Game</li>
                         </a>
@@ -68,57 +67,6 @@
             </ul>
         </nav>
     </header>
-
-    <!-- <div class="base-head">
-
-            
-
-            <nav class="navbar">
-                <div class="container">
-
-                    <div class="navbar-brand">
-                        {% if current_user.is_authenticated %}
-                        <div class="navbar-item">
-                            Logged in as: &nbsp; <b> {{current_user.dict['username']}}</b>
-                            {% if current_user.is_guest() %}
-                            &nbsp; (guest)
-                            {% endif %}
-                        </div>
-                        {% endif %}
-                    </div>
-
-                    <div id="navbarMenuHeroA" class="navbar-menu">
-                        <div class="navbar-end">
-                            <a href="{{ url_for('main.index') }}" class="navbar-item">
-                                Home
-                            </a> 
-
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.profile') }}" class="navbar-item">
-                                Profile
-                            </a> 
-                            {% endif %}
-
-                            {% if not current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.login') }}" class="navbar-item">
-                                Login
-                            </a>
-
-                            <a href="{{ url_for('auth.signup') }}" class="navbar-item">
-                                Sign Up
-                            </a>
-                            {% endif %}
-
-                            {% if current_user.is_authenticated %}
-                            <a href="{{ url_for('auth.logout') }}" class="navbar-item">
-                                Logout
-                            </a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            </nav>s
-        </div> -->
 
     <div class="page-body">
         {% block content %} {% endblock %}
