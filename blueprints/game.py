@@ -55,7 +55,7 @@ def lobby(id:int):
         if games[int(id)]['started'] == True:
             flash('That game has already started!')
             return redirect(url_for('game.joingame'))
-        return render_template('lobby.html')
+        return render_template('lobby.html', gamecode = id)
     else:
         flash('That game ID does not exist!')
         return redirect(url_for('game.joingame'))
