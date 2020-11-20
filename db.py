@@ -8,4 +8,3 @@ def open_db(func):
         db.close()
         return a
     return open_db_wrapper
-    
