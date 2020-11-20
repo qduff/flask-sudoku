@@ -96,13 +96,13 @@ def signup_post():
     # Check presence of username and password
     if not username and not password:
         flash('A username and password is required')
-        return render_template('signup.html')
+        return redirect(url_for('auth.signup'))
     if not username:
         flash('A username is required')
-        return render_template('signup.html')
+        return redirect(url_for('auth.signup'))
     if not password:
         flash('A password is required')
-        return render_template('signup.html')
+        return redirect(url_for('auth.signup'))
 
     # Check if username already exists
     usernameexistence = dbsearch(key='username', value=username)
