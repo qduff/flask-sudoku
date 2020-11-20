@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, current_user, logout_user
 from tinydb.queries import where
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import timedelta
 import random
 from db import open_db
@@ -15,6 +15,9 @@ auth = Blueprint('auth', __name__)
 def dbsearch(db, key, value):
     return db.search(where(key) == value)
 
+@open_db
+def dbadduser(db, username, password):
+    return  db.insert({'username':username,'password':generate_password_hash(password,'sha256')})
 
 @auth.route('/login')
 def login():
@@ -56,10 +59,9 @@ def login_post():
         return redirect(url_for('auth.login'))
 
     #Check if user exists
-    try:
-        user = dbsearch(key='username', value=username)
-    except:
-        user = False
+    
+    user = dbsearch(key='username', value=username)
+    
 
     #If user exists, check password
     if user:
@@ -117,7 +119,8 @@ def signup_post():
         return render_template('signup.html')
 
     # ! CREATEACCOUNT - not yet reimplemented
-
+    dbadduser(username=username, password=password)
+    
     flash('Account created')
     return redirect(url_for('auth.login'))
 

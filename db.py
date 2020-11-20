@@ -8,3 +8,5 @@ def open_db(func):
         db.close()
         return a
     return open_db_wrapper
+
+ #userdb.insert({'username':'quentin','password':generate_password_hash('test','sha256')})

@@ -7,7 +7,7 @@
     {% if not current_user.is_authenticated %}
 
     You must first log in to host and play games
-
+    
     <form action="{{ url_for('auth.login') }}"> 
         <button class="button is-block is-info is-fullwidth">
             Log In with account
