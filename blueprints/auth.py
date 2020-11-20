@@ -13,14 +13,12 @@ auth = Blueprint('auth', __name__)
 from tinydb import TinyDB
 
 
-@open_db
 def dbsearch(db, key, value):
     db = TinyDB('users.json')
     resp =  db.search(where(key) == value)
     db.close()
     return resp
 
-@open_db
 def dbadduser(db, username, password):
     db = TinyDB('users.json')
     resp =   db.insert({'username':username,'password':generate_password_hash(password,'sha256')})
