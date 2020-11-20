@@ -18,9 +18,10 @@ def hostgame():
 def joingame():
     return render_template('joingame.html')
 
-@game.route('/sudoku')
+
+@game.route('/game/<id>')
 @login_required
-def sudoku():
+def sudoku(id):
     return render_template('sudoku.html')
     
 

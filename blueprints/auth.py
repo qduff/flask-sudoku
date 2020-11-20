@@ -6,9 +6,7 @@ from datetime import timedelta
 import random
 from models import User
 
-
 auth = Blueprint('auth', __name__)
-
 
 from tinydb import TinyDB
 
@@ -36,10 +34,7 @@ def login():
 @auth.route('/loginguest')
 def loginguest():
     if not current_user.is_authenticated:
-        
-        #Generate a nickname
-        words = ['cat', 'dog', 'word','game']
-        nick = ''.join(random.choices(words, k=2))
+        nick = ''.join(random.choices(open('words.txt').read().split(), k=2))+str(random.randint(100,999))
         
         #Log in this user
         usermodel = User({'username': f"{nick}", 'guest': True})
