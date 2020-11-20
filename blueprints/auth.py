@@ -85,25 +85,27 @@ def signup():
     return render_template('signup.html')
 
 
-@auth.route('/signup', methods=['POST'])        #!NOT YET REIMPLEMENTED!!!
+@auth.route('/signup', methods=['POST'])        # !NOT YET REIMPLEMENTED!!!
 def signup_post():
-    #Get form contents
+    # Get form contents
+    # Todo: clean this up
+    # Todo: also make it work
     username = request.form.get('username')
     password = request.form.get('password')
 
-    #Check presence of username and password
+    # Check presence of username and password
     if not username or not password:
         return render_template('signup.html', message='A username and password is required')
 
-    #Check if username already exists
+    # Check if username already exists
     usernameexistence = dbsearch(key='username', value=username)
 
-    #If it does, flask warning and refresh.
+    # If it does, flask warning and refresh.
     if usernameexistence:
         flash('Username already exists')
         return redirect(url_for('auth.signup'))
 
-    #! CREATEACCOUNT - not yet reimplemented
+    # ! CREATEACCOUNT - not yet reimplemented
 
     flash('Account created')
     return redirect(url_for('auth.login'))
