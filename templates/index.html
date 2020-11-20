@@ -27,22 +27,26 @@ You must first log in to host and play games
 
 {% if current_user.is_authenticated %}
 
-      <button class="button is-block is-info is-large is-fullwidth">
-          Join game
-        </button>
+<div class="btn-group">
 
-        {% if not current_user.is_guest() %}
-        <button class="button is-block is-info is-large is-fullwidth">
-            Host game
-          </button>
-          {% endif %}
+            <a href="{{ url_for('game.joingame') }}" class="button">
+                Join game
+            </a>
+            <br>
 
-          {% if current_user.is_guest() %}
-          <a href="{{ url_for('auth.signup') }}" class="button">Button!</a>
-          
-            <button class="button is-block is-large is-fullwidth greybutton">
-                Host game
-              </button>
-              {% endif %}
+            {% if not current_user.is_guest() %}
+            <a href="{{ url_for('game.hostgame') }}" class="button">
+              Host game
+            </a>
+            {% endif %}
+            {% if current_user.is_guest() %}
+            <a class="greybutton" title="You must login to host games">
+              Host game
+            </a>
+            {% endif %}
+
+</div>
+
+              
 {% endif %}
 {% endblock %}
