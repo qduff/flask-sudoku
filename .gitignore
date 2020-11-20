@@ -5,8 +5,6 @@ __pycache__/
 
 .vscode/
 
-users.json
-
 
 # C extensions
 *.so
