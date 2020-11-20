@@ -7,9 +7,8 @@ import random
 
 game = Blueprint('game', __name__)
 
-games = {1234:{'started':False,'players':[]}}
+games = {1234:{'name':'TestLobby','started':False,'players':[]}}
 
-#swap both
 @game.route('/hostgame')
 @login_required
 def hostgame():
@@ -20,12 +19,16 @@ def hostgame():
     
 @game.route('/hostgame', methods=['POST'])
 def hostgame_post():
+    print(current_user.id['username'])
     roomname = request.form.get('roomname')
-    codelen = 10
+    print(roomname)
+    codelen = 4
     roomcode = 0
-    while roomcode != 0 and roomcode not in games:
+    while roomcode == 0 or roomcode in games:
         roomcode = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, codelen)])
-    print(roomcode)
+        print(roomcode)
+    games.update({int(roomcode):{'name':roomname,'started':False,'players':[{current_user.id['username']:{'completed':False,'admin':True}}]}})
+    return redirect(url_for('game.lobby',id=roomcode))
     
     
 @game.route('/joingame')
