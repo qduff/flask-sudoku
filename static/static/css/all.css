@@ -11,7 +11,7 @@ body {
       margin: 0 auto;
       width: 500px; }
       body div.btn-group {
-        width: 20%;
+        width: 10rem;
         display: block;
         padding: 1px; }
         body div.btn-group a.button {
@@ -22,7 +22,7 @@ body {
           background: lightgray;
           color: black;
           padding: 10px;
-          height: 40px; }
+          height: 25px; }
           body div.btn-group a.greybutton {
             display: inherit;
             text-decoration: none;
@@ -30,7 +30,7 @@ body {
             border: 1px solid gray;
             background: darkgray;
             padding: 10px;
-            height: 40px;
+            height: 25px;
             color: gray;
             cursor: not-allowed; }
   body header {
