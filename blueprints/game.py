@@ -27,7 +27,7 @@ def hostgame_post():
     while roomcode == 0 or roomcode in games:
         roomcode = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, codelen)])
         print(roomcode)
-    games.update({int(roomcode):{'name':roomname,'started':False,'players':[{current_user.id['username']:{'completed':False,'admin':True}}]}})
+    games.update({int(roomcode):{'name':roomname,'started':False,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
     return redirect(url_for('game.lobby',id=roomcode))
     
     
@@ -55,7 +55,16 @@ def lobby(id:int):
         if games[int(id)]['started'] == True:
             flash('That game has already started!')
             return redirect(url_for('game.joingame'))
-        return render_template('lobby.html', gamecode = id)
+        else:
+            if current_user.dict['username'] not in games[int(id)]['players']:
+                games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+                
+            if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
+                admin = True
+            else:
+                admin = False
+            
+            return render_template('lobby.html', gamecode = id, admin = admin,roomname =games[int(id)]['name'])
     else:
         flash('That game ID does not exist!')
         return redirect(url_for('game.joingame'))
