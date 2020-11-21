@@ -9,11 +9,12 @@
     socket.on("userupdate", function(jason) { //NOT EXXEPTION JSON - MUST FUX
         console.log(jason)
         var j = 0;
-        for (var  prop in jason) {
-            //alert("Key:" + prop);
-            //alert("Value:" + jason[prop]);
 
-            var table = document.getElementById("myTable");
+        var table = document.getElementById("myTable");
+        table.innerHTML = "";
+
+        for (var  prop in jason) {
+    
 
             var row = table.insertRow(j);
             var cell1 = row.insertCell(0);
@@ -21,7 +22,6 @@
 
             cell1.innerHTML =  prop,
             cell2.innerHTML =  jason[prop],
-
             j = j+1
 
           }
@@ -34,19 +34,11 @@
 
 <h1>Lobby</h1>
 
-
-
 <h2> Code: {{gamecode}}</h2>
-<br>
 
 {% if admin%}
-YOU ARE ADMIN 
-
-
+<b>YOU ARE ADMIN </b>
 {%endif%}
-
-
-
 
 <br><br><br>
 

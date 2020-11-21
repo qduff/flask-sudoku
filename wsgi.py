@@ -25,9 +25,16 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 @socketio.on('join')
 def on_join(data):
+    
+    
     print('USER IN JOINING ROOM')
+    
     username = current_user.dict['username']
+    
+    
     room = data['room']
+    
+    #if username not in games[int(room)]['players']:
     join_room(room)
     print(username + f' has entered the room. {room}{type(room)}')
     
@@ -45,8 +52,6 @@ def on_join(data):
 
         # userdict[i] = {'name':item,'role':role}
 
-
-    print(userdict)   
     emit('userupdate',userdict, room=room, json=True)
 
         #emit('userupdate', 'Hi!', room=room)
