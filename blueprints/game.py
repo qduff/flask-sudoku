@@ -3,11 +3,14 @@ from flask.globals import request
 from flask.helpers import flash
 from flask_login.utils import login_required, current_user
 
-import random 
+import random
+
+#needs to be able to send here
 
 game = Blueprint('game', __name__)
 
-games = {1234:{'name':'TestLobby','started':False,'players':[]}}
+from games import games
+from wsgi import socketio
 
 @game.route('/hostgame')
 @login_required
@@ -63,11 +66,16 @@ def lobby(id:int):
                 admin = True
             else:
                 admin = False
+
+            
+            
+            
             
             return render_template('lobby.html', gamecode = id, admin = admin,roomname =games[int(id)]['name'])
     else:
         flash('That game ID does not exist!')
         return redirect(url_for('game.joingame'))
+
 
 
 @game.route('/play/<id>')
@@ -87,3 +95,4 @@ def playpage(id):
     
 
 #Add joingame POST and hostgame POST
+

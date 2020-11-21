@@ -7,7 +7,21 @@ Code: {{gamecode}}
 
 {% if admin%}
 admin user 
+
+
 {%endif%}
+
+
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on( 'connect', function() {
+        socket.emit('join', { 'room': "{{gamecode}}"});
+        console.log("Connected, joining room!")
+      })
+    socket.on('newuser', function() {
+        console.log("newuser")
+    });
+</script>
 
 <br>
 
