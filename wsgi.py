@@ -1,6 +1,6 @@
 from flask.globals import current_app
 from app import create_app
-from flask_socketio import SocketIO, send, join_room, leave_room
+from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from flask_login import current_user
 
 from games import games
@@ -29,9 +29,16 @@ def on_join(data):
     room = data['room']
     join_room(room)
     print(username + f' has entered the room. {room}{type(room)}')
-    
-    send('newuser',{'que','fds'}, room=room, json=True)
-    send(username + ' has entered the room.', room=room) #MAKE WODK
+    try:
+        print(games)
+        for item in games[int(room)]['players']:
+            print(item)
+            
+        emit('userupdate',  {'users':{'quentin':'admin','fds':'default'}}, room=room, json=True)
+    except:
+        pass
+    #send(username + ' has entered the room.', room=room) #MAKE WODK
+
 
 @socketio.on('leave')
 def on_leave(data):
@@ -44,4 +51,5 @@ def ctxsend(*args, **kwargs):
     send(*args,**kwargs)
 
 if __name__ == "__main__":
+    print('\n\n\nRunning\n-----------------')
     socketio.run(app, host='0.0.0.0', port=8001)

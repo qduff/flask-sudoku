@@ -18,7 +18,7 @@ admin user
         socket.emit('join', { 'room': "{{gamecode}}"});
         console.log("Connected, joining room!")
       })
-    socket.on('newuser', function() {
+    socket.on('userupdate', function() {
         console.log("newuser")
     });
 </script>
