@@ -25,19 +25,37 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
 @socketio.on('join')
 def on_join(data):
+    print('USER IN JOINING ROOM')
     username = current_user.dict['username']
     room = data['room']
     join_room(room)
     print(username + f' has entered the room. {room}{type(room)}')
-    try:
-        print(games)
-        for item in games[int(room)]['players']:
-            print(item)
-            
-        emit('userupdate',  {'users':{'quentin':'admin','fds':'default'}}, room=room, json=True)
-    except:
-        pass
+    
+    userdict = {}
+    print(games[int(room)]['players'])
+    for i, item in enumerate(games[int(room)]['players']):
+        
+        
+        print('newplayer')
+        if games[int(room)]['players'][item]['admin'] == True:
+            role = 'admin'
+        else:
+            role = 'default'
+        userdict.update({item:role})
+
+        # userdict[i] = {'name':item,'role':role}
+
+
+    print(userdict)   
+    emit('userupdate',userdict, room=room, json=True)
+
+        #emit('userupdate', 'Hi!', room=room)
+
+    
     #send(username + ' has entered the room.', room=room) #MAKE WODK
+
+def ack():
+    print('message was received!')
 
 
 @socketio.on('leave')

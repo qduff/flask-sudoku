@@ -1,30 +1,63 @@
 {% extends "base.html" %} {% block content %}
 
-Lobby!
+<script type="text/javascript" charset="utf-8">
+    var socket = io();
+    socket.on( "connect", function() {
+        socket.emit("join", { "room": "{{gamecode}}"});
+        console.log("Connected, joining room!")
+      })
+    socket.on("userupdate", function(jason) { //NOT EXXEPTION JSON - MUST FUX
+        console.log(jason)
+        var j = 0;
+        for (var  prop in jason) {
+            //alert("Key:" + prop);
+            //alert("Value:" + jason[prop]);
 
-Code: {{gamecode}}
+            var table = document.getElementById("myTable");
+
+            var row = table.insertRow(j);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+
+            cell1.innerHTML =  prop,
+            cell2.innerHTML =  jason[prop],
+
+            j = j+1
+
+          }
+
+
+    });
+
+</script>
+
+
+<h1>Lobby</h1>
+
+
+
+<h2> Code: {{gamecode}}</h2>
 <br>
 
 {% if admin%}
-admin user 
+YOU ARE ADMIN 
 
 
 {%endif%}
 
 
-<script type="text/javascript" charset="utf-8">
-    var socket = io();
-    socket.on( 'connect', function() {
-        socket.emit('join', { 'room': "{{gamecode}}"});
-        console.log("Connected, joining room!")
-      })
-    socket.on('userupdate', function() {
-        console.log("newuser")
-    });
-</script>
 
-<br>
+
+<br><br><br>
+
 
 room name {{roomname}}
+<br>
+<br>
+<br>
+
+<div id="tablediv">
+    <table id="myTable"></table>
+</div>
 
 {% endblock %}
