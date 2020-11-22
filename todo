@@ -1,4 +1,7 @@
 # Todo
 
-1. allow players to join lobbies
-2. add player list to lobby that auto updates
+Quentin:
+    leave button - javascript that sends a socket to leave, with code, and then the python program removes the user. If the user  is an admin, it will be shifted
+    Password protected lobbies
+    lobby chat
+
