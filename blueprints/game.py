@@ -9,8 +9,8 @@ import random
 
 game = Blueprint('game', __name__)
 
-from games import games
-from wsgi import socketio
+from gamesdb import games
+#from wsgi import socketio
 
 @game.route('/hostgame')
 @login_required

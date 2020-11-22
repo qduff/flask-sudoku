@@ -3,7 +3,7 @@ from app import create_app
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from flask_login import current_user
 
-from games import games
+from gamesdb import games
 
 import logging
 
