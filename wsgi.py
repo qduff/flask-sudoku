@@ -28,18 +28,11 @@ def on_join(data):
     username = current_user.dict['username']
     room = data['room']
     join_room(room)
-    userdict = {}
+    
     if int(room) in games:
-        for i, item in enumerate(games[int(room)]['players']):
-            if games[int(room)]['players'][item]['admin'] == True:
-                
-                role = 'admin'
-            else:
-                role = 'default'
-            print(role)
-            userdict.update({str(item):str(role)})
-
-        print(userdict)
+        
+        userdict = genuserdict(room)
+        
         emit('userupdate',userdict, room=room, json=True)
     else:
         return False
@@ -52,11 +45,37 @@ def ack():
 def on_leave(data):
     username = current_user.dict['username']
     room = data['room']
+    print('leave event triggered')
     leave_room(room)
+    
+    #pop from arr - check admin stat
+    
+    
+    if int(room) in games:
+        userdict = genuserdict(room)
+        emit('userupdate',userdict, room=room, json=True)
+    else:
+        return False
+    
+    
     send(username + ' has left the room.', room=room)
     
 def ctxsend(*args, **kwargs):
     send(*args,**kwargs)
+
+
+def genuserdict(room):
+    userdict = {}
+    for i, item in enumerate(games[int(room)]['players']):
+        if games[int(room)]['players'][item]['admin'] == True:
+            
+            role = 'admin'
+        else:
+            role = 'default'
+        #print(role)
+        userdict.update({str(item):str(role)})
+    return userdict
+        #print(userdict)
 
 if __name__ == "__main__":
     print('\n\n\nRunning\n-----------------')

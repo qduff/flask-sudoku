@@ -1,14 +1,20 @@
 {% extends "base.html" %} {% block content %}
 
 <script type="text/javascript" charset="utf-8">
-    var socket = io();
-    socket.on( "connect", function() {
-        socket.emit("join", { "room": "{{gamecode}}"});
-        console.log("Connected, joining room!")
-      })
-    socket.on("userupdate", function(jason) { //NOT EXXEPTION JSON - MUST FUX
 
-        console.log(jason)
+
+    var socket = io();
+    socket.on("connect", function () {
+        socket.emit("join", { "room": "{{gamecode}}" });
+    })
+
+    function myFunction() {
+        //alert('what ever');
+        socket.emit("leave", { "room": "{{gamecode}}" });
+
+    }
+
+    socket.on("userupdate", function (jason) { //NOT EXXEPTION JSON - MUST FUX
 
         var j = 0;
 
@@ -20,27 +26,32 @@
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
 
-            cell1.innerHTML =  prop;
+            cell1.innerHTML = prop;
 
-            var img=document.createElement("img");
+            var img = document.createElement("img");
 
             currentusername = String(prop);
             currentrole = String(jason[prop]);
             console.log(currentrole);
 
             if (currentrole == 'admin') {
-            img.src="/static/userdefaulty.svg"
+                img.src = "/static/userdefaulty.svg"
             }
             else {
-            img.src="/static/userdefaultd.svg"
+                img.src = "/static/userdefaultd.svg"
             }
-            img.id="picture"
+            img.id = "picture"
             cell2.appendChild(img)
-            
-            j = j+1
-          }
+
+            j = j + 1
+        }
+
+    
+
     });
 </script>
+
+
 
 
 <h1>Lobby:&nbsp;<i>{{roomname}}</i></h1>
@@ -55,13 +66,13 @@
 <div class="btn-group">
     {% if admin%}
 
-    <a href="{{ url_for('game.joingame') }}" class="button">
+    <a onclick="myFunction()" class="button">
        Start Game 
     </a>
     <br>
     {%endif%}
 
-    <a href="{{ url_for('game.hostgame') }}" class="button">
+    <a href='javascript:;' onclick="myFunction()" class="button">
     Leave game
     </a>
 </div>
