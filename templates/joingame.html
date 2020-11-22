@@ -2,22 +2,25 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h3 class="title">Join game</h3>
+<h1 class="title">Join game</h1>
 <div class="box">
     {% with messages = get_flashed_messages() %} {% if messages %}
-    <div class="notification is-danger">
+    <div class="notification">
         {{ messages[0] }}
     </div>
     {% endif %} {% endwith %}
     
     <form method="POST" action="/joingame">
-        <div class="field">
-            <div class="control">
-                <input class="input is-large" type="username" name="gamecode" placeholder="Game Code" autofocus="" required>
-            </div>
+        
+        <div class="form__group field">
+            <input class="form__field" type="username" name="gamecode" placeholder="Game Code" autofocus="f" required>
+            <label for="name" class="form__label">Game Code</label>
         </div>
+        
         <div class="btn-group">
-            <button class="button">Join Game</button>
+                <!-- <button class="button">Join Game</button> -->
+            <a href="#" onclick="$(this).closest('form').submit()" class="button">Submit Link</a>
+            
         </div>
     </form>
 </div>
