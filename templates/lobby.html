@@ -7,49 +7,63 @@
         console.log("Connected, joining room!")
       })
     socket.on("userupdate", function(jason) { //NOT EXXEPTION JSON - MUST FUX
+
         console.log(jason)
+
         var j = 0;
 
         var table = document.getElementById("myTable");
         table.innerHTML = "";
 
-        for (var  prop in jason) {
-    
-
+        for (var prop in jason) {
             var row = table.insertRow(j);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
 
-            cell1.innerHTML =  prop,
-            cell2.innerHTML =  jason[prop],
+            cell1.innerHTML =  prop;
+
+            var img=document.createElement("img");
+
+            currentusername = String(prop);
+            currentrole = String(jason[prop]);
+            console.log(currentrole);
+
+            if (currentrole == 'admin') {
+            img.src="/static/userdefaulty.svg"
+            }
+            else {
+            img.src="/static/userdefaultd.svg"
+            }
+            img.id="picture"
+            cell2.appendChild(img)
+            
             j = j+1
-
           }
-
-
     });
-
 </script>
 
 
-<h1>Lobby</h1>
+<h1>Lobby:&nbsp;<i>{{roomname}}</i></h1>
 
 <h2> Code: {{gamecode}}</h2>
 
-{% if admin%}
-<b>YOU ARE ADMIN </b>
-{%endif%}
-
-<br><br><br>
-
-
-room name {{roomname}}
-<br>
-<br>
-<br>
-
 <div id="tablediv">
     <table id="myTable"></table>
+</div>
+
+
+<div class="btn-group">
+    {% if admin%}
+
+    <a href="{{ url_for('game.joingame') }}" class="button">
+       Start Game 
+    </a>
+    <br>
+    {%endif%}
+
+    <a href="{{ url_for('game.hostgame') }}" class="button">
+    Leave game
+    </a>
 </div>
 
 {% endblock %}
