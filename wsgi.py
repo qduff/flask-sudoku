@@ -24,40 +24,25 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     socketio.emit('my response', json, callback=messageReceived)
 
 @socketio.on('join')
-def on_join(data):
-    
-    
-    print('USER IN JOINING ROOM')
-    
+def on_join(data):    
     username = current_user.dict['username']
-    
-    
     room = data['room']
-    
-    #if username not in games[int(room)]['players']:
     join_room(room)
-    print(username + f' has entered the room. {room}{type(room)}')
-    
     userdict = {}
-    print(games[int(room)]['players'])
-    for i, item in enumerate(games[int(room)]['players']):
-        
-        
-        print('newplayer')
-        if games[int(room)]['players'][item]['admin'] == True:
-            role = 'admin'
-        else:
-            role = 'default'
-        userdict.update({item:role})
+    if int(room) in games:
+        for i, item in enumerate(games[int(room)]['players']):
+            if games[int(room)]['players'][item]['admin'] == True:
+                
+                role = 'admin'
+            else:
+                role = 'default'
+            print(role)
+            userdict.update({str(item):str(role)})
 
-        # userdict[i] = {'name':item,'role':role}
-
-    emit('userupdate',userdict, room=room, json=True)
-
-        #emit('userupdate', 'Hi!', room=room)
-
-    
-    #send(username + ' has entered the room.', room=room) #MAKE WODK
+        print(userdict)
+        emit('userupdate',userdict, room=room, json=True)
+    else:
+        return False
 
 def ack():
     print('message was received!')

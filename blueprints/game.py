@@ -22,14 +22,13 @@ def hostgame():
     
 @game.route('/hostgame', methods=['POST'])
 def hostgame_post():
-    print(current_user.id['username'])
+    #print(current_user.id['username'])
     roomname = request.form.get('roomname')
-    print(roomname)
     codelen = 4
     roomcode = 0
     while roomcode == 0 or roomcode in games:
-        roomcode = ''.join(["{}".format(random.randint(0, 9)) for num in range(0, codelen)])
-        print(roomcode)
+        roomcode = ''.join(["{}".format(random.randint(1, 9)) for num in range(0, codelen)])
+    print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
     games.update({int(roomcode):{'name':roomname,'started':False,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
     return redirect(url_for('game.lobby',id=roomcode))
     
@@ -53,7 +52,7 @@ def joingame_post():
 @login_required
 def lobby(id:int):
     global games
-    print(id,games)
+    #print(id,games)
     if int(id) in games:
         if games[int(id)]['started'] == True:
             flash('That game has already started!')
@@ -61,15 +60,12 @@ def lobby(id:int):
         else:
             if current_user.dict['username'] not in games[int(id)]['players']:
                 games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+            print(games)
                 
             if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
                 admin = True
             else:
                 admin = False
-
-            
-            
-            
             
             return render_template('lobby.html', gamecode = id, admin = admin,roomname =games[int(id)]['name'])
     else:

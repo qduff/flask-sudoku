@@ -6,42 +6,62 @@ body {
   text-align: left; }
   body .page-body {
     padding: 2rem; }
-    body > #container {
-      text-align: left;
-      margin: 0 auto;
-      width: 500px; }
-      body div.btn-group {
-        width: 15rem;
-        display: block;
-        padding: 5px; }
-        body div.btn-group a.button {
+    body .page-body #myTable {
+      border-radius: 5px; }
+      body .page-body #myTable {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 1.1em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
+        body .page-body #myTable thead tr {
+          color: #ffffff;
+          text-align: left; }
+          body .page-body #myTable th, body .page-body #myTable td {
+            padding: 12px 15px; }
+            body .page-body #myTable tbody tr {
+              border-bottom: 1px solid #dddddd; }
+              body .page-body #myTable tbody tr:nth-of-type(even) {
+                background-color: #f3f3f3; }
+                body .page-body #myTable tbody tr.active-row {
+                  font-weight: bold; }
+  body > #container {
+    text-align: left;
+    margin: 0 auto;
+    width: 500px; }
+    body div.btn-group {
+      width: 15rem;
+      display: block;
+      padding: 5px; }
+      body div.btn-group a.button {
+        display: inherit;
+        text-decoration: none;
+        border-radius: 5px;
+        border: 1px solid gray;
+        background: lightgray;
+        color: black;
+        padding: 10px;
+        height: 25px; }
+        body div.btn-group a.buttonalt {
           display: inherit;
           text-decoration: none;
           border-radius: 5px;
           border: 1px solid gray;
-          background: lightgray;
+          background: white;
           color: black;
           padding: 10px;
           height: 25px; }
-          body div.btn-group a.buttonalt {
+          body div.btn-group a.greybutton {
             display: inherit;
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid gray;
-            background: white;
-            color: black;
+            background: darkgray;
             padding: 10px;
-            height: 25px; }
-            body div.btn-group a.greybutton {
-              display: inherit;
-              text-decoration: none;
-              border-radius: 5px;
-              border: 1px solid gray;
-              background: darkgray;
-              padding: 10px;
-              height: 25px;
-              color: gray;
-              cursor: not-allowed; }
+            height: 25px;
+            color: gray;
+            cursor: not-allowed; }
   body header {
     width: 100%;
     height: 50px;
