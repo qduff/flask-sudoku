@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="column is-4 is-offset-4">
-    <h3 class="title">Login</h3>
+    <h1 class="title">Login</h1>
     <div class="box">
         {% with messages = get_flashed_messages() %} {% if messages %}
         <div class="notification is-danger">
@@ -11,26 +11,38 @@
         </div>
         {% endif %} {% endwith %}
         <form method="POST" action="/login">
-            <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="username" name="username" placeholder="Your Username" autofocus="" required>
-                </div>
+
+            <div class="form__group field">
+                <input class="form__field" type="username" name="username" placeholder="Your Username" autofocus="f" required>
+                <label for="name" class="form__label">Your Username</label>
             </div>
+            
+            <div class="form__group field">
+                <input class="form__field" type="password" name="password" placeholder="Your Password" autofocus="f" required>
+                <label for="name" class="form__label">Your Password</label>
+            </div>
+            
 
             <div class="field">
-                <div class="control">
-                    <input class="input is-large" type="password" name="password" placeholder="Your Password" required>
-                </div>
-            </div>
-            <div class="field">
                 <label class="checkbox">
-                    <input type="checkbox">
+                    <input type="checkbox" checked>
                     Remember me
                 </label>
             </div>
-            <button class="button is-block is-info is-large is-fullwidth">Login</button>
+
+            <br>
+            <div class="btn-group">
+                <!-- <button class="button">Join Game</button> -->
+                <a href="#" onclick="$(this).closest('form').submit()" type="submit" class="button">Login</a>
+            
+            </div>
+            <input type="submit" style="display:none"/>
+        
         </form>
-        <a href="{{ url_for('auth.loginguest') }}" class="navbar-item">
+        
+        <br>
+
+        <a href="{{ url_for('auth.loginguest') }}" class="continue" style="text-decoration: none;">
             Continue as a guest
         </a>
     </div>

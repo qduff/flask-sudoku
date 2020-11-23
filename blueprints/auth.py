@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, current_user, logout_user
 from tinydb.queries import where
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.urls import url_parse
 from datetime import timedelta
 import random
 from models import User
@@ -81,7 +82,13 @@ def login_post():
         #Log in the user
         usermodel = User(user[0])
         login_user(usermodel, remember=remember)
-        return redirect(url_for('main.index'))
+        
+        #Not working apparently
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            return redirect(url_for('main.index'))
+        else:
+            redirect(next_page)
 
 
 @auth.route('/signup')
