@@ -13,13 +13,13 @@
     <form method="POST" action="/joingame">
         
         <div class="form__group field">
-            <input class="form__field" type="username" name="gamecode" placeholder="Game Code" autofocus="f" required>
+            <input class="form__field" type="number" maxlength="4" name="gamecode" placeholder="Game Code" autofocus="f" required>
             <label for="name" class="form__label">Game Code</label>
         </div>
         
         <div class="btn-group">
                 <!-- <button class="button">Join Game</button> -->
-            <a href="#" onclick="$(this).closest('form').submit()" class="button">Submit Link</a>
+            <a href="#" onclick="$(this).closest('form').submit()" class="button">Join Game</a>
             
         </div>
     </form>

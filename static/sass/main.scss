@@ -11,6 +11,8 @@ $col3: #e16428;
 $col4: #f6e9e9;
 
 
+$tablegrey1: #524f4f;
+$tablegrey2: #5e5959;
 
 $primary: $col3;
 $secondary: $col3;
@@ -36,6 +38,7 @@ body {
         //This is the page body, where all the subpages will be contained
         
         #myTable {
+            background-color: $tablegrey2;
             border-radius: 5px;
         }
         #myTable {
@@ -44,11 +47,11 @@ body {
             font-size: 1.1em;
             font-family: sans-serif;
             min-width: 400px;
+            
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             }
         #myTable thead tr {
-                //background-color: #009879;
-                color: #ffffff;
+            color: #ffffff;
                 text-align: left;
             }
             #myTable th,
@@ -60,12 +63,12 @@ body {
             }
             
             #myTable tbody tr:nth-of-type(even) {
-                background-color: #f3f3f3;
+                background-color: $tablegrey1;
             }
             
-            //#myTable tbody tr:last-of-type {
-                //border-bottom: 2px solid #009879;
-            //}
+            #myTable tbody tr:last-of-type {
+                border-bottom: 1px solid #dddddd;
+            }
             #myTable tbody tr.active-row {
                 font-weight: bold;
                 //color: #009879;
@@ -81,40 +84,51 @@ body {
     }
 
     div.btn-group {
-        width: 15rem;
-        display: block;
-        padding: 5px;
+        //width: 15rem;
+        display: table;
+        //padding: 5px;
+
 
         a.button {
-            display: inherit;
+            text-align: center;
+
+            font-weight: 600;
+            display: block;
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid gray;
-            background: lightgray;
-            color: black;
-            padding: 10px;
-            height: 25px;
+            background: $col1;
+            color: $col4;
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px;
+
+            //height: 25px;
         }
 
         a.buttonalt {
-            display: inherit;
+            text-align: center;
+            display: block;
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid gray;
-            background: white;
-            color: black;
-            padding: 10px;
-            height: 25px;
+            background: $col1;
+            color: $col4;
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px;
         }
 
         a.greybutton {
-            display: inherit;
+            text-align: center;
+            display: block;
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid gray;
             background: darkgray;
-            padding: 10px;
-            height: 25px;
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px;
             color: gray;
             cursor: not-allowed;
             
@@ -124,6 +138,7 @@ body {
     
 
     header {
+        font-family: karla;
         a {
             text-decoration: none;
         }
@@ -134,7 +149,6 @@ body {
         height: 50px;
         line-height: 50px;
         text-align: center;
-        font-family: sans-serif;
         background-color:  $col1;
         border-bottom: 1px solid lightgrey;
 
@@ -188,6 +202,7 @@ body {
       padding: 15px 0 0;
       margin-top: 10px;
       width: 50%;
+      padding-bottom: 15px;
     }
     
     .form__field {

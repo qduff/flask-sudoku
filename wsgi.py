@@ -105,4 +105,4 @@ def genuserdict(room):
 
 if __name__ == "__main__":
     print('\n\n\nRunning\n-----------------')
-    socketio.run(app, host='0.0.0.0', port=8001)
+    socketio.run(app, host='0.0.0.0', port=80)
