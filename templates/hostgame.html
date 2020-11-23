@@ -9,14 +9,17 @@
     {% endif %} {% endwith %}
     
     <form method="POST" action="/hostgame">
-        <div class="field">
-            <div class="control">
-                <input class="input is-large" type="username" name="roomname" placeholder="Room name" autofocus="" required>
-            </div>
+        <div class="form__group field">
+            <input class="form__field" type="username" name="roomname" placeholder="Room Name" autofocus="" required>
+            <label for="name" class="form__label">Room Name</label>
         </div>
+
+
         <div class="btn-group">
-            <button class="button">Create Game</button>
+            <a href="#" onclick="$(this).closest('form').submit()" class="button">Create Game</a>
+        
         </div>
+        
     </form>
 </div>
 
