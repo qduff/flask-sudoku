@@ -45,20 +45,46 @@ def ack():
 def on_leave(data):
     username = current_user.dict['username']
     room = data['room']
-    print('leave event triggered')
+    print('leave event triggered by '+username)
     leave_room(room)
     
-    #pop from arr - check admin stat
-    
+        #pop from arr - check admin stat, or if no players will be left
+
     
     if int(room) in games:
-        userdict = genuserdict(room)
-        emit('userupdate',userdict, room=room, json=True)
-    else:
-        return False
     
-    
-    send(username + ' has left the room.', room=room)
+        if username in games[int(room)]['players']:
+            
+            if games[int(room)]['players'][current_user.dict['username']]['admin'] == True:
+                if len(games[int(room)]['players']) >= 2:
+                    print('move admin to antoher player')
+                    for username  in games[int(room)]['players']:
+                        print(games[int(room)]['players'][username]['admin'])
+                        if games[int(room)]['players'][username]['admin'] == False:
+                            games[int(room)]['players'][username]['admin'] = True
+                        
+            print(games)
+            print(f"popping{current_user.dict['username']}")
+            games[int(room)]['players'].pop(current_user.dict['username'])
+            print(games)
+        
+        
+        
+        
+        if len(games[int(room)]['players']) == 0:
+            games.pop(int(room))
+        
+
+        
+        if int(room) in games and len(games[int(room)]['players']) != 0:
+            userdict = genuserdict(room)
+            print(userdict)
+            emit('userupdate',userdict, room=room, json=True)
+        else:
+            return False
+
+        
+        send(username + ' has left the room.', room=room)
     
 def ctxsend(*args, **kwargs):
     send(*args,**kwargs)

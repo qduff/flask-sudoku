@@ -11,7 +11,8 @@
     function myFunction() {
         //alert('what ever');
         socket.emit("leave", { "room": "{{gamecode}}" });
-
+        //redirect to join room page
+        window.location.replace("{{ url_for('main.index') }}")
     }
 
     socket.on("userupdate", function (jason) { //NOT EXXEPTION JSON - MUST FUX
