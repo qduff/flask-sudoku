@@ -61,7 +61,7 @@
               text-decoration: none;
               border-radius: 5px;
               border: 1px solid gray;
-              background: #272121;
+              background: #363333;
               color: #f6e9e9;
               padding: 11px;
               padding-left: 20px;
@@ -72,16 +72,15 @@
                 text-decoration: none;
                 border-radius: 5px;
                 border: 1px solid gray;
-                background: darkgray;
+                background: #413e3e;
                 padding: 11px;
                 padding-left: 20px;
                 padding-right: 20px;
                 color: gray;
                 cursor: not-allowed; }
-                body div.btn-group a.button:hover, body div.btn-group a.greybutton:hover,
-                body div.btn-group a.buttonalt:hover {
+                body div.btn-group a.button:hover, body div.btn-group a.buttonalt:hover {
                   background: linear-gradient(rgba(98, 98, 98, 0.25), rgba(145, 136, 136, 0.25));
-                  transition: 0.75s; }
+                  transition: 0.05s; }
       body .continue {
         color: #f6e9e9; }
         body header {
