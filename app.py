@@ -8,7 +8,6 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = 'secretweewooa8gn(^(_g0m9z8u2nnmxv!w$75yf5wx#3als9a)9hmdc&&=+za'
     app.debug=True
-    app.ver = 'Yes'
     #SASS assets
     assets = Environment(app)
     assets.register('scss_all', 'sass/main.scss', filters='pyscss', output='static/css/all.css') # you can add more scss files
@@ -37,6 +36,3 @@ def create_app():
     app.register_blueprint(game_blueprint)
     
     return app
-
-
-

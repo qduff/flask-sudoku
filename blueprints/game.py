@@ -1,16 +1,12 @@
+import random
 from flask import Blueprint, render_template, redirect, url_for
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.utils import login_required, current_user
 
-import random
-
-#needs to be able to send here
-
 game = Blueprint('game', __name__)
 
 from gamesdb import games
-#from wsgi import socketio
 
 @game.route('/hostgame')
 @login_required
