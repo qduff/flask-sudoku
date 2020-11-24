@@ -34,6 +34,43 @@ body {
     margin: 0;
 
     .page-body {
+
+        div.tablediv{
+            table {
+                border: 1px solid white;
+                border-collapse: collapse;
+                table-layout: fixed;
+                margin: auto;
+                margin-top: 5%;
+            }
+            
+            td {
+                border: 1px dashed white;
+                border-collapse: collapse;
+                background-color: #454545;
+                text-align: center;
+                height: 56px;
+                padding: 0%;
+                margin-top: 0%;
+            }
+            
+            td span {
+                text-align: center;
+                padding: 0%;
+            }
+            
+            tr:nth-child(3) td,
+            tr:nth-child(6) td {
+                border-bottom: 2px solid white;
+            }
+            
+            td:nth-child(3),
+            td:nth-child(6) {
+                border-right: 2px solid white;
+            }
+        }
+
+
         padding: 2rem;
         //This is the page body, where all the subpages will be contained
         
