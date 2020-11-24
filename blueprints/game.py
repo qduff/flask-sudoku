@@ -16,27 +16,31 @@ from gamesdb import games
 @login_required
 def hostgame():
     if not current_user.is_guest():
+        
         return render_template('hostgame.html')
     else:
-        # non logged in users cannot host
-        return redirect(url_for('main.index'))
+        return render_template('guesterror.html')
+        #return redirect(url_for('main.index'))
     
 @game.route('/hostgame', methods=['POST'])
 def hostgame_post():
-    roomname = request.form.get('roomname')
-    codelen = 4
-    roomcode = 0
-    # Make roomcode
-    while roomcode == 0 or roomcode in games:
-        roomcode = ''.join(["{}".format(random.randint(1, 9)) for num in range(0, codelen)])
-    print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
-    #Create a room in the games dict
-    
-    games.update({int(roomcode):{'name':roomname,'started':False,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
-    
-    #redirect to lobby
-    return redirect(url_for('game.lobby',id=roomcode))
-    
+    if not current_user.is_guest():
+        roomname = request.form.get('roomname')
+        codelen = 4
+        roomcode = 0
+        # Make roomcode
+        while roomcode == 0 or roomcode in games:
+            roomcode = ''.join(["{}".format(random.randint(1, 9)) for num in range(0, codelen)])
+        print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
+        #Create a room in the games dict
+        
+        games.update({int(roomcode):{'name':roomname,'started':False,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
+        
+        #redirect to lobby
+        return redirect(url_for('game.lobby',id=roomcode))
+    else:
+        return render_template('guesterror.html')
+        #return redirect(url_for('main.index'))
     
 @game.route('/joingame')
 @login_required

@@ -1,5 +1,15 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+{% block title %}Guest Error!{% endblock %}
 
-Your account is a guest account! 
+{% block content %}
 
+
+<h1>Your account is a guest account! </h1>
+<h3>You may not do that</h3>
+
+<div class="btn-group">
+    <a href='javascript:history.back()' class="button">
+    Go Back
+    </a>
+</div>
 {% endblock %}
