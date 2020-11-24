@@ -11,13 +11,18 @@
         socket.emit("join", { "room": "{{gamecode}}" });
     })
     function startgame() {
-        alert('Start not yet implemented!!')
+        socket.emit("requestgamestart", { "room": "{{gamecode}}" });
+
     }
 
     function myFunction() {
         socket.emit("leave", { "room": "{{gamecode}}" });
-        window.location.replace("{{ url_for('main.index') }}")
+        window.location.replace("{{ url_for('main.index') }}");
     }
+
+    socket.on("startgame", function (jason) { 
+        alert(jason)
+    });
 
     socket.on("userupdate", function (jason) { 
         var j = 0;

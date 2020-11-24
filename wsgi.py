@@ -1,4 +1,5 @@
 from flask.globals import current_app
+from flask.helpers import url_for
 from app import create_app
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from flask_login import current_user
@@ -77,6 +78,22 @@ def on_leave(data):
 
         send(username + ' has left the room.', room=room)
     
+@socketio.on('requestgamestart')
+def on_leave(data):
+    username = current_user.dict['username']
+    room = data['room']
+    print('starrt event triggered by '+username)
+    try:
+        if int(room) in games:
+            if games[int(room)]['players'][username]['admin'] == True:
+                print('you may start!, sending start')
+                url = url_for('game.playpage')+room
+                emit('startgame',{'url',url}, room=room, json=True)
+            else:
+                return False
+    except:
+        return False
+        
 
 def genuserdict(room):
     userdict = {}
