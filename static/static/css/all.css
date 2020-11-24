@@ -128,7 +128,6 @@
                 margin: 0 0 0 5%; }
                 body header .menu {
                   padding: 0;
-                  display: block;
                   width: 60%;
                   height: 100%;
                   float: right; }
@@ -141,8 +140,7 @@
                     display: -webkit-box;
                     display: -moz-box;
                     display: -ms-flexbox;
-                    display: -webkit-flex;
-                    display: block; }
+                    display: -webkit-flex; }
                     body header .menu ul a {
                       text-align: center;
                       width: 20%;
