@@ -5,8 +5,7 @@ from flask_login import current_user
 
 from gamesdb import games
 
-import logging
-
+import logging #Why no work ಥ_ಥ
 logging.getLogger('socketio').setLevel(logging.ERROR)
 logging.getLogger('werkzeug').setLevel(logging.ERROR)
 
