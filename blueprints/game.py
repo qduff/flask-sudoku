@@ -89,6 +89,10 @@ def lobby(id:int):
         return redirect(url_for('game.joingame'))
 
 
+@game.route('/sudoku')
+@login_required
+def sudokutest():
+    return render_template('sudoku.html')
 
 @game.route('/play/<id>')
 @login_required
