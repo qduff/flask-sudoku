@@ -6,22 +6,23 @@
 
 <script type="text/javascript" charset="utf-8">
 
+    $(window).bind('beforeunload', function(){  //Will not always work, e.g. if page not interacted with
+        socket.emit("leave", { "room": "{{gamecode}}" });
+    });
     var socket = io();
     socket.on("connect", function () {
         socket.emit("join", { "room": "{{gamecode}}" });
     })
-    function startgame() {
+    function requestgamestart() {
         socket.emit("requestgamestart", { "room": "{{gamecode}}" });
-
     }
 
     function myFunction() {
         socket.emit("leave", { "room": "{{gamecode}}" });
         window.location.replace("{{ url_for('main.index') }}");
     }
-
     socket.on("startgame", function (jason) { 
-        alert(jason)
+        window.location.replace(jason['url']);
     });
 
     socket.on("userupdate", function (jason) { 
@@ -54,9 +55,6 @@
 
             j = j + 1
         }
-
-    
-
     });
 </script>
 
@@ -75,10 +73,9 @@
 <div class="btn-group">
     {% if admin%}
 
-    <a href='javascript:;' onclick="startgame()" class="button">
+    <a href='javascript:;' onclick="requestgamestart()" class="button">
        Start Game 
-    </a>
-    <br>
+    </a><br>
     {%endif%}
 
     <a href='javascript:;' onclick="myFunction()" class="button">

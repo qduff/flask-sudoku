@@ -187,7 +187,7 @@
           padding-bottom: 6px;
           font-weight: 700;
           border-width: 3px;
-          border-image: linear-gradient(to right, #e16428, #e16428);
+          border-image: linear-gradient(to right, #00ced1, #00ced1);
           border-image-slice: 1; }
           body .form__field:focus ~ .form__label {
             position: absolute;
@@ -195,7 +195,7 @@
             display: block;
             transition: 0.2s;
             font-size: 1rem;
-            color: #e16428;
+            color: #00ced1;
             font-weight: 700; }
       body .form__field:required, body .form__field:invalid {
         box-shadow: none; }

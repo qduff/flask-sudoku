@@ -83,16 +83,20 @@ def on_leave(data):
     username = current_user.dict['username']
     room = data['room']
     print('starrt event triggered by '+username)
-    try:
-        if int(room) in games:
+    if int(room) in games:
+        if len(games[int(room)]['players']) >=2:
             if games[int(room)]['players'][username]['admin'] == True:
                 print('you may start!, sending start')
-                url = url_for('game.playpage')+room
-                emit('startgame',{'url',url}, room=room, json=True)
+                url = str(url_for('game.playpage', id=room))
+                json = {'url':url}
+                json['players'] = genuserdict(room)
+                emit('startgame',json, room=room, json=True)
+                games[int(room)]['started'] = True
             else:
                 return False
-    except:
-        return False
+        else:
+            return False
+   
         
 
 def genuserdict(room):

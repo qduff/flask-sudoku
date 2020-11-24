@@ -10,6 +10,8 @@ Quentin:
     DONE - WONT DO (for now) - Password protected lobbies
     DONE - WONT DO (for now) - lobby chat
     
+
+    instead of game -> started -> kick | do | game -> started -> play -> checkifingame -> kick
     polish up login func to use chekuser
     make signup look nice
     start game funcitonality - at least 2 players require
@@ -17,3 +19,4 @@ Quentin:
     game finder
 
 Andrew:
+    
