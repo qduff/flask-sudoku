@@ -50,7 +50,8 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
             body .page-body #myTable thead tr {
               color: #ffffff;
-              text-align: left; }
+              text-align: left;
+              height: 50px; }
               body .page-body #myTable th, body .page-body #myTable td {
                 padding: 12px 15px; }
                 body .page-body #myTable tbody tr {

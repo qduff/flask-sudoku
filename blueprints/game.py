@@ -30,7 +30,7 @@ def hostgame_post():
         print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
         #Create a room in the games dict
         
-        games.update({int(roomcode):{'name':roomname,'started':False,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
+        games.update({int(roomcode):{'name':roomname,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
         
         #redirect to lobby
         return redirect(url_for('game.lobby',id=roomcode))

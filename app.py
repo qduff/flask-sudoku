@@ -5,7 +5,9 @@ from flask_assets import Environment
     
 def create_app():
     #Create Flask App
+    
     app = Flask(__name__)
+    app.logger.disabled = True
     app.secret_key = 'secretweewooa8gn(^(_g0m9z8u2nnmxv!w$75yf5wx#3als9a)9hmdc&&=+za'
     app.debug=True
     #SASS assets

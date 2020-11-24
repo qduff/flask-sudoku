@@ -84,7 +84,8 @@ def on_leave(data):
     room = data['room']
     print('starrt event triggered by '+username)
     if int(room) in games:
-        if len(games[int(room)]['players']) >=2:
+        nplayers = len(games[int(room)]['players'])
+        if nplayers >=2:
             if games[int(room)]['players'][username]['admin'] == True:
                 print('you may start!, sending start')
                 url = str(url_for('game.playpage', id=room))
@@ -93,9 +94,9 @@ def on_leave(data):
                 emit('startgame',json, room=room, json=True)
                 games[int(room)]['started'] = True
             else:
-                return False
+                return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
         else:
-            return False
+            emit('cannotstart',{'msg':f"At least {games[int(room)]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
    
         
 
@@ -111,4 +112,4 @@ def genuserdict(room):
 
 if __name__ == "__main__":
     print('\n\n\nRunning\n-----------------')
-    socketio.run(app, host='0.0.0.0', port=80)
+    socketio.run(app, host='0.0.0.0', port=80, use_reloader=False, log_output=False)
