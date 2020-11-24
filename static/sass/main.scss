@@ -174,12 +174,15 @@ body {
             margin: 0 0 0 5%;
         }
         .menu {
+            padding: 0;
+            display: block;
             width: 60%;
             height: 100%;
             float: right;
         }
 
         .menu ul {
+            //float: right;
             width: 100%;
 
             height: inherit;
@@ -189,13 +192,15 @@ body {
             display: -moz-box;
             display: -ms-flexbox;
             display: -webkit-flex;
-            display: flex;
+            display: block;
+            
         }
         .menu ul a {
+            
             width: 20%;
             height: inherit;
             color: $col4;
-            display: inline-block;
+            display: inline-flex;
         }
         .menu ul a:hover {
             background-color: $col2;

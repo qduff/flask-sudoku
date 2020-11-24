@@ -3,6 +3,7 @@
 General Fixes:
     Navbar space on right
     Table in lobby size
+    move socketio from wsgi to its own file
 
 Quentin:
     DONE - leave button - javascript that sends a socket to leave, with code, and then the python program removes the user. If the user  is an admin, it will be shifted
