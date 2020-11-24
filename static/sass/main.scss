@@ -37,6 +37,8 @@ body {
 
         div.tablediv{
             table {
+                width:500px;
+                height:500px;
                 border: 1px solid $col4;
                 border-collapse: collapse;
                 table-layout: fixed;
