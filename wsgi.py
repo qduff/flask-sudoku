@@ -52,9 +52,7 @@ def on_leave(data):
 
     
     if int(room) in games:
-    
         if username in games[int(room)]['players']:
-            
             if games[int(room)]['players'][current_user.dict['username']]['admin'] == True:
                 if len(games[int(room)]['players']) >= 2:
                     print('move admin to antoher player')
@@ -62,20 +60,15 @@ def on_leave(data):
                         print(games[int(room)]['players'][username]['admin'])
                         if games[int(room)]['players'][username]['admin'] == False:
                             games[int(room)]['players'][username]['admin'] = True
-                        
             print(games)
             print(f"popping{current_user.dict['username']}")
             games[int(room)]['players'].pop(current_user.dict['username'])
             print(games)
         
-        
-        
-        
         if len(games[int(room)]['players']) == 0:
             games.pop(int(room))
         
 
-        
         if int(room) in games and len(games[int(room)]['players']) != 0:
             userdict = genuserdict(room)
             print(userdict)
@@ -83,25 +76,18 @@ def on_leave(data):
         else:
             return False
 
-        
         send(username + ' has left the room.', room=room)
     
-def ctxsend(*args, **kwargs):
-    send(*args,**kwargs)
-
 
 def genuserdict(room):
     userdict = {}
     for i, item in enumerate(games[int(room)]['players']):
         if games[int(room)]['players'][item]['admin'] == True:
-            
             role = 'admin'
         else:
             role = 'default'
-        #print(role)
         userdict.update({str(item):str(role)})
     return userdict
-        #print(userdict)
 
 if __name__ == "__main__":
     print('\n\n\nRunning\n-----------------')
