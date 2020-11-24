@@ -93,9 +93,6 @@ def signup():
 
 @auth.route('/signup', methods=['POST'])        # !NOT YET REIMPLEMENTED!!!
 def signup_post():
-    # Get form contents
-    # Todo: clean this up
-    # Todo: also make it work
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -110,21 +107,15 @@ def signup_post():
         flash('A password is required')
         return redirect(url_for('auth.signup'))
 
-    # Check if username already exists
-    usernameexistence = checkexistence(username=username)
-
-    print(usernameexistence)
     
-    # If it does, flask warning and refresh.
-    if usernameexistence:
+    if checkexistence(username=username):
         flash('Username already exists')
         return redirect(url_for('auth.signup'))
     
     if len(password) < 8:
         flash('Password must be at least eight characters long')
-        return render_template('signup.html')
+        return redirect(url_for('auth.signup'))
 
-    # ! CREATEACCOUNT - not yet reimplemented
     dbadduser(username=username, password=password)
     
     flash('Account created')
