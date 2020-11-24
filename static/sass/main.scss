@@ -222,6 +222,8 @@ body {
             //float: right;
             width: 100%;
 
+            text-align: center;
+
             height: inherit;
             margin: 0;
             padding: 0;
@@ -233,11 +235,11 @@ body {
             
         }
         .menu ul a {
-            
+            text-align: center;
             width: 20%;
             height: inherit;
             color: $col4;
-            display: inline-flex;
+            display: inline-block;
         }
         .menu ul a:hover {
             background-color: $col2;
