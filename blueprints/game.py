@@ -31,7 +31,9 @@ def hostgame_post():
         roomcode = ''.join(["{}".format(random.randint(1, 9)) for num in range(0, codelen)])
     print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
     #Create a room in the games dict
+    
     games.update({int(roomcode):{'name':roomname,'started':False,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
+    
     #redirect to lobby
     return redirect(url_for('game.lobby',id=roomcode))
     
@@ -55,26 +57,31 @@ def joingame_post():
 @login_required
 def lobby(id:int):
     global games
-    if int(id) in games:
-        #Check if game has started
-        if games[int(id)]['started'] == True:
-            flash('That game has already started!')
-            return redirect(url_for('game.joingame'))
-        
-        #If not...
-        else:
-            #If user has never joined this game, he will be added to dict.
-            if current_user.dict['username'] not in games[int(id)]['players']:
-                games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
-            #If he is the admin, then he will get admin stuff!
-            if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
-                admin = True
-            else:
-                admin = False
+    
+    try:
+        if int(id) in games:
+            #Check if game has started
+            if games[int(id)]['started'] == True:
+                flash('That game has already started!')
+                return redirect(url_for('game.joingame'))
             
-            return render_template('lobby.html', gamecode = id, admin = admin,roomname =games[int(id)]['name'])
-    else:
-        flash('That game ID does not exist!')
+            #If not...
+            else:
+                #If user has never joined this game, he will be added to dict.
+                if current_user.dict['username'] not in games[int(id)]['players']:
+                    games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+                #If he is the admin, then he will get admin stuff!
+                if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
+                    admin = True
+                else:
+                    admin = False
+                
+                return render_template('lobby.html', gamecode = id, admin = admin,roomname =games[int(id)]['name'])
+        else:
+            flash('That game ID does not exist!')
+            return redirect(url_for('game.joingame'))
+    except:
+        flash('That game ID is not valid!')
         return redirect(url_for('game.joingame'))
 
 
@@ -83,16 +90,19 @@ def lobby(id:int):
 @login_required
 def playpage(id):
     global games
-    print(id,games)
+    try:
     # Check if game exists
-    if int(id) in games:
-        # check if game has started
-        if games[int(id)]['started'] == True:
-            return render_template('sudoku.html')
+        if int(id) in games:
+            # check if game has started
+            if games[int(id)]['started'] == True:
+                return render_template('sudoku.html')
+            else:
+                # If not started, send to lobby with same id
+                flash("That game hasn't started!")
+                return redirect(url_for('game.lobby',id=id))
         else:
-            # If not started, send to lobby with same id
-            flash("That game hasn't started!")
-            return redirect(url_for('game.lobby',id=id))
-    else:
-        flash('That game ID does not exist!')
+            flash('That game ID does not exist!')
+            return redirect(url_for('game.joingame'))
+    except:
+        flash('That game ID is not valid!')
         return redirect(url_for('game.joingame'))

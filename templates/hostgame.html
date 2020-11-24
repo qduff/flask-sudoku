@@ -1,25 +1,24 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
 
-<h3 class="title">Host game</h3>
+{% block content %}
+<h1 class="title">Host game</h1>
 <div class="box">
-    {% with messages = get_flashed_messages() %} {% if messages %}
-    <div class="notification is-danger">
-        {{ messages[0] }}
-    </div>
-    {% endif %} {% endwith %}
+    {% with messages = get_flashed_messages() %} 
+        {% if messages %}
+        <div class="notification is-danger">
+            {{ messages[0] }}
+        </div>
+        {% endif %} 
+    {% endwith %}
     
     <form method="POST" action="/hostgame">
         <div class="form__group field">
             <input class="form__field" type="username" name="roomname" placeholder="Room Name" autofocus="" required>
             <label for="name" class="form__label">Room Name</label>
         </div>
-
-
         <div class="btn-group">
             <a href="#" onclick="$(this).closest('form').submit()" class="button">Create Game</a>
-        
         </div>
-        
     </form>
 </div>
 
