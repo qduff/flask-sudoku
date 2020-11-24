@@ -5,6 +5,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.urls import url_parse
 from datetime import timedelta
 import random
+import re
 from models import User
 
 auth = Blueprint('auth', __name__)
@@ -21,6 +22,12 @@ def dbsearch( key, value):
 def dbadduser( username, password):
     db = TinyDB('users.json', indent=4)
     resp =   db.insert({'username':username,'password':generate_password_hash(password,'sha256')})
+    db.close()
+    return resp
+
+def checkexistence(username): # Case INSENSITIVE!
+    db = TinyDB('users.json', indent=4)
+    resp =  db.search(where('username').matches(username,flags=re.IGNORECASE))
     db.close()
     return resp
 
@@ -56,40 +63,28 @@ def login_post():
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
 
-    #see if values are existent
+    # See if values are existent
     if not username or not password:
         flash('Username and password are required.')
         return redirect(url_for('auth.login'))
-
-    #Check if user exists
-    
-    user = dbsearch(key='username', value=username)
-    
-
-    #If user exists, check password
-    if user:
-        credscorrect = check_password_hash(user[0]['password'], password)
-    else:
-        credscorrect = False
-
-    print(f"Login entered= {username=},{password=},{remember=},{user=},{credscorrect=}")
-
-    if not credscorrect:
-        #Refreshes page with message
-        flash("Please check your login details and try again.")
-        return redirect(url_for('auth.login'))
-    else:
-        #Log in the user
-        usermodel = User(user[0])
-        login_user(usermodel, remember=remember)
-        
-        #Not working apparently
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            return redirect(url_for('main.index'))
+    else:        
+        user = checkexistence(username)
+        #user = dbsearch(key='username', value=username)
+        # If user exists, check password
+        if user: 
+            #print(f"Login entered= {username=},{password=},{remember=},{user=}")
+            if not check_password_hash(user[0]['password'], password):
+                flash("Please check your login details and try again.")
+                return redirect(url_for('auth.login'))
+            else:
+                usermodel = User(user[0])
+                login_user(usermodel, remember=remember)
+                return redirect(url_for('main.index'))
         else:
-            redirect(next_page)
-
+            flash("Username does not exist (signup link here).")
+            return redirect(url_for('auth.login'))
+        
+            
 
 @auth.route('/signup')
 def signup():
@@ -116,8 +111,10 @@ def signup_post():
         return redirect(url_for('auth.signup'))
 
     # Check if username already exists
-    usernameexistence = dbsearch(key='username', value=username)
+    usernameexistence = checkexistence(username=username)
 
+    print(usernameexistence)
+    
     # If it does, flask warning and refresh.
     if usernameexistence:
         flash('Username already exists')

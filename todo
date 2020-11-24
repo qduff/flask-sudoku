@@ -10,6 +10,7 @@ Quentin:
     DONE - WONT DO (for now) - Password protected lobbies
     DONE - WONT DO (for now) - lobby chat
     
+    polish up login func to use chekuser
     make signup look nice
     start game funcitonality - at least 2 players require
     add game options for admin - such as difficulty and public
