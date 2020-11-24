@@ -2,13 +2,12 @@ from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, current_user, logout_user
 from tinydb.queries import where
 from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.urls import url_parse
 from datetime import timedelta
 import random
 from models import User
 
-
 auth = Blueprint('auth', __name__)
-
 
 from tinydb import TinyDB
 
@@ -36,10 +35,7 @@ def login():
 @auth.route('/loginguest')
 def loginguest():
     if not current_user.is_authenticated:
-        
-        #Generate a nickname
-        words = ['cat', 'dog', 'word','game']
-        nick = ''.join(random.choices(words, k=2))
+        nick = ''.join(random.choices(open('words.txt').read().split(), k=2))+str(random.randint(100,999))
         
         #Log in this user
         usermodel = User({'username': f"{nick}", 'guest': True})
@@ -54,6 +50,7 @@ def loginguest():
 
 @auth.route('/login', methods=['POST'])
 def login_post():
+    
     #Get form contents
     username = request.form.get('username')
     password = request.form.get('password')
@@ -85,7 +82,13 @@ def login_post():
         #Log in the user
         usermodel = User(user[0])
         login_user(usermodel, remember=remember)
-        return redirect(url_for('main.index'))
+        
+        #Not working apparently
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            return redirect(url_for('main.index'))
+        else:
+            redirect(next_page)
 
 
 @auth.route('/signup')

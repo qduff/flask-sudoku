@@ -8,6 +8,13 @@
 
     <title>{% block title %}{% endblock %}</title>
 
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/json2html/1.4.0/json2html.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
+
     {% assets "scss_all" %}
     <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
     {% endassets %}
@@ -72,8 +79,17 @@
         {% block content %} {% endblock %}
     </div>
 
-<footer>
-    Footer
+<footer class="footer">
+    
+    <div class='leftalign'>
+        Sudoku Project
+    </div>
+    <div class='rightalign'>
+        ver: beta-0.1.0
+
+    </div>
+    
+    
 </footer>
 
 </body>

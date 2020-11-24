@@ -1,78 +1,193 @@
-body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  font-family: sans-serif;
-  text-align: left; }
-  body .page-body {
-    padding: 2rem; }
-    body > #container {
+@font-face {
+  font-family: karla;
+  src: url('/static/fonts/Karla-VariableFont_wght.ttf'); }
+
+  h1, h2, h3, h4, h5, h6, div {
+    color: #f6e9e9; }
+
+    body {
+      font-family: karla;
       text-align: left;
-      margin: 0 auto;
-      width: 500px; }
-      body div.btn-group {
-        width: 10rem;
-        display: block;
-        padding: 1px; }
-        body div.btn-group a.button {
-          display: inherit;
-          text-decoration: none;
-          border-radius: 5px;
-          border: 1px solid gray;
-          background: lightgray;
-          color: black;
-          padding: 10px;
-          height: 25px; }
-          body div.btn-group a.greybutton {
-            display: inherit;
+      background-color: #363333;
+      width: 100%;
+      height: 100%;
+      margin: 0; }
+      body .page-body {
+        padding: 2rem; }
+        body .page-body #myTable {
+          background-color: #5e5959;
+          border-radius: 5px; }
+          body .page-body #myTable {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.1em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
+            body .page-body #myTable thead tr {
+              color: #ffffff;
+              text-align: left; }
+              body .page-body #myTable th, body .page-body #myTable td {
+                padding: 12px 15px; }
+                body .page-body #myTable tbody tr {
+                  border-bottom: 1px solid #dddddd; }
+                  body .page-body #myTable tbody tr:nth-of-type(even) {
+                    background-color: #524f4f; }
+                    body .page-body #myTable tbody tr:last-of-type {
+                      border-bottom: 1px solid #dddddd; }
+                      body .page-body #myTable tbody tr.active-row {
+                        font-weight: bold; }
+      body > #container {
+        text-align: left;
+        margin: 0 auto;
+        width: 500px; }
+        body div.btn-group {
+          display: table; }
+          body div.btn-group a.button {
+            text-align: center;
+            font-weight: 700;
+            display: block;
             text-decoration: none;
             border-radius: 5px;
             border: 1px solid gray;
-            background: darkgray;
-            padding: 10px;
-            height: 25px;
-            color: gray;
-            cursor: not-allowed; }
-  body header {
-    width: 100%;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    font-family: sans-serif;
-    background-color: #ffffff;
-    border-bottom: 1px solid lightgrey; }
-    body header a {
-      text-decoration: none; }
-      body header li {
-        list-style: none; }
-        body header .brand {
-          width: auto;
-          height: 100%;
-          float: left;
-          margin: 0 0 0 5%; }
-          body header .menu {
-            width: 60%;
-            height: 100%;
-            float: right; }
-            body header .menu ul {
-              width: 100%;
-              height: inherit;
-              margin: 0;
-              padding: 0;
-              display: -webkit-box;
-              display: -moz-box;
-              display: -ms-flexbox;
-              display: -webkit-flex;
-              display: flex; }
-              body header .menu ul a {
-                width: 20%;
-                height: inherit;
-                color: #222;
-                display: inline-block; }
-                body header .menu ul a:hover {
-                  background-color: #222;
-                  color: #fff; }
-                  body header #menuToggle {
-                    display: none; }
-                    body header .menu-icon {
-                      display: none; }
+            background: #363333;
+            color: #f6e9e9;
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px; }
+            body div.btn-group a.buttonalt {
+              text-align: center;
+              display: block;
+              text-decoration: none;
+              border-radius: 5px;
+              border: 1px solid gray;
+              background: #363333;
+              color: #f6e9e9;
+              padding: 11px;
+              padding-left: 20px;
+              padding-right: 20px; }
+              body div.btn-group a.greybutton {
+                text-align: center;
+                display: block;
+                text-decoration: none;
+                border-radius: 5px;
+                border: 1px solid gray;
+                background: #413e3e;
+                padding: 11px;
+                padding-left: 20px;
+                padding-right: 20px;
+                color: gray;
+                cursor: not-allowed; }
+                body div.btn-group a.button:hover, body div.btn-group a.buttonalt:hover {
+                  background: linear-gradient(rgba(98, 98, 98, 0.25), rgba(145, 136, 136, 0.25));
+                  transition: 0.05s; }
+      body .continue {
+        color: #f6e9e9; }
+        body header {
+          font-family: karla;
+          width: 100%;
+          height: 50px;
+          line-height: 50px;
+          text-align: center;
+          background-color: #363333;
+          border-bottom: 1px solid lightgrey; }
+          body header a {
+            text-decoration: none; }
+            body header li {
+              list-style: none; }
+              body header .brand {
+                color: #f6e9e9;
+                width: auto;
+                height: 100%;
+                float: left;
+                margin: 0 0 0 5%; }
+                body header .menu {
+                  width: 60%;
+                  height: 100%;
+                  float: right; }
+                  body header .menu ul {
+                    width: 100%;
+                    height: inherit;
+                    margin: 0;
+                    padding: 0;
+                    display: -webkit-box;
+                    display: -moz-box;
+                    display: -ms-flexbox;
+                    display: -webkit-flex;
+                    display: flex; }
+                    body header .menu ul a {
+                      width: 20%;
+                      height: inherit;
+                      color: #f6e9e9;
+                      display: inline-block; }
+                      body header .menu ul a:hover {
+                        background-color: #272121;
+                        color: #fff; }
+                        body header #menuToggle {
+                          display: none; }
+                          body header .menu-icon {
+                            display: none; }
+      body .form__group {
+        position: relative;
+        padding: 15px 0 0;
+        margin-top: 10px;
+        width: 50%;
+        padding-bottom: 15px; }
+        body .form__field {
+          font-family: inherit;
+          width: 100%;
+          border: 0;
+          border-bottom: 2px solid #f6e9e9;
+          outline: 0;
+          font-size: 1.3rem;
+          color: #f6e9e9;
+          padding: 7px 0;
+          background: transparent;
+          transition: border-color 0.2s; }
+          body .form__field::placeholder {
+            color: transparent; }
+            body .form__field:placeholder-shown ~ .form__label {
+              font-size: 1.3rem;
+              cursor: text;
+              top: 20px; }
+      body .form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: #f6e9e9; }
+        body .form__field:focus {
+          padding-bottom: 6px;
+          font-weight: 700;
+          border-width: 3px;
+          border-image: linear-gradient(to right, #e16428, #e16428);
+          border-image-slice: 1; }
+          body .form__field:focus ~ .form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: #e16428;
+            font-weight: 700; }
+      body .form__field:required, body .form__field:invalid {
+        box-shadow: none; }
+
+footer {
+  padding: 5px;
+  border-top: 1px solid #272121;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #363333;
+  color: black; }
+  footer .leftalign {
+    float: left;
+    padding-left: 10px;
+    text-align: left; }
+    footer .rightalign {
+      float: right;
+      padding-right: 10px;
+      text-align: right; }

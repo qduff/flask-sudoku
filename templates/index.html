@@ -4,49 +4,47 @@
 {% block content %}
 
 
+    <h1>OnlineSudoku</h1>
+
     {% if not current_user.is_authenticated %}
-
-    You must first log in to host and play games
-    
-    <form action="{{ url_for('auth.login') }}"> 
-        <button class="button is-block is-info is-fullwidth">
+    <h3>You must first log in to host and play games</h3>
+    <div class="btn-group">
+        <a href="{{ url_for('auth.login') }}" class="button">
             Log In with account
-        </button>
-    </form>
-
-    <form action="{{ url_for('auth.signup') }}"> 
-        <button class="button is-block is-info is-fullwidth">
+        </a><br> 
+        <a href="{{ url_for('auth.signup') }}" class="button">
             Sign Up
-        </button>
-    </form>
-
-    <form action="{{ url_for('auth.loginguest') }}"> 
-        <button class="button is-block is-fullwidth">
+        </a><br>
+        <a href="{{ url_for('auth.loginguest') }}" class="buttonalt">
             Continue as a guest
-        </button>
-    </form>
-
+        </a>
+    </div>
     {% endif %}
 
     {% if current_user.is_authenticated %}
-
+    <h3>Join or host a game</h3>
     <div class="btn-group">
+        <a href="{{ url_for('game.joingame') }}" class="button">
+            Join game
+        </a><br>
 
-                <a href="{{ url_for('game.joingame') }}" class="button">
-                    Join game
-                </a>
-                <br>
+        {% if not current_user.is_guest() %}
+        <a href="{{ url_for('game.hostgame') }}" class="button">
+        Host game
+        </a>
+        {% endif %}
 
-                {% if not current_user.is_guest() %}
-                <a href="{{ url_for('game.hostgame') }}" class="button">
-                Host game
-                </a>
-                {% endif %}
-                {% if current_user.is_guest() %}
-                <a class="greybutton" title="You must login to host games">
-                Host game
-                </a>
-                {% endif %}
+        {% if current_user.is_guest() %}
+        
+
+        <a class="greybutton" title="You must login to host games">
+        Host game
+        </a>
+        <a style="padding: 10px;">
+            You must login&NewLine; to host games
+        </a>
+        
+        {% endif %}
 
     </div>
 
