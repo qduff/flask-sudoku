@@ -1,3 +1,5 @@
+from logging import debug
+from os import terminal_size
 from flask.globals import current_app
 from flask.helpers import url_for
 from app import create_app
@@ -112,4 +114,4 @@ def genuserdict(room):
 
 if __name__ == "__main__":
     print('\n\n\nRunning\n-----------------')
-    socketio.run(app, host='0.0.0.0', port=80, use_reloader=False, log_output=False)
+    socketio.run(app, host='0.0.0.0', port=80, use_reloader=False, log_output=False, debug=True)

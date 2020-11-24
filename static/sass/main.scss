@@ -217,6 +217,7 @@ body {
             margin: 0 0 0 5%;
         }
         .menu {
+            justify-content: flex-end;
             padding: 0;
             //display: block;
             width: 60%;
@@ -225,6 +226,7 @@ body {
         }
 
         .menu ul {
+            justify-content: flex-end;
             //float: right;
             width: 100%;
 

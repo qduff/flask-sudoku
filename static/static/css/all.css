@@ -127,11 +127,13 @@
                 float: left;
                 margin: 0 0 0 5%; }
                 body header .menu {
+                  justify-content: flex-end;
                   padding: 0;
                   width: 60%;
                   height: 100%;
                   float: right; }
                   body header .menu ul {
+                    justify-content: flex-end;
                     width: 100%;
                     text-align: center;
                     height: inherit;
