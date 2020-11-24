@@ -1,22 +1,25 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} 
+
+{% block title %}OnlineSuduko - {{gamecode}} - {{roomname}}{% endblock %}
+
+{% block content %}
 
 <script type="text/javascript" charset="utf-8">
-
 
     var socket = io();
     socket.on("connect", function () {
         socket.emit("join", { "room": "{{gamecode}}" });
     })
+    function startgame() {
+        alert('Start not yet implemented!!')
+    }
 
     function myFunction() {
-        //alert('what ever');
         socket.emit("leave", { "room": "{{gamecode}}" });
-        //redirect to join room page
         window.location.replace("{{ url_for('main.index') }}")
     }
 
-    socket.on("userupdate", function (jason) { //NOT EXXEPTION JSON - MUST FUX
-
+    socket.on("userupdate", function (jason) { 
         var j = 0;
 
         var table = document.getElementById("myTable");
@@ -33,7 +36,6 @@
 
             currentusername = String(prop);
             currentrole = String(jason[prop]);
-            console.log(currentrole);
 
             if (currentrole == 'admin') {
                 img.src = "/static/userdefaulty.svg"

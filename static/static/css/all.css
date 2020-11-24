@@ -102,6 +102,8 @@
                 float: left;
                 margin: 0 0 0 5%; }
                 body header .menu {
+                  padding: 0;
+                  display: block;
                   width: 60%;
                   height: 100%;
                   float: right; }
@@ -114,12 +116,12 @@
                     display: -moz-box;
                     display: -ms-flexbox;
                     display: -webkit-flex;
-                    display: flex; }
+                    display: block; }
                     body header .menu ul a {
                       width: 20%;
                       height: inherit;
                       color: #f6e9e9;
-                      display: inline-block; }
+                      display: inline-flex; }
                       body header .menu ul a:hover {
                         background-color: #272121;
                         color: #fff; }
