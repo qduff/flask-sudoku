@@ -1,6 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, send_from_directory
-from flask_login import current_user
-import os
+from flask import Blueprint, render_template
 main = Blueprint('main', __name__)
 
 @main.route('/')
