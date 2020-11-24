@@ -13,13 +13,13 @@ from tinydb import TinyDB
 
 
 def dbsearch( key, value):
-    db = TinyDB('users.json')
+    db = TinyDB('users.json', indent=4)
     resp =  db.search(where(key) == value)
     db.close()
     return resp
 
 def dbadduser( username, password):
-    db = TinyDB('users.json')
+    db = TinyDB('users.json', indent=4)
     resp =   db.insert({'username':username,'password':generate_password_hash(password,'sha256')})
     db.close()
     return resp
