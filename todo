@@ -6,20 +6,20 @@ General Fixes:
     move socketio from wsgi to its own file
 
 Quentin:
-    DONE - leave button - javascript that sends a socket to leave, with code, and then the python program removes the user. If the user  is an admin, it will be shifted
-    DONE - WONT DO (for now) - Password protected lobbies
-    DONE - WONT DO (for now) - lobby chat
-    
 
     instead of game -> started -> kick | do | game -> started -> play -> checkifingame -> kick
-    polish up login func to use chekuser
-    make signup look nice
+    
     start game funcitonality - at least 2 players require
-    add game options for admin - such as difficulty and public
+    add game options for admin - such as difficulty
+
+    fix hostgame checkbox...
+
+Andrew:
+    sudoku html
+
+
+LOng term goals
     game finder
 
 
-    what happened to the append player list?1 
 
-Andrew:
-    
