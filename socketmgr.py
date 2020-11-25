@@ -23,10 +23,12 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 def on_join(data):    
     username = current_user.dict['username']
     room = data['room']
+    join_room(room)
     #whyh is the pla
     if int(room) in games:
         userdict = genuserdict(room)
         print(games[int(room)]['players'])
+        print('userupdate')
         emit('userupdate',userdict, room=room, json=True)
     else:
         return False
@@ -46,7 +48,7 @@ def on_leave(data):
                         print(games[int(room)]['players'][username]['admin'])
                         if games[int(room)]['players'][username]['admin'] == False:
                             games[int(room)]['players'][username]['admin'] = True
-            print(f"popping{current_user.dict['username']}")
+            print(f"popping {current_user.dict['username']}")
             games[int(room)]['players'].pop(current_user.dict['username'])        
         if len(games[int(room)]['players']) == 0:
             games.pop(int(room))
