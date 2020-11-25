@@ -147,12 +147,16 @@
                 // Normal movement
                 if ((e.code == "KeyA" || e.code == "ArrowLeft") && selX > 0) {
                     selX -= 1;
+                    e.preventDefault();
                 } else if ((e.code == "KeyD" || e.code == "ArrowRight") && selX < 8) {
                     selX += 1;
+                    e.preventDefault();
                 } else if ((e.code == "KeyW" || e.code == "ArrowUp") && selY > 0) {
                     selY -= 1;
+                    e.preventDefault();
                 } else if ((e.code == "KeyS" || e.code == "ArrowDown") && selY < 8) {
                     selY += 1;
+                    e.preventDefault();
                 }
             } else {
                 // Block movement
@@ -180,8 +184,12 @@
             }
 
             if (e.code.startsWith("Digit") && e.code != "Digit0") {
-                writeCell(e.code.slice(-1))
-            } else if (e.code == "Digit0" || e.code == "Backspace" || e.code == "Delete" || e.code == "Space") {
+                writeCell(e.code.slice(-1));
+            } 
+            else if (e.code.startsWith("Numpad") && e.code != "Numpad0") {
+                writeCell(e.code.slice(-1));
+            }
+            else if (e.code == "Digit0" || e.code == "Numpad0" || e.code == "Backspace" || e.code == "Delete" || e.code == "Space") {
                 clearCell();
             }
 
@@ -195,6 +203,7 @@
         selectCell();
         console.log(e.code);
         // console.log(e);
+        // // required so arrow keys dont scroll
     }
 
     function fillSudoku(s) {
