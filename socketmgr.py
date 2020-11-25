@@ -75,9 +75,11 @@ def onrequestgamestart(data):
                 json['players'] = genuserdict(room)
                 games[int(room)]['started'] = True
                 
-                #sudoku, sol = generate()
+                sudoku, solution = generate()
                 #GEN SUDOKU
-                
+                games[int(room)]['sudoku'] = sudoku
+                games[int(room)]['sudokusol'] = solution
+
                 emit('startgame',json, room=room, json=True)
             else: return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
         else: emit('cannotstart',{'msg':f"At least {games[int(room)]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
@@ -92,11 +94,18 @@ def onrequestgamestart(data):
 
 @socketio.on('requestsudoku')
 def onrequestgamestart(data):
-    #send the sudoku, and start the timer. 
-    emit('sudokustr',{'content':f'sudstring'}, json=True)
+    username = current_user.dict['username']
+    room = data['room']
     
-
-
+    #send the sudoku, and start the timer. 
+    sudokustring =  games[int(room)]['sudoku']
+    emit('sudokustr',{'content':sudokustring}, json=True)
+    
+@socketio.on('submitsudoku')
+def sudukochanges(data):
+    #check sudoku
+    pass
+    
 
 
 def genuserdict(room):
