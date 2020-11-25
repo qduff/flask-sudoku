@@ -15,9 +15,10 @@
       body .page-body {
         padding: 2rem; }
         body .page-body div.tablediv {
+          user-select: none;
           font-size: 180%;
-          font-weight: 700;
-          color: #75b5c9; }
+          font-weight: 600;
+          color: #93c5d4; }
           body .page-body div.tablediv .immutable-cell {
             font-weight: 600;
             color: #e4e0e0; }

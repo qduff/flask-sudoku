@@ -9,7 +9,7 @@ $col2: #292626; //
 $col3: #00ced1;
 $col4: #f6e9e9;
 $prefilled: #e4e0e0;
-$entered: #75b5c9;
+$entered: #93c5d4;
 
 
 $tablegrey1: #524f4f;
@@ -37,8 +37,10 @@ body {
     margin: 0;
     .page-body {
         div.tablediv {
+
+            user-select: none; 
             font-size: 180%;
-            font-weight: 700;
+            font-weight: 600;
             color: $entered;
             .immutable-cell{
                 font-weight: 600;
