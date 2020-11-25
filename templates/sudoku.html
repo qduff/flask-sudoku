@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content %}
 
-<h1 class = "loadingtext">Loading board...</h1>
-<div class='tablediv' >
+<h1 id = "loadingtext">Loading board...</h1>
+<div class='tablediv' id="tablediv" style="display: none;">
     <table id="grid">
         <tr>
             <td></td>
@@ -210,25 +210,24 @@
 
     document.addEventListener("keydown", keyDown);
     
-    var sudokuString = "004000067300470005150820003006000031802105604410000900700080046600012000930000710"
+    //var sudokuString = "004000067300470005150820003006000031802105604410000900700080046600012000930000710"
 
-    fillSudoku(sudokuString);
+    //fillSudoku(sudokuString);
 
 
-    //var socket = io();
-
-    //socket.on("connect", function() {
-    //    socket.emit("requestsudoku", {
-    //        "room": "{{gamecode}}"
-    ////    });
-    //})
-    //socket.on("sudokustr", function(jason) {
-    //    console.log(jason['content']);
-    //    //$('#tablediv').show();
-    //    //$('#loadingtext').hide();
-    //    fillSudoku(jason['content']);
-    //    console.log('filled')
-    //});
+    var socket = io();
+   socket.on("connect", function() {
+        socket.emit("requestsudoku", {
+            "room": "{{gamecode}}"
+        });
+    });
+    socket.on("sudokustr", function(jason) {
+        console.log(jason['content']);
+        $('#tablediv').show();
+        $('#loadingtext').hide();
+        fillSudoku(jason['content']);
+        console.log('filled')
+    });
 
 </script>
 
