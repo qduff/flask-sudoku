@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.utils import login_required, current_user
+from werkzeug.urls import iri_to_uri
 
 game = Blueprint('game', __name__)
 
@@ -21,6 +22,7 @@ def hostgame():
 @game.route('/hostgame', methods=['POST'])
 def hostgame_post():
     if not current_user.is_guest():
+        password = request.form.get('password')
         roomname = request.form.get('roomname')
         codelen = 4
         roomcode = 0
@@ -30,7 +32,10 @@ def hostgame_post():
         print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
         #Create a room in the games dict
         
-        games.update({int(roomcode):{'name':roomname,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
+        if not password: password = None
+        print(password)
+        
+        games.update({int(roomcode):{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
         
         #redirect to lobby
         return redirect(url_for('game.lobby',id=roomcode))
@@ -52,6 +57,14 @@ def joingame_post():
         flash('Invalid input!')
         return redirect(url_for('game.joingame'))
 
+@game.route('/authgame/<id>', methods=['POST'])
+def auth_post(id):
+    pw = request.form.get('gamepass')
+    if pw == games[int(id)]['password']:
+        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+    
+    return redirect(url_for('game.lobby',id=id)) #not efficitent but works
+
 
 @game.route('/game/<id>')
 @login_required
@@ -66,10 +79,16 @@ def lobby(id:int):
                 return redirect(url_for('game.joingame'))
             
             #If not...
-            else:
+            else:                
+                
                 #If user has never joined this game, he will be added to dict.
                 if current_user.dict['username'] not in games[int(id)]['players']:
-                    games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+                    
+                    if games[int(id)]['password'] != None:
+                        #Test if user has authed into the games
+                        return render_template('enterpass.html', code=id)
+                    else:
+                        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
                 #If he is the admin, then he will get admin stuff!
                 if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
                     admin = True

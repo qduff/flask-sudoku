@@ -30,11 +30,11 @@ def on_join(data):
     username = current_user.dict['username']
     room = data['room']
     join_room(room)
-    
+    #whyh is the pla
     if int(room) in games:
         
         userdict = genuserdict(room)
-        
+        print(games[int(room)]['players'])
         emit('userupdate',userdict, room=room, json=True)
     else:
         return False
