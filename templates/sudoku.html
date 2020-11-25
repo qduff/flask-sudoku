@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block title %}Login{% endblock %} {% block content %}
 
-<div class='tablediv'>
+<h1 class = "loadingtext">Loading board...</h1>
+<div class='tablediv' >
     <table id="grid">
         <tr>
             <td>1</td>
@@ -108,18 +109,6 @@
     var selX = null;
     var selY = null;
 
-    var socket = io();
-
-    socket.on("connect", function() {
-        socket.emit("requestsudoku", {
-            "room": "{{gamecode}}"
-        });
-    })
-    socket.on("sudokustr", function(jason) {
-        console.log(jason['content']);
-    });
-
-
     function cellClick(e) {
         console.log("Click", e.target.cellIndex, e.target.parentElement.rowIndex)
 
@@ -222,11 +211,27 @@
     $("#grid tr td").on("click", cellClick);
 
     document.addEventListener("keydown", keyDown);
-
-
+    
     var sudokuString = "004000067300470005150820003006000031802105604410000900700080046600012000930000710"
 
     fillSudoku(sudokuString);
+
+
+    //var socket = io();
+
+    //socket.on("connect", function() {
+    //    socket.emit("requestsudoku", {
+    //        "room": "{{gamecode}}"
+    ////    });
+    //})
+    //socket.on("sudokustr", function(jason) {
+    //    console.log(jason['content']);
+    //    //$('#tablediv').show();
+    //    //$('#loadingtext').hide();
+    //    fillSudoku(jason['content']);
+    //    console.log('filled')
+    //});
+
 </script>
 
 {% endblock %}

@@ -95,9 +95,11 @@ def onrequestgamestart(data):
 @socketio.on('requestsudoku')
 def onrequestgamestart(data):
     username = current_user.dict['username']
+    print(data)
     room = data['room']
+    print(f"|{room=}|")
     
-    #send the sudoku, and start the timer. 
+    #send the sudoku, and start the timer for le user. 
     sudokustring =  games[int(room)]['sudoku']
     emit('sudokustr',{'content':sudokustring}, json=True)
     
