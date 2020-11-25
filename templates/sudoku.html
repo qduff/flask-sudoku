@@ -4,15 +4,15 @@
 <div class='tablediv' >
     <table id="grid">
         <tr>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
         <tr>
             <td></td>
@@ -198,12 +198,10 @@
     }
 
     function fillSudoku(s) {
-        for (var i in s.length) {
-            console.log(s[i])
-            if (s[i] == "0") continue;
-            if (i < s.length) {
+        for (i = 0; i < s.length; i++) {
+            if (i < s.length && s[i] != "0") {
                 $("#grid tr td").eq(i).text(s[i]);
-                $("#grid tr td").eq(i).addClass("immutable-cell")
+                $("#grid tr td").eq(i).addClass("immutable-cell");
             }
         }
     }
