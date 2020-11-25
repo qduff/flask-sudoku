@@ -16,7 +16,9 @@ socketio = SocketIO(app)
 @socketio.on('getusers')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json)+' from '+current_user.dict['username'])
+    print('sending user')
     socketio.emit('my response', json)
+    
 @socketio.on('join')
 def on_join(data):    
     username = current_user.dict['username']
@@ -71,7 +73,7 @@ def onrequestgamestart(data):
                 json['players'] = genuserdict(room)
                 games[int(room)]['started'] = True
                 
-                sudoku = generate()
+                #sudoku, sol = generate()
                 #GEN SUDOKU
                 
                 emit('startgame',json, room=room, json=True)
@@ -89,7 +91,8 @@ def onrequestgamestart(data):
 @socketio.on('requestsudoku')
 def onrequestgamestart(data):
     #send the sudoku, and start the timer. 
-    pass
+    emit('sudokustr',{'content':f'sudstring'}, json=True)
+    
 
 
 
