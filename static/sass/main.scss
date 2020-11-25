@@ -8,6 +8,10 @@ $col2: #292626; //
 //$col3: #e16428;
 $col3: #00ced1;
 $col4: #f6e9e9;
+$prefilled: #e4e0e0;
+$entered: #75b5c9;
+
+
 $tablegrey1: #524f4f;
 $tablegrey2: #5e5959;
 $primary: $col3;
@@ -33,15 +37,26 @@ body {
     margin: 0;
     .page-body {
         div.tablediv {
+            font-size: 180%;
+            font-weight: 700;
+            color: $entered;
+            .immutable-cell{
+                font-weight: 600;
+                color: $prefilled;
+            }
             table {
+
                 width: 500px;
                 height: 500px;
                 border: 1px solid $col4;
                 border-collapse: collapse;
                 table-layout: fixed;
                 margin: auto;
-                margin-top: 5%;
+                //margin-top: 5%;
+                
+
             }
+
             td {
                 border: 1px dashed $col4;
                 border-collapse: collapse;
@@ -100,11 +115,11 @@ body {
             //color: #009879;
         }
     }
-    >#container {
-        text-align: left;
-        margin: 0 auto;
-        width: 500px;
-    }
+    //>#container {
+    //    text-align: left;
+    //    margin: 0 auto;
+    //    width: 500px;
+    //}
     div.btn-group {
         //width: 15rem;
         display: table;

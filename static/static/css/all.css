@@ -14,31 +14,37 @@
       margin: 0; }
       body .page-body {
         padding: 2rem; }
-        body .page-body div.tablediv table {
-          width: 500px;
-          height: 500px;
-          border: 1px solid #f6e9e9;
-          border-collapse: collapse;
-          table-layout: fixed;
-          margin: auto;
-          margin-top: 5%; }
-          body .page-body div.tablediv td {
-            border: 1px dashed #f6e9e9;
-            border-collapse: collapse;
-            background-color: #454545;
-            text-align: center;
-            height: 56px;
-            padding: 0%;
-            margin-top: 0%;
-            transition: 0.15s; }
-            body .page-body div.tablediv tr:nth-child(3) td,
-            body .page-body div.tablediv tr:nth-child(6) td {
-              border-bottom: 2px solid #f6e9e9; }
-              body .page-body div.tablediv td:nth-child(3),
-              body .page-body div.tablediv td:nth-child(6) {
-                border-right: 2px solid #f6e9e9; }
-                body .page-body div.tablediv .cell-selected {
-                  background-color: #5e5959 !important; }
+        body .page-body div.tablediv {
+          font-size: 180%;
+          font-weight: 700;
+          color: #75b5c9; }
+          body .page-body div.tablediv .immutable-cell {
+            font-weight: 600;
+            color: #e4e0e0; }
+            body .page-body div.tablediv table {
+              width: 500px;
+              height: 500px;
+              border: 1px solid #f6e9e9;
+              border-collapse: collapse;
+              table-layout: fixed;
+              margin: auto; }
+              body .page-body div.tablediv td {
+                border: 1px dashed #f6e9e9;
+                border-collapse: collapse;
+                background-color: #454545;
+                text-align: center;
+                height: 56px;
+                padding: 0%;
+                margin-top: 0%;
+                transition: 0.15s; }
+                body .page-body div.tablediv tr:nth-child(3) td,
+                body .page-body div.tablediv tr:nth-child(6) td {
+                  border-bottom: 2px solid #f6e9e9; }
+                  body .page-body div.tablediv td:nth-child(3),
+                  body .page-body div.tablediv td:nth-child(6) {
+                    border-right: 2px solid #f6e9e9; }
+                    body .page-body div.tablediv .cell-selected {
+                      background-color: #5e5959 !important; }
         body .page-body #myTable {
           background-color: #5e5959;
           border-radius: 5px; }
@@ -62,15 +68,22 @@
                       border-bottom: 1px solid #dddddd; }
                       body .page-body #myTable tbody tr.active-row {
                         font-weight: bold; }
-      body > #container {
-        text-align: left;
-        margin: 0 auto;
-        width: 500px; }
-        body div.btn-group {
-          display: table; }
-          body div.btn-group a.button {
+      body div.btn-group {
+        display: table; }
+        body div.btn-group a.button {
+          text-align: center;
+          font-weight: 700;
+          display: block;
+          text-decoration: none;
+          border-radius: 5px;
+          border: 1px solid gray;
+          background: #363333;
+          color: #f6e9e9;
+          padding: 11px;
+          padding-left: 20px;
+          padding-right: 20px; }
+          body div.btn-group a.buttonalt {
             text-align: center;
-            font-weight: 700;
             display: block;
             text-decoration: none;
             border-radius: 5px;
@@ -80,32 +93,21 @@
             padding: 11px;
             padding-left: 20px;
             padding-right: 20px; }
-            body div.btn-group a.buttonalt {
+            body div.btn-group a.greybutton {
               text-align: center;
               display: block;
               text-decoration: none;
               border-radius: 5px;
               border: 1px solid gray;
-              background: #363333;
-              color: #f6e9e9;
+              background: #413e3e;
               padding: 11px;
               padding-left: 20px;
-              padding-right: 20px; }
-              body div.btn-group a.greybutton {
-                text-align: center;
-                display: block;
-                text-decoration: none;
-                border-radius: 5px;
-                border: 1px solid gray;
-                background: #413e3e;
-                padding: 11px;
-                padding-left: 20px;
-                padding-right: 20px;
-                color: gray;
-                cursor: not-allowed; }
-                body div.btn-group a.button:hover, body div.btn-group a.buttonalt:hover {
-                  background: linear-gradient(rgba(98, 98, 98, 0.25), rgba(145, 136, 136, 0.25));
-                  transition: 0.05s; }
+              padding-right: 20px;
+              color: gray;
+              cursor: not-allowed; }
+              body div.btn-group a.button:hover, body div.btn-group a.buttonalt:hover {
+                background: linear-gradient(rgba(98, 98, 98, 0.25), rgba(145, 136, 136, 0.25));
+                transition: 0.05s; }
       body .continue {
         color: #f6e9e9; }
         body header {
