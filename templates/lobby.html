@@ -6,9 +6,9 @@
 
 <script type="text/javascript" charset="utf-8">
 
-    $(window).bind('beforeunload', function(){  //Will not always work, e.g. if page not interacted with
-        socket.emit("leave", { "room": "{{gamecode}}" });
-    });
+    //$(window).bind('beforeunload', function(){  //Will not always work, e.g. if page not interacted with
+    //    socket.emit("leave", { "room": "{{gamecode}}" });
+    //});
     
     var socket = io();
     socket.on("connect", function () {
@@ -31,6 +31,8 @@
     });
 
     socket.on("userupdate", function (jason) { 
+        console.log('user update')
+
         var j = 0;
 
         var table = document.getElementById("myTable");
