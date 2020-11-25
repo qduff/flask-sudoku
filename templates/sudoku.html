@@ -110,10 +110,12 @@
 
     var socket = io();
 
-    socket.on("connect", function () {
-        socket.emit("requestsudoku", { "room": "{{gamecode}}" });
+    socket.on("connect", function() {
+        socket.emit("requestsudoku", {
+            "room": "{{gamecode}}"
+        });
     })
-    socket.on("sudokustr", function (jason) { 
+    socket.on("sudokustr", function(jason) {
         console.log(jason['content']);
     });
 
@@ -201,17 +203,30 @@
             selY = null;
         }
 
-
-
-
         selectCell();
         console.log(e.code);
         // console.log(e);
     }
 
+    function fillSudoku(s) {
+        for (var i in s.length) {
+            console.log(s[i])
+            if (s[i] == "0") continue;
+            if (i < s.length) {
+                $("#grid tr td").eq(i).text(s[i]);
+                $("#grid tr td").eq(i).addClass("immutable-cell")
+            }
+        }
+    }
+
     $("#grid tr td").on("click", cellClick);
 
     document.addEventListener("keydown", keyDown);
+
+
+    var sudokuString = "004000067300470005150820003006000031802105604410000900700080046600012000930000710"
+
+    fillSudoku(sudokuString);
 </script>
 
 {% endblock %}
