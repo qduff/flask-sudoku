@@ -50,7 +50,8 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); }
             body .page-body #myTable thead tr {
               color: #ffffff;
-              text-align: left; }
+              text-align: left;
+              height: 50px; }
               body .page-body #myTable th, body .page-body #myTable td {
                 padding: 12px 15px; }
                 body .page-body #myTable tbody tr {
@@ -126,11 +127,14 @@
                 float: left;
                 margin: 0 0 0 5%; }
                 body header .menu {
+                  justify-content: flex-end;
                   padding: 0;
+                  padding-right: 15px;
                   width: 60%;
                   height: 100%;
                   float: right; }
                   body header .menu ul {
+                    justify-content: flex-end;
                     width: 100%;
                     text-align: center;
                     height: inherit;
@@ -147,7 +151,7 @@
                       color: #f6e9e9;
                       display: inline-block; }
                       body header .menu ul a:hover {
-                        background-color: #272121;
+                        background-color: #292626;
                         color: #fff; }
                         body header #menuToggle {
                           display: none; }
@@ -187,7 +191,7 @@
           padding-bottom: 6px;
           font-weight: 700;
           border-width: 3px;
-          border-image: linear-gradient(to right, #e16428, #e16428);
+          border-image: linear-gradient(to right, #00ced1, #00ced1);
           border-image-slice: 1; }
           body .form__field:focus ~ .form__label {
             position: absolute;
@@ -195,14 +199,14 @@
             display: block;
             transition: 0.2s;
             font-size: 1rem;
-            color: #e16428;
+            color: #00ced1;
             font-weight: 700; }
       body .form__field:required, body .form__field:invalid {
         box-shadow: none; }
 
 footer {
   padding: 5px;
-  border-top: 1px solid #272121;
+  border-top: 1px solid #f6e9e9;
   position: fixed;
   left: 0;
   bottom: 0;

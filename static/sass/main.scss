@@ -5,9 +5,10 @@
 
 
 
-$col1: #363333;
-$col2: #272121;
-$col3: #e16428;
+$col1: #363333;  // backgrouond dont change
+$col2: #292626; //
+//$col3: #e16428;
+$col3: #00ced1;
 $col4: #f6e9e9;
 
 
@@ -86,11 +87,14 @@ body {
             font-size: 1.1em;
             min-width: 400px;
             
+
+
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             }
         #myTable thead tr {
             color: #ffffff;
                 text-align: left;
+                height: 50px;
                 
             }
             #myTable th,
@@ -212,7 +216,9 @@ body {
             margin: 0 0 0 5%;
         }
         .menu {
+            justify-content: flex-end;
             padding: 0;
+            padding-right: 15px;
             //display: block;
             width: 60%;
             height: 100%;
@@ -220,6 +226,7 @@ body {
         }
 
         .menu ul {
+            justify-content: flex-end;
             //float: right;
             width: 100%;
 
