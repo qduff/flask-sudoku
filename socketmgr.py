@@ -3,7 +3,7 @@ from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from flask_login import current_user
 from gamesdb import games
 from flask.helpers import url_for
-
+from sudokutools.generate import generate
 
 app = create_app()
 
@@ -16,7 +16,9 @@ socketio = SocketIO(app)
 @socketio.on('getusers')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json)+' from '+current_user.dict['username'])
+    print('sending user')
     socketio.emit('my response', json)
+    
 @socketio.on('join')
 def on_join(data):    
     username = current_user.dict['username']
@@ -57,7 +59,7 @@ def on_leave(data):
         send(username + ' has left the room.', room=room)
     
 @socketio.on('requestgamestart')
-def on_leave(data):
+def onrequestgamestart(data):
     username = current_user.dict['username']
     room = data['room']
     print('starrt event triggered by '+username)
@@ -69,12 +71,14 @@ def on_leave(data):
                 url = str(url_for('game.playpage', id=room))
                 json = {'url':url}
                 json['players'] = genuserdict(room)
-                emit('startgame',json, room=room, json=True)
                 games[int(room)]['started'] = True
-            else:
-                return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
-        else:
-            emit('cannotstart',{'msg':f"At least {games[int(room)]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
+                
+                #sudoku, sol = generate()
+                #GEN SUDOKU
+                
+                emit('startgame',json, room=room, json=True)
+            else: return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
+        else: emit('cannotstart',{'msg':f"At least {games[int(room)]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
    
       
       
@@ -84,7 +88,11 @@ def on_leave(data):
 ############################################### 
       
 
-
+@socketio.on('requestsudoku')
+def onrequestgamestart(data):
+    #send the sudoku, and start the timer. 
+    emit('sudokustr',{'content':f'sudstring'}, json=True)
+    
 
 
 
