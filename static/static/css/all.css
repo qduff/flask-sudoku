@@ -29,7 +29,8 @@
             text-align: center;
             height: 56px;
             padding: 0%;
-            margin-top: 0%; }
+            margin-top: 0%;
+            transition: 0.15s; }
             body .page-body div.tablediv tr:nth-child(3) td,
             body .page-body div.tablediv tr:nth-child(6) td {
               border-bottom: 2px solid #f6e9e9; }

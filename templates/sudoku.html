@@ -134,45 +134,73 @@
         }
     }
 
-    function keyDown(e) {
-        if (!e.altKey) {
-            // Normal movement
-            if ((e.code == "KeyA" || e.code == "ArrowLeft") && selX > 0) {
-                selX -= 1;
-            } else if ((e.code == "KeyD" || e.code == "ArrowRight") && selX < 8) {
-                selX += 1;
-            } else if ((e.code == "KeyW" || e.code == "ArrowUp") && selY > 0) {
-                selY -= 1;
-            } else if ((e.code == "KeyS" || e.code == "ArrowDown") && selY < 8) {
-                selY += 1;
-            } else if (e.code == "Escape") {
-                selX = null;
-                selY = null;
-            }
-        } else {
-            // Block movement
-            if ((e.code == "KeyA" || e.code == "ArrowLeft")) {
-                if (selX >= 3) {
-                    selX -= 3;
-                }
-                e.preventDefault();
-            } else if ((e.code == "KeyD" || e.code == "ArrowRight")) {
-                if (selX <= 5) {
-                    selX += 3;
-                }
-                e.preventDefault();
-            } else if ((e.code == "KeyW" || e.code == "ArrowUp")) {
-                if (selY >= 3) {
-                    selY -= 3;
-                }
-                e.preventDefault();
-            } else if ((e.code == "KeyS" || e.code == "ArrowDown")) {
-                if (selY <= 5) {
-                    selY += 3;
-                }
-                e.preventDefault();
+    function writeCell(digit) {
+        if (selX !== null && selY !== null) {
+            if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
+                $("#grid tr td").eq(selY * 9 + selX).text(digit.slice(0));
             }
         }
+    }
+
+    function clearCell() {
+        if (selX !== null && selY !== null) {
+            if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
+                $("#grid tr td").eq(selY * 9 + selX).text("");
+            }
+        }
+    }
+
+    function keyDown(e) {
+        if (selX !== null && selY !== null) {
+            if (!e.altKey) {
+                // Normal movement
+                if ((e.code == "KeyA" || e.code == "ArrowLeft") && selX > 0) {
+                    selX -= 1;
+                } else if ((e.code == "KeyD" || e.code == "ArrowRight") && selX < 8) {
+                    selX += 1;
+                } else if ((e.code == "KeyW" || e.code == "ArrowUp") && selY > 0) {
+                    selY -= 1;
+                } else if ((e.code == "KeyS" || e.code == "ArrowDown") && selY < 8) {
+                    selY += 1;
+                }
+            } else {
+                // Block movement
+                if ((e.code == "KeyA" || e.code == "ArrowLeft")) {
+                    if (selX >= 3) {
+                        selX -= 3;
+                    }
+                    e.preventDefault();
+                } else if ((e.code == "KeyD" || e.code == "ArrowRight")) {
+                    if (selX <= 5) {
+                        selX += 3;
+                    }
+                    e.preventDefault();
+                } else if ((e.code == "KeyW" || e.code == "ArrowUp")) {
+                    if (selY >= 3) {
+                        selY -= 3;
+                    }
+                    e.preventDefault();
+                } else if ((e.code == "KeyS" || e.code == "ArrowDown")) {
+                    if (selY <= 5) {
+                        selY += 3;
+                    }
+                    e.preventDefault();
+                }
+            }
+
+            if (e.code.startsWith("Digit") && e.code != "Digit0") {
+                writeCell(e.code.slice(-1))
+            } else if (e.code == "Digit0" || e.code == "Backspace" || e.code == "Delete" || e.code == "Space") {
+                clearCell();
+            }
+
+        }
+
+        if (e.code == "Escape") {
+            selX = null;
+            selY = null;
+        }
+
 
 
 
