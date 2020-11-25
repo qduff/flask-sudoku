@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.utils import login_required, current_user
+from werkzeug.urls import iri_to_uri
 
 game = Blueprint('game', __name__)
 
@@ -56,6 +57,14 @@ def joingame_post():
         flash('Invalid input!')
         return redirect(url_for('game.joingame'))
 
+@game.route('/authgame/<id>', methods=['POST'])
+def auth_post(id):
+    pw = request.form.get('gamepass')
+    if pw == games[int(id)]['password']:
+        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+    
+    return redirect(url_for('game.lobby',id=id)) #not efficitent but works
+
 
 @game.route('/game/<id>')
 @login_required
@@ -70,10 +79,16 @@ def lobby(id:int):
                 return redirect(url_for('game.joingame'))
             
             #If not...
-            else:
+            else:                
+                
                 #If user has never joined this game, he will be added to dict.
                 if current_user.dict['username'] not in games[int(id)]['players']:
-                    games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+                    
+                    if games[int(id)]['password'] != None:
+                        #Test if user has authed into the games
+                        return render_template('enterpass.html', code=id)
+                    else:
+                        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
                 #If he is the admin, then he will get admin stuff!
                 if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
                     admin = True

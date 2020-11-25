@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+{% block title %}enterpass{% endblock %}
+
+{% block content %}
+
+<h1>{{code}}</h1>
+
+<form method="POST" action="/authgame/{{code}}">
+    
+
+
+    <div class="form__group field">
+        <input class="form__field" type="text" name="gamepass" placeholder="Room Password" autofocus="" required>
+        <label for="name" class="form__label">Password</label>
+    </div>
+
+    <div class="btn-group">
+        <a href="#" onclick="$(this).closest('form').submit()" type="submit" class="button">Continue</a>
+        <input type="submit" style="display:none"/>
+
+    </div>
+
+</form>
+
+{% endblock %}
