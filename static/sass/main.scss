@@ -5,11 +5,10 @@
 
 
 
-$col1: #363333;
-$col2: #272121;
+$col1: #363333;  // backgrouond dont change
+$col2: #292626; //
 //$col3: #e16428;
 $col3: #00ced1;
-
 $col4: #f6e9e9;
 
 
@@ -219,6 +218,7 @@ body {
         .menu {
             justify-content: flex-end;
             padding: 0;
+            padding-right: 15px;
             //display: block;
             width: 60%;
             height: 100%;

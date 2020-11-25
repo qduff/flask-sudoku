@@ -129,6 +129,7 @@
                 body header .menu {
                   justify-content: flex-end;
                   padding: 0;
+                  padding-right: 15px;
                   width: 60%;
                   height: 100%;
                   float: right; }
@@ -150,7 +151,7 @@
                       color: #f6e9e9;
                       display: inline-block; }
                       body header .menu ul a:hover {
-                        background-color: #272121;
+                        background-color: #292626;
                         color: #fff; }
                         body header #menuToggle {
                           display: none; }
@@ -205,7 +206,7 @@
 
 footer {
   padding: 5px;
-  border-top: 1px solid #272121;
+  border-top: 1px solid #f6e9e9;
   position: fixed;
   left: 0;
   bottom: 0;
