@@ -9,41 +9,32 @@ app = create_app()
 
 socketio = SocketIO(app)
 
-
+###############################################
+#################    LOBBY   ##################
+###############################################
 
 @socketio.on('getusers')
 def handle_my_custom_event(json, methods=['GET', 'POST']):
     print('received my event: ' + str(json)+' from '+current_user.dict['username'])
     socketio.emit('my response', json)
-
 @socketio.on('join')
 def on_join(data):    
     username = current_user.dict['username']
     room = data['room']
-    join_room(room)
     #whyh is the pla
     if int(room) in games:
-        
         userdict = genuserdict(room)
         print(games[int(room)]['players'])
         emit('userupdate',userdict, room=room, json=True)
     else:
         return False
-
-def ack():
-    print('message was received!')
-
-
+    
 @socketio.on('leave')
 def on_leave(data):
     username = current_user.dict['username']
     room = data['room']
     print('leave event triggered by '+username)
-    leave_room(room)
-    
-        #pop from arr - check admin stat, or if no players will be left
-
-    
+    leave_room(room)    
     if int(room) in games:
         if username in games[int(room)]['players']:
             if games[int(room)]['players'][current_user.dict['username']]['admin'] == True:
@@ -53,22 +44,16 @@ def on_leave(data):
                         print(games[int(room)]['players'][username]['admin'])
                         if games[int(room)]['players'][username]['admin'] == False:
                             games[int(room)]['players'][username]['admin'] = True
-            print(games)
             print(f"popping{current_user.dict['username']}")
-            games[int(room)]['players'].pop(current_user.dict['username'])
-            print(games)
-        
+            games[int(room)]['players'].pop(current_user.dict['username'])        
         if len(games[int(room)]['players']) == 0:
             games.pop(int(room))
-        
-
         if int(room) in games and len(games[int(room)]['players']) != 0:
             userdict = genuserdict(room)
             print(userdict)
             emit('userupdate',userdict, room=room, json=True)
         else:
             return False
-
         send(username + ' has left the room.', room=room)
     
 @socketio.on('requestgamestart')
@@ -91,7 +76,18 @@ def on_leave(data):
         else:
             emit('cannotstart',{'msg':f"At least {games[int(room)]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
    
-        
+      
+      
+      
+###############################################
+#################    GAME   ###################
+############################################### 
+      
+
+
+
+
+
 
 def genuserdict(room):
     userdict = {}
