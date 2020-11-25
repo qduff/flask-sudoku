@@ -16,8 +16,8 @@
     })
     function requestgamestart() {
         socket.emit("requestgamestart", { "room": "{{gamecode}}" });
+        console.log('request gma start')
     }
-
     function myFunction() {
         socket.emit("leave", { "room": "{{gamecode}}" });
         window.location.replace("{{ url_for('main.index') }}");
