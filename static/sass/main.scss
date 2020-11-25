@@ -1,52 +1,47 @@
 @font-face {
     font-family: karla;
     src: url('/static/fonts/Karla-VariableFont_wght.ttf');
-    }
+}
 
-
-
-$col1: #363333;  // backgrouond dont change
+$col1: #363333; // backgrouond dont change
 $col2: #292626; //
 //$col3: #e16428;
 $col3: #00ced1;
 $col4: #f6e9e9;
-
-
 $tablegrey1: #524f4f;
 $tablegrey2: #5e5959;
-
 $primary: $col3;
 $secondary: $col3;
 $white: $col4;
 $gray: $col4;
-
-h1, h2, h3, h4, h5, h6, div {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
     color: $col4;
 }
-
 
 body {
     font-family: karla;
     text-align: left;
     background-color: $col1;
-    
     width: 100%;
     height: 100%;
     margin: 0;
-
     .page-body {
-
-        div.tablediv{
+        div.tablediv {
             table {
-                width:500px;
-                height:500px;
+                width: 500px;
+                height: 500px;
                 border: 1px solid $col4;
                 border-collapse: collapse;
                 table-layout: fixed;
                 margin: auto;
                 margin-top: 5%;
             }
-            
             td {
                 border: 1px dashed $col4;
                 border-collapse: collapse;
@@ -56,27 +51,20 @@ body {
                 padding: 0%;
                 margin-top: 0%;
             }
-            
-            td span {
-                text-align: center;
-                padding: 0%;
-            }
-            
             tr:nth-child(3) td,
             tr:nth-child(6) td {
                 border-bottom: 2px solid $col4;
             }
-            
             td:nth-child(3),
             td:nth-child(6) {
                 border-right: 2px solid $col4;
             }
+            .cell-selected {
+                background-color: $tablegrey2 !important;
+            }
         }
-
-
         padding: 2rem;
         //This is the page body, where all the subpages will be contained
-        
         #myTable {
             background-color: $tablegrey2;
             border-radius: 5px;
@@ -86,57 +74,42 @@ body {
             margin: 25px 0;
             font-size: 1.1em;
             min-width: 400px;
-            
-
-
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-            }
+        }
         #myTable thead tr {
             color: #ffffff;
-                text-align: left;
-                height: 50px;
-                
-            }
-            #myTable th,
-             #myTable td {
-                padding: 12px 15px;
-                
-            }
-            #myTable tbody tr {
-                border-bottom: 1px solid #dddddd;
-            }
-            
-            #myTable tbody tr:nth-of-type(even) {
-                background-color: $tablegrey1;
-            }
-            
-            #myTable tbody tr:last-of-type {
-                border-bottom: 1px solid #dddddd;
-            }
-            #myTable tbody tr.active-row {
-                font-weight: bold;
-                //color: #009879;
-            }    
-            
+            text-align: left;
+            height: 50px;
+        }
+        #myTable th,
+        #myTable td {
+            padding: 12px 15px;
+        }
+        #myTable tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        #myTable tbody tr:nth-of-type(even) {
+            background-color: $tablegrey1;
+        }
+        #myTable tbody tr:last-of-type {
+            border-bottom: 1px solid #dddddd;
+        }
+        #myTable tbody tr.active-row {
+            font-weight: bold;
+            //color: #009879;
+        }
     }
-
-
     >#container {
         text-align: left;
         margin: 0 auto;
         width: 500px;
     }
-
     div.btn-group {
         //width: 15rem;
         display: table;
         //padding: 5px;
-
-
         a.button {
-            
             text-align: center;
-
             font-weight: 700;
             display: block;
             text-decoration: none;
@@ -147,10 +120,8 @@ body {
             padding: 11px;
             padding-left: 20px;
             padding-right: 20px;
-
             //height: 25px;
         }
-
         a.buttonalt {
             text-align: center;
             display: block;
@@ -163,7 +134,6 @@ body {
             padding-left: 20px;
             padding-right: 20px;
         }
-
         a.greybutton {
             text-align: center;
             display: block;
@@ -176,23 +146,16 @@ body {
             padding-right: 20px;
             color: gray;
             cursor: not-allowed;
-            
         }
-        a.button:hover, a.buttonalt:hover {
-            background: linear-gradient(
-              rgba(98, 98, 98, 0.25), 
-              rgba(145, 136, 136, 0.25));
-            transition:0.05s;//no works?
+        a.button:hover,
+        a.buttonalt:hover {
+            background: linear-gradient( rgba(98, 98, 98, 0.25), rgba(145, 136, 136, 0.25));
+            transition: 0.05s; //no works?
         }
-
-
     }
-
-    .continue{
+    .continue {
         color: $col4;
     }
-    
-
     header {
         font-family: karla;
         a {
@@ -205,9 +168,8 @@ body {
         height: 50px;
         line-height: 50px;
         text-align: center;
-        background-color:  $col1;
+        background-color: $col1;
         border-bottom: 1px solid lightgrey;
-
         .brand {
             color: $col4;
             width: auto;
@@ -224,14 +186,11 @@ body {
             height: 100%;
             float: right;
         }
-
         .menu ul {
             justify-content: flex-end;
             //float: right;
             width: 100%;
-
             text-align: center;
-
             height: inherit;
             margin: 0;
             padding: 0;
@@ -240,7 +199,6 @@ body {
             display: -ms-flexbox;
             display: -webkit-flex;
             //display: block;
-            
         }
         .menu ul a {
             text-align: center;
@@ -260,78 +218,69 @@ body {
             display: none;
         }
     }
-
-
-    
     .form__group {
-      position: relative;
-      padding: 15px 0 0;
-      margin-top: 10px;
-      width: 50%;
-      padding-bottom: 15px;
+        position: relative;
+        padding: 15px 0 0;
+        margin-top: 10px;
+        width: 50%;
+        padding-bottom: 15px;
     }
-    
     .form__field {
-      font-family: inherit;
-      width: 100%;
-      border: 0;
-      border-bottom: 2px solid $gray;
-      outline: 0;
-      font-size: 1.3rem;
-      color: $white;
-      padding: 7px 0;
-      background: transparent;
-      transition: border-color 0.2s;
-    
-      &::placeholder {
-        color: transparent;
-      }
-    
-      &:placeholder-shown ~ .form__label {
+        font-family: inherit;
+        width: 100%;
+        border: 0;
+        border-bottom: 2px solid $gray;
+        outline: 0;
         font-size: 1.3rem;
-        cursor: text;
-        top: 20px;
-      }
+        color: $white;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+        &::placeholder {
+            color: transparent;
+        }
+        &:placeholder-shown~.form__label {
+            font-size: 1.3rem;
+            cursor: text;
+            top: 20px;
+        }
     }
-    
     .form__label {
-      position: absolute;
-      top: 0;
-      display: block;
-      transition: 0.2s;
-      font-size: 1rem;
-      color: $gray;
-    }
-    
-    .form__field:focus {
-      ~ .form__label {
         position: absolute;
         top: 0;
         display: block;
         transition: 0.2s;
         font-size: 1rem;
-        color: $primary;
-        font-weight:700;    
-      }
-      padding-bottom: 6px;  
-      font-weight: 700;
-      border-width: 3px;
-      border-image: linear-gradient(to right, $primary,$secondary);
-      border-image-slice: 1;
+        color: $gray;
+    }
+    .form__field:focus {
+        ~.form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: $primary;
+            font-weight: 700;
+        }
+        padding-bottom: 6px;
+        font-weight: 700;
+        border-width: 3px;
+        border-image: linear-gradient(to right,
+        $primary,
+        $secondary);
+        border-image-slice: 1;
     }
     /* reset input */
-    .form__field{
-      &:required,&:invalid { box-shadow:none; }
+    .form__field {
+        &:required,
+        &:invalid {
+            box-shadow: none;
+        }
     }
-
-
-
 }
 
-
-
 footer {
-    
     padding: 5px;
     border-top: 1px solid $col2;
     position: fixed;
@@ -340,15 +289,14 @@ footer {
     width: 100%;
     background-color: $col1;
     color: black;
-    
-    .leftalign{
-        float:left;
+    .leftalign {
+        float: left;
         padding-left: 10px;
         text-align: left;
     }
-    .rightalign{
-        float:right;
+    .rightalign {
+        float: right;
         padding-right: 10px;
         text-align: right;
     }
-  }
+}
