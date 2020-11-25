@@ -89,7 +89,7 @@ def onrequestgamestart(data):
 @socketio.on('requestsudoku')
 def onrequestgamestart(data):
     #send the sudoku, and start the timer. 
-    
+    pass
 
 
 
