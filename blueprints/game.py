@@ -21,6 +21,7 @@ def hostgame():
 @game.route('/hostgame', methods=['POST'])
 def hostgame_post():
     if not current_user.is_guest():
+        password = request.form.get('password')
         roomname = request.form.get('roomname')
         codelen = 4
         roomcode = 0
@@ -30,7 +31,10 @@ def hostgame_post():
         print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
         #Create a room in the games dict
         
-        games.update({int(roomcode):{'name':roomname,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
+        if not password: password = None
+        print(password)
+        
+        games.update({int(roomcode):{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
         
         #redirect to lobby
         return redirect(url_for('game.lobby',id=roomcode))
