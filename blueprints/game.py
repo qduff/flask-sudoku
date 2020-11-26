@@ -35,7 +35,7 @@ def hostgame_post():
         if not password: password = None
         print(password)
         
-        games.update({int(roomcode):{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'admin':True}}}})
+        games.update({int(roomcode):{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'timestarted':None,'admin':True}}}})
         
         #redirect to lobby
         return redirect(url_for('game.lobby',id=roomcode))
