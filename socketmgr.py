@@ -110,7 +110,9 @@ def onrequestgamestart(data):
         emit('sudokustr',{'content':sudokustring}, json=True)
     else:
         print('already comp')
-        emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
+        sendtime = games[int(room)]['players'][username]['completed']
+        print(sendtime.strftime(r'%M:%S:%f'))
+        emit('completed',{'time':str(sendtime)}, json=True)
 
 
 @socketio.on('submitsudoku')
