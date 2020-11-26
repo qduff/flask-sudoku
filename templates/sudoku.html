@@ -293,12 +293,9 @@
 
     socket.on("completed", function(jason) {
         console.log(jason['time']);
-
-
-        $('#tablediv');
-        $('#loadingtext').show().text('Done!');
+        $('#tablediv').show();
+        $('#loadingtext').show().text('Completed in '+jason['time']);
         completed = true
-
         console.log('COMPLETED!!')
     });
 
@@ -311,7 +308,7 @@
     });
 
     setTimeout(function() {
-        if (!filled) {
+        if (!filled && completed == false) {
             var sudokuString = "004000067300470005150820003006000031802105604410000900700080046600012000930000710"
             $('#tablediv').show();
             $('#loadingtext').hide();

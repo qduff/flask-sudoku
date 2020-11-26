@@ -102,12 +102,16 @@ def onrequestgamestart(data):
     if games[int(room)]['players'][username]['timestarted'] == None:
         games[int(room)]['players'][username]['timestarted'] = datetime.datetime.now()
 
-    print(games[int(room)]['players'])
-    print(f"TIMESTARTEDS {current_user.dict['username']} {data['room']}")
-
 
     sudokustring =  games[int(room)]['sudoku']
-    emit('sudokustr',{'content':sudokustring}, json=True)
+    
+    #print(games[int(room)]['players'][username]['completed'])
+    if games[int(room)]['players'][username]['completed'] == False:
+        emit('sudokustr',{'content':sudokustring}, json=True)
+    else:
+        print('already comp')
+        emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
+
 
 @socketio.on('submitsudoku')
 def sudukochanges(data):
@@ -121,14 +125,14 @@ def sudukochanges(data):
     if int(games[int(room)]['sudokusol']) == int(data['string']):
         time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
         games[int(room)]['players'][username]['completed'] = time
-        
-        emit('completed',{'time':str(time)}, json=True)
-        
+
+        emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
+
         #ALSO send to room
-        
-        print(time)
-        
         #broadcast completion!
+
+        print(time)
+
 
     print(data)
     pass
