@@ -151,7 +151,9 @@
     function smallNumber(digit) {
         if (selX !== null && selY !== null) {
             if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
-                $("#grid tr td span.big-number").eq(selY * 9 + selX).text(digit.slice(0));
+                var t = $("#grid tr td span.small-number").eq(selY * 9 + selX).text();
+                console.log(t);
+                // $("#grid tr td span.small-number").eq(selY * 9 + selX).text(digit.slice(0));
             }
         }
     }
@@ -207,9 +209,7 @@
                 }
             }
 
-            if (e.code.startsWith("Digit") && e.code != "Digit0") {
-                writeCell(e.code.slice(-1));
-            } else if (e.code.startsWith("Numpad") && e.code != "Numpad0") {
+            if ((e.code.startsWith("Digit") && e.code != "Digit0") || (e.code.startsWith("Numpad") && e.code != "Numpad0")) {
                 writeCell(e.code.slice(-1));
             } else if (e.code == "Digit0" || e.code == "Numpad0" || e.code == "Backspace" || e.code == "Delete" || e.code == "Space") {
                 clearCell();
