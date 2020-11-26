@@ -74,8 +74,10 @@ body {
                 background-color: $tablegrey2 !important;
             }
             span.small-number {
-                color: crimson;
-                font-size: 15px;
+                position: fixed;
+                word-wrap: break-word;
+                color: $col3;
+                font-size: 12px;
             }
         }
         padding: 2rem;
