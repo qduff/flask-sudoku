@@ -47,8 +47,10 @@
                     body .page-body div.tablediv .cell-selected {
                       background-color: #5e5959 !important; }
                       body .page-body div.tablediv span.small-number {
-                        color: crimson;
-                        font-size: 15px; }
+                        position: fixed;
+                        word-wrap: break-word;
+                        color: #00ced1;
+                        font-size: 12px; }
         body .page-body #myTable {
           background-color: #5e5959;
           border-radius: 5px; }
