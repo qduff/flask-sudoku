@@ -118,7 +118,10 @@ def playpage(id):
         if int(id) in games:
             # check if game has started
             if games[int(id)]['started'] == True:
-                return render_template('sudoku.html',gamecode = id)
+                if current_user.dict['username'] in games[int(id)]['players']:
+                    return render_template('sudoku.html',gamecode = id)
+                else:
+                    return redirect(url_for('game.lobby',id=id))
             else:
                 # If not started, send to lobby with same id
                 flash("That game hasn't started!")
