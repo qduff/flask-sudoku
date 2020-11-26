@@ -9,8 +9,9 @@ Quentin:
 
     instead of game -> started -> kick | do | game -> started -> play -> checkifingame -> kick
     
-    start game funcitonality - at least 2 players require
     add game options for admin - such as difficulty
+
+    if user reloads sudoku page and has already done it, then don't let redo
 
     fix hostgame checkbox...
 
