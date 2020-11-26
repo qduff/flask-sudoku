@@ -88,7 +88,7 @@ def lobby(id:int):
                         #Test if user has authed into the games
                         return render_template('enterpass.html', code=id)
                     else:
-                        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+                        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False,'timestarted':None}})
                 #If he is the admin, then he will get admin stuff!
                 if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
                     admin = True

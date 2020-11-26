@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, send, join_room, leave_room, emit
 from flask_login import current_user
 from gamesdb import games
 from flask.helpers import url_for
+import datetime
 from sudokutools.generate import generate
 
 app = create_app()
@@ -95,19 +96,39 @@ def onrequestgamestart(data):
 @socketio.on('requestsudoku')
 def onrequestgamestart(data):
     username = current_user.dict['username']
-    print(data)
+
     room = data['room']
-    print(f"|{room=}|")
-    
-    #send the sudoku, and start the timer for le user. 
+
+    if games[int(room)]['players'][username]['timestarted'] == None:
+        games[int(room)]['players'][username]['timestarted'] = datetime.datetime.now()
+
+    print(f"TIMESTARTEDS {current_user.dict['username']} {data['room']}")
+    print(games[int(room)]['players'][username]['timestarted'])
+
+
     sudokustring =  games[int(room)]['sudoku']
     emit('sudokustr',{'content':sudokustring}, json=True)
-    
+
 @socketio.on('submitsudoku')
 def sudukochanges(data):
+    room = data['room']
     #check sudoku
-    pass
+    username = current_user.dict['username']
+
     
+    print(games[int(room)]['players'][username]['timestarted'])
+    
+    
+    if int(games[int(room)]['sudokusol']) == int(data['string']):
+        time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
+        games[int(room)]['players'][username]['completed'] = time
+        print(time)
+        
+        #broadcast completion!
+
+    print(data)
+    pass
+
 
 
 def genuserdict(room):
