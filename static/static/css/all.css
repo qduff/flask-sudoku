@@ -46,6 +46,9 @@
                     border-right: 2px solid #f6e9e9; }
                     body .page-body div.tablediv .cell-selected {
                       background-color: #5e5959 !important; }
+                      body .page-body div.tablediv span.small-number {
+                        color: crimson;
+                        font-size: 15px; }
         body .page-body #myTable {
           background-color: #5e5959;
           border-radius: 5px; }

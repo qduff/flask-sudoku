@@ -73,6 +73,10 @@ body {
             .cell-selected {
                 background-color: $tablegrey2 !important;
             }
+            span.small-number {
+                color: crimson;
+                font-size: 15px;
+            }
         }
         padding: 2rem;
         //This is the page body, where all the subpages will be contained
