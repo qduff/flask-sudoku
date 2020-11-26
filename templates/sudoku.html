@@ -250,8 +250,12 @@
 
     socket.on("completed", function(jason) {
         console.log(jason['time']);
-        //$('#tablediv').show();
-        //$('#loadingtext').hide();
+
+
+        $('#tablediv');
+        $('#loadingtext').show().text('Done!');
+        completed = true
+
         console.log('COMPLETED!!')
     });
 
