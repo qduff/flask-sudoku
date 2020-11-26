@@ -102,8 +102,8 @@ def onrequestgamestart(data):
     if games[int(room)]['players'][username]['timestarted'] == None:
         games[int(room)]['players'][username]['timestarted'] = datetime.datetime.now()
 
+    print(games[int(room)]['players'])
     print(f"TIMESTARTEDS {current_user.dict['username']} {data['room']}")
-    print(games[int(room)]['players'][username]['timestarted'])
 
 
     sudokustring =  games[int(room)]['sudoku']
@@ -115,13 +115,17 @@ def sudukochanges(data):
     #check sudoku
     username = current_user.dict['username']
 
-    
-    print(games[int(room)]['players'][username]['timestarted'])
+    print(games[int(room)]['players'])
     
     
     if int(games[int(room)]['sudokusol']) == int(data['string']):
         time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
         games[int(room)]['players'][username]['completed'] = time
+        
+        emit('completed',{'time':str(time)}, json=True)
+        
+        #ALSO send to room
+        
         print(time)
         
         #broadcast completion!
