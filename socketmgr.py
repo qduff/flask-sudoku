@@ -14,14 +14,13 @@ socketio = SocketIO(app)
 #################    LOBBY   ##################
 ###############################################
 
-@socketio.on('getusers')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json)+' from '+current_user.dict['username'])
-    print('sending user')
-    socketio.emit('my response', json)
+#@socketio.on('getusers')
+#def handle_my_custom_event(json):
+#    socketio.emit('my response', json)
     
+
 @socketio.on('join')
-def on_join(data):    
+def on_join(data):
     username = current_user.dict['username']
     room = data['room']
     join_room(room)
@@ -30,10 +29,11 @@ def on_join(data):
         userdict = genuserdict(room)
         print(games[int(room)]['players'])
         print('userupdate')
-        emit('userupdate',userdict, room=room, json=True)
+        emit('userupdate', userdict, room=room, json=True)
     else:
         return False
-    
+
+
 @socketio.on('leave')
 def on_leave(data):
     username = current_user.dict['username']
@@ -101,41 +101,39 @@ def onrequestgamestart(data):
     if room == "":
         return
 
-    if games[int(room)]['players'][username]['timestarted'] == None:
-        games[int(room)]['players'][username]['timestarted'] = datetime.datetime.now()
+    if int(room) in games:
+        if games[int(room)]['players'][username]['timestarted'] == None:
+            games[int(
+                room)]['players'][username]['timestarted'] = datetime.datetime.now()
 
-    sudokustring =  games[int(room)]['sudoku']
+        sudokustring = games[int(room)]['sudoku']
 
-    if games[int(room)]['players'][username]['completed'] == False:
-        emit('sudokustr',{'content':sudokustring}, json=True)
+        if games[int(room)]['players'][username]['completed'] == False:
+            emit('sudokustr', {'content': sudokustring}, json=True)
+        else:
+            # Covers refresh case
+            time = games[int(room)]['players'][username]['completed']
+            emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
     else:
-        time = games[int(room)]['players'][username]['completed']  # Covers refresh case    
-        emit('completed',{'time':f"{time.total_seconds()}"}, json=True)
+        emit('redirect', {'url': f"/"}, json=True)
 
 
 @socketio.on('submitsudoku')
 def sudukochanges(data):
     room = data['room']
-
-    if room == "":
-        return
-        
-    #check sudoku
     username = current_user.dict['username']
 
+    if room == "": 
+        return
     
     #check that user has not already completed the sudoku (done), and started
-    if games[int(room)]['players'][username]['completed'] == False: #does this even work?
+    if games[int(room)]['players'][username]['completed'] == False:  # does this even work? apparently. 
         if int(games[int(room)]['sudokusol']) == int(data['string']):
             time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
-            
             games[int(room)]['players'][username]['completed'] = time
-
-            emit('completed',{'time':f"{time.total_seconds()}"}, json=True)
-            
+            emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
             #ALSO send to room!
             #broadcast completion!
-            
             
     else: # If already done (shouldnt happen)
         emit('completed',{'time':f"{games[int(room)]['players'][username]['completed'].total_seconds()}"}, json=True)
@@ -143,10 +141,10 @@ def sudukochanges(data):
 
 def genuserdict(room):
     userdict = {}
-    for i, item in enumerate(games[int(room)]['players']):
+    for item in games[int(room)]['players']:
         if games[int(room)]['players'][item]['admin'] == True:
             role = 'admin'
         else:
             role = 'default'
-        userdict.update({str(item):str(role)})
+        userdict.update({str(item): str(role)})
     return userdict
