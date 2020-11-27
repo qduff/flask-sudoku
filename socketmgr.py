@@ -130,12 +130,15 @@ def sudukochanges(data):
         if int(games[int(room)]['sudokusol']) == int(data['string']):
             time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
             games[int(room)]['players'][username]['completed'] = time
-            emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
+            #emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
+            
             #ALSO send to room!
             
             completiondict = gencompletiondict(room=room)
             print(completiondict)
+            
             emit('tableupdate', completiondict, room=room, json=True)
+
             print('sent')
             #broadcast completion!
             
