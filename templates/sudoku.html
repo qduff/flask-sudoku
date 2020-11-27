@@ -1,114 +1,123 @@
-{% extends "base.html" %} {% block title %}Login{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}Play{% endblock %} {% block content %}
 
-<h1 id="loadingtext">Loading board...</h1>
-<div class='tablediv' id="tablediv" style="display: none;">
-    <table id="grid">
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-        <tr>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-            <td><span class="small-number"></span><span class="big-number"></span></td>
-        </tr>
-    </table>
+<div id="leftside" style="width: 80%; height: 100px; float: left;">
+    <h1 id="loadingtext">Loading...</h1>
+    <h1 id="completiontext" style="display: none;"></h1>
+
+    <div class='tablediv' id="tablediv" style="display: none;">
+        <table id="grid">
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+            <tr>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+                <td><span class="small-number"></span><span class="big-number"></span></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<div id="rightside" style="margin-left: 80%; height: 100px;">
+    <h4>Completion status here</h4>
+
 </div>
 
 <script>
     var selX = null;
     var selY = null;
 
+    var testmode = false;
     var completed = false;
 
     var filled = false;
@@ -123,7 +132,7 @@
     }
 
     function sendSudoku() {
-        if (completed == false) {
+        if (completed == false && testmode == false) {
             console.log('sending sudoku');
             socket.emit("submitsudoku", {
                 "room": "{{gamecode}}",
@@ -140,10 +149,12 @@
     }
 
     function writeCell(digit) {
-        if (selX !== null && selY !== null) {
-            if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
-                $("#grid tr td span.big-number").eq(selY * 9 + selX).text(digit.slice(0));
-                sendSudoku();
+        if (completed == false) {
+            if (selX !== null && selY !== null) {
+                if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
+                    $("#grid tr td span.big-number").eq(selY * 9 + selX).text(digit.slice(0));
+                    sendSudoku();
+                }
             }
         }
     }
@@ -175,18 +186,17 @@
                     });
                     t = o;
                 }
-                console.log(t);
-                target.text(t);
-                // $("#grid tr td span.small-number").eq(selY * 9 + selX).text(digit.slice(0));
             }
         }
     }
 
     function clearCell() {
-        if (selX !== null && selY !== null) {
-            if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
-                $("#grid tr td span.big-number").eq(selY * 9 + selX).text("");
-                sendSudoku();
+        if (completed == false) {
+            if (selX !== null && selY !== null) {
+                if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
+                    $("#grid tr td span.big-number").eq(selY * 9 + selX).text("");
+                    sendSudoku();
+                }
             }
         }
     }
@@ -295,7 +305,8 @@
     socket.on("completed", function(jason) {
         console.log(jason['time']);
         $('#tablediv').show();
-        $('#loadingtext').show().text('Completed in ' + jason['time']);
+        $('#loadingtext').hide();
+        $('#completiontext').show().text('Completed in ' + jason['time']);
         completed = true
         console.log('COMPLETED!!')
     });
@@ -310,6 +321,7 @@
 
     setTimeout(function() {
         if (!filled && completed == false) {
+            var testmode = true;
             var sudokuString = "004000067300470005150820003006000031802105604410000900700080046600012000930000710"
             $('#tablediv').show();
             $('#loadingtext').hide();
