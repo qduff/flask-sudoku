@@ -397,6 +397,15 @@
         console.log('COMPLETED!!')
     });
 
+    
+    socket.on("updatetable", function(jason) {
+        for (var name in jason) {
+            console.log(jason[name]);
+            console.log(jason['role']);
+            console.log(jason['completed']);
+        }
+    });
+
     socket.on("sudokustr", function(jason) {
         console.log(jason['content']);
         $('#tablediv').show();
