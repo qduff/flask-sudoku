@@ -135,7 +135,8 @@
         socket.emit("submitsudoku", {
             "room": "{{gamecode}}",
             "string": "284593167369471825157826493576948231892135674413267958721389546645712389938654712"
-        });
+        })
+        console.log('sent');
     }
 
     function sendSudoku() {
@@ -389,13 +390,16 @@
 
 
     var socket = io();
+
     socket.on("connect", function() {
         socket.emit("requestsudoku", {
             "room": "{{gamecode}}"
         });
     });
 
-    
+    socket.on("message", function(myjson) {
+        console.log(myjson)
+    });
 
     socket.on("completed", function(jason) {
         console.log(jason['time']);
@@ -415,11 +419,11 @@
 
     socket.on("tableupdate", function(jason) {
         console.log('tableupdate')
-        //for (var name in jason) {
-        //    console.log(jason[name]);
-        //    console.log(jason['role']);
-        //    console.log(jason['completed']);
-        //}
+        for (var name in jason) {
+            console.log(name);
+            console.log(jason[name]['role']);
+            console.log(jason[name]['completed']);
+        }
     });
 
     setTimeout(function() {

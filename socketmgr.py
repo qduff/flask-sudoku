@@ -1,3 +1,4 @@
+from os import name
 from app import create_app
 from flask_socketio import SocketIO, send, join_room, leave_room, emit, rooms
 from flask_login import current_user
@@ -9,6 +10,9 @@ from sudokutools.generate import generate
 app = create_app()
 
 socketio = SocketIO(app)
+
+user_to_sid = {}
+sid_to_user = {}
 
 ###############################################
 #################    LOBBY   ##################
@@ -23,14 +27,17 @@ socketio = SocketIO(app)
 def on_join(data):
     username = current_user.dict['username']
     room = data['room']
-    join_room(room)
-    #whyh is the pla
+    
     if int(room) in games:
-        userdict = genuserdict(room)
-        print(games[int(room)]['players'])
-        emit('userupdate', userdict, room=room, json=True)
-    else:
-        return False
+        join_room(room)
+        
+        
+        print(f'{username} has joined the room')
+        if int(room) in games:
+            userdict = genuserdict(room)
+            emit('userupdate', userdict, room=room, json=True)
+        else:
+            return False
 
 
 @socketio.on('leave')
@@ -80,12 +87,11 @@ def onrequestgamestart(data):
                 games[int(room)]['sudoku'] = sudoku
                 games[int(room)]['sudokusol'] = solution
 
+
                 emit('startgame',json, room=room, json=True)
             else: return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
         else: emit('cannotstart',{'msg':f"At least {games[int(room)]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
-   
-      
-      
+
       
 ###############################################
 #################    GAME   ###################
@@ -96,11 +102,16 @@ def onrequestgamestart(data):
 def onrequestgamestart(data):
     username = current_user.dict['username']
     room = data['room']
+    
 
     if room == "":
         return
 
     if int(room) in games:
+        
+        join_room(room)
+
+        
         if games[int(room)]['players'][username]['timestarted'] == None:
             games[int(
                 room)]['players'][username]['timestarted'] = datetime.datetime.now()
@@ -118,9 +129,9 @@ def onrequestgamestart(data):
 
 
 @socketio.on('submitsudoku')
-def sudukochanges(data):
-    room = data['room']
+def sudokusubmit(data):
     username = current_user.dict['username']
+    room = data['room']
 
     if room == "": 
         return
@@ -135,13 +146,14 @@ def sudukochanges(data):
             
             #ALSO send to room!
             
-            completiondict = gencompletiondict(room=room)
-            print(completiondict)
             
-            #emit('tableupdate', completiondict, room=room, json=True)
 
             print('sent')
             #broadcast completion!
+        
+        completiondict = gencompletiondict(room=room) # send complete table, regardless of correctness
+        emit('tableupdate', completiondict, json=True, room=room)
+            
             
     else: # If already done (shouldnt happen)
         emit('completed',{'time':f"{games[int(room)]['players'][username]['completed'].total_seconds()}"}, json=True)
