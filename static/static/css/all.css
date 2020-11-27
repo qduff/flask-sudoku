@@ -47,10 +47,14 @@
                     body .page-body div.tablediv .cell-selected {
                       background-color: #5e5959 !important; }
                       body .page-body div.tablediv span.small-number {
-                        position: fixed;
+                        position: relative;
+                        word-break: break-all;
                         word-wrap: break-word;
                         color: #00ced1;
-                        font-size: 12px; }
+                        font-size: 10px;
+                        top: -45%;
+                        left: 0%;
+                        text-align: left; }
         body .page-body #myTable {
           background-color: #5e5959;
           border-radius: 5px; }

@@ -74,10 +74,14 @@ body {
                 background-color: $tablegrey2 !important;
             }
             span.small-number {
-                position: fixed;
+                position: relative;
+                word-break: break-all;
                 word-wrap: break-word;
                 color: $col3;
-                font-size: 12px;
+                font-size: 10px;
+                top: -45%;
+                left: 0%;
+                text-align: left;
             }
         }
         padding: 2rem;
