@@ -96,7 +96,6 @@ def onrequestgamestart(data):
 @socketio.on('requestsudoku')
 def onrequestgamestart(data):
     username = current_user.dict['username']
-
     room = data['room']
 
     if room == "":
@@ -105,18 +104,13 @@ def onrequestgamestart(data):
     if games[int(room)]['players'][username]['timestarted'] == None:
         games[int(room)]['players'][username]['timestarted'] = datetime.datetime.now()
 
-
     sudokustring =  games[int(room)]['sudoku']
-    
-    #print(games[int(room)]['players'][username]['completed'])
+
     if games[int(room)]['players'][username]['completed'] == False:
         emit('sudokustr',{'content':sudokustring}, json=True)
     else:
-        print('already comp')
-        sendtime = games[int(room)]['players'][username]['completed']
-        #print(sendtime.strftime(r'%M:%S:%f'))
-        #format sendtime
-        emit('completed',{'time':str(sendtime)}, json=True)
+        time = games[int(room)]['players'][username]['completed']  # Covers refresh case    
+        emit('completed',{'time':f"{time.total_seconds()}"}, json=True)
 
 
 @socketio.on('submitsudoku')
@@ -134,16 +128,17 @@ def sudukochanges(data):
     if games[int(room)]['players'][username]['completed'] == False: #does this even work?
         if int(games[int(room)]['sudokusol']) == int(data['string']):
             time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
+            
             games[int(room)]['players'][username]['completed'] = time
 
-            emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
-            #ALSO send to room
+            emit('completed',{'time':f"{time.total_seconds()}"}, json=True)
+            
+            #ALSO send to room!
             #broadcast completion!
-    else:
-        emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
-     
-    pass
-
+            
+            
+    else: # If already done (shouldnt happen)
+        emit('completed',{'time':f"{games[int(room)]['players'][username]['completed'].total_seconds()}"}, json=True)
 
 
 def genuserdict(room):
