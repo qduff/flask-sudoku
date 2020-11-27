@@ -114,7 +114,8 @@ def onrequestgamestart(data):
     else:
         print('already comp')
         sendtime = games[int(room)]['players'][username]['completed']
-        print(sendtime.strftime(r'%M:%S:%f'))
+        #print(sendtime.strftime(r'%M:%S:%f'))
+        #format sendtime
         emit('completed',{'time':str(sendtime)}, json=True)
 
 
@@ -128,22 +129,19 @@ def sudukochanges(data):
     #check sudoku
     username = current_user.dict['username']
 
-    print(games[int(room)]['players'])
     
-    
-    if int(games[int(room)]['sudokusol']) == int(data['string']):
-        time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
-        games[int(room)]['players'][username]['completed'] = time
+    #check that user has not already completed the sudoku (done), and started
+    if games[int(room)]['players'][username]['completed'] == False: #does this even work?
+        if int(games[int(room)]['sudokusol']) == int(data['string']):
+            time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
+            games[int(room)]['players'][username]['completed'] = time
 
+            emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
+            #ALSO send to room
+            #broadcast completion!
+    else:
         emit('completed',{'time':str(games[int(room)]['players'][username]['completed'])}, json=True)
-
-        #ALSO send to room
-        #broadcast completion!
-
-        print(time)
-
-
-    print(data)
+     
     pass
 
 
