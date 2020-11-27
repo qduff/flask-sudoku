@@ -134,9 +134,21 @@
     function sendSudoku() {
         if (completed == false && testmode == false) {
             console.log('sending sudoku');
+            var userString = "";
+            for (var y = 0; y < 9; y++) {
+                for (var x = 0; x < 9; x++) {
+                    if (isEntered(x, y)) {
+                        userString += $("#grid tr td span.big-number").eq(y * 9 + x).text();
+                        // userString += "1";
+                    } else {
+                        userString += "0";
+                    }
+                }
+            }
+
             socket.emit("submitsudoku", {
                 "room": "{{gamecode}}",
-                "string": "284593167369471825157826493576948231892135674413267958721389546645712389938654712"
+                "string": userString
             });
         }
     }
@@ -159,11 +171,19 @@
         }
     }
 
-    function isEntered() {
-        if (selX !== null && selY !== null) {
-            if ($("#grid tr td span.big-number").eq(selY * 9 + selX).text()) {
+    function isEntered(x = null, y = null) {
+        if (x !== null && y !== null) {
+            if ($("#grid tr td span.big-number").eq(y * 9 + x).text()) {
                 return true;
             }
+        }
+        if (x === null && y === null) {
+            if (selX !== null && selY !== null) {
+                if ($("#grid tr td span.big-number").eq(selY * 9 + selX).text()) {
+                    return true;
+                }
+            }
+            return false;
         }
         return false;
     }
@@ -174,7 +194,7 @@
                 var target = $("#grid tr td span.small-number").eq(selY * 9 + selX)
                 var t = target.text();
                 if (t.includes(digit) || remove) {
-                    t = t.replace(digit, "")
+                    t = t.replace(digit, " ")
                 } else {
                     var o = "";
                     ['1', '2', '3', '4', '5', '6', '7', '8', '9'].forEach(element => {
@@ -188,6 +208,15 @@
                 }
                 target.text(t);
             }
+        }
+    }
+
+    function removeSmallNumber(eqn, digit) {
+        if (!$("#grid tr td").eq(eqn).hasClass("immutable-cell")) {
+            var target = $("#grid tr td span.small-number").eq(eqn)
+            var t = target.text();
+            t = t.replace(digit, " ")
+            target.text(t);
         }
     }
 
@@ -310,12 +339,16 @@
                     clearNotes();
                 }
             } else if (e.code == "Enter") {
-                var l = connectedCells();
-                console.log(l);
-                l.forEach(element => {
-                    console.log($("#grid tr td").eq(element));
-                    $("#grid tr td").eq(element).addClass("cell-selected");
-                });
+                if (isEntered()) {
+                    var t = $("#grid tr td span.big-number").eq(selY * 9 + selX).text();
+                    var l = connectedCells();
+                    for (let i = 0; i < l.length; i++) {
+                        const element = l[i];
+                        removeSmallNumber(element, t);
+                        // console.log($("#grid tr td").eq(element));
+                        // $("#grid tr td").eq(element).css("background-color", "lime");
+                    }
+                }
             }
 
         }
