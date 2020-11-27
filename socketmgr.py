@@ -39,7 +39,8 @@ def on_leave(data):
     username = current_user.dict['username']
     room = data['room']
     print('leave event triggered by '+username)
-    leave_room(room)    
+    leave_room(room)
+
     if int(room) in games:
         if username in games[int(room)]['players']:
             if games[int(room)]['players'][current_user.dict['username']]['admin'] == True:
@@ -133,10 +134,34 @@ def sudukochanges(data):
             games[int(room)]['players'][username]['completed'] = time
             emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
             #ALSO send to room!
+            
+            completiondict = gencompletiondict(room=room)
+            emit('updatetable',completiondict, room=room, json=True)
+            
             #broadcast completion!
             
     else: # If already done (shouldnt happen)
         emit('completed',{'time':f"{games[int(room)]['players'][username]['completed'].total_seconds()}"}, json=True)
+
+
+
+def gencompletiondict(room):
+    completiondict = {}
+    for item in games[int(room)]['players']:
+        if games[int(room)]['players'][item]['admin'] == True:
+            role = 'admin'
+        else:
+            role = 'default'
+        
+        if games[int(room)]['players'][item]['completed'] == False:
+            completed = 'false'
+        else:
+            completed = str(games[int(room)]['players'][item]['completed'].total_seconds())
+
+        completiondict[str(item)] = {'role':str(role), 'completed':completed}
+
+
+    return completiondict
 
 
 def genuserdict(room):
