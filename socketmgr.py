@@ -124,6 +124,10 @@ def onrequestgamestart(data):
             # Covers refresh case
             time = games[int(room)]['players'][username]['completed']
             emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
+            
+        completiondict = gencompletiondict(room=room) # send complete table, regardless of correctness
+        emit('tableupdate', completiondict, json=True, room=room)
+        
     else:
         emit('redirect', {'url': f"/"}, json=True)
 
