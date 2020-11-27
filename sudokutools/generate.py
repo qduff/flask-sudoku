@@ -36,6 +36,6 @@ def generate():
 
     return sudokustr, solutionstr
 
-#sudoku, solution = generate()
+sudoku, solution = generate()
 
-#print(sudoku, solution)
+print(sudoku, solution)

@@ -131,6 +131,13 @@
         selectCell();
     }
 
+    function sendAns(){
+        socket.emit("submitsudoku", {
+            "room": "{{gamecode}}",
+            "string": "284593167369471825157826493576948231892135674413267958721389546645712389938654712"
+        });
+    }
+
     function sendSudoku() {
         if (completed == false && testmode == false) {
             console.log('sending sudoku');
@@ -388,22 +395,14 @@
         });
     });
 
+    
+
     socket.on("completed", function(jason) {
         console.log(jason['time']);
         $('#tablediv').show();
         $('#loadingtext').hide();
         $('#completiontext').show().text('Completed in ' + jason['time']);
         completed = true
-        console.log('COMPLETED!!')
-    });
-
-    
-    socket.on("updatetable", function(jason) {
-        for (var name in jason) {
-            console.log(jason[name]);
-            console.log(jason['role']);
-            console.log(jason['completed']);
-        }
     });
 
     socket.on("sudokustr", function(jason) {
@@ -412,6 +411,15 @@
         $('#loadingtext').hide();
         fillSudoku(jason['content']);
         console.log('filled')
+    });
+
+    socket.on("tableupdate", function(jason) {
+        console.log('tableupdate')
+        //for (var name in jason) {
+        //    console.log(jason[name]);
+        //    console.log(jason['role']);
+        //    console.log(jason['completed']);
+        //}
     });
 
     setTimeout(function() {

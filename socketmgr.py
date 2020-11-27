@@ -28,7 +28,6 @@ def on_join(data):
     if int(room) in games:
         userdict = genuserdict(room)
         print(games[int(room)]['players'])
-        print('userupdate')
         emit('userupdate', userdict, room=room, json=True)
     else:
         return False
@@ -56,7 +55,6 @@ def on_leave(data):
             games.pop(int(room))
         if int(room) in games and len(games[int(room)]['players']) != 0:
             userdict = genuserdict(room)
-            print(userdict)
             emit('userupdate',userdict, room=room, json=True)
         else:
             return False
@@ -136,13 +134,13 @@ def sudukochanges(data):
             #ALSO send to room!
             
             completiondict = gencompletiondict(room=room)
-            emit('updatetable',completiondict, room=room, json=True)
-            
+            print(completiondict)
+            emit('tableupdate', completiondict, room=room, json=True)
+            print('sent')
             #broadcast completion!
             
     else: # If already done (shouldnt happen)
         emit('completed',{'time':f"{games[int(room)]['players'][username]['completed'].total_seconds()}"}, json=True)
-
 
 
 def gencompletiondict(room):
