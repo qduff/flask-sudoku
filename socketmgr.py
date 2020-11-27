@@ -99,6 +99,9 @@ def onrequestgamestart(data):
 
     room = data['room']
 
+    if room == "":
+        return
+
     if games[int(room)]['players'][username]['timestarted'] == None:
         games[int(room)]['players'][username]['timestarted'] = datetime.datetime.now()
 
@@ -118,6 +121,10 @@ def onrequestgamestart(data):
 @socketio.on('submitsudoku')
 def sudukochanges(data):
     room = data['room']
+
+    if room == "":
+        return
+        
     #check sudoku
     username = current_user.dict['username']
 

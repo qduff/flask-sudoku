@@ -168,12 +168,12 @@
         return false;
     }
 
-    function smallNumber(digit) {
+    function smallNumber(digit, remove = false) {
         if (selX !== null && selY !== null) {
             if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
                 var target = $("#grid tr td span.small-number").eq(selY * 9 + selX)
                 var t = target.text();
-                if (t.includes(digit)) {
+                if (t.includes(digit) || remove) {
                     t = t.replace(digit, "")
                 } else {
                     var o = "";
@@ -186,6 +186,7 @@
                     });
                     t = o;
                 }
+                target.text(t);
             }
         }
     }
@@ -207,6 +208,49 @@
                 $("#grid tr td span.small-number").eq(selY * 9 + selX).text("");
             }
         }
+    }
+
+    function visibleNotes(bool) {
+        if (selX !== null && selY !== null) {
+            if (!$("#grid tr td").eq(selY * 9 + selX).hasClass("immutable-cell")) {
+                if (bool) {
+                    $("#grid tr td span.small-number").eq(selY * 9 + selX).show();
+                } else {
+                    $("#grid tr td span.small-number").eq(selY * 9 + selX).hide();
+                }
+            }
+        }
+    }
+
+    function connectedCells() {
+        if (selX !== null && selY !== null) {
+            var r = [];
+            for (var x = 0; x < 9; x++) {
+                r.push(selY * 9 + x);
+                // $("#grid tr td").eq(selY * 9 + x).css("background-color", "lime");
+            }
+            for (var y = 0; y < 9; y++) {
+                r.push(y * 9 + selX);
+                // $("#grid tr td").eq(y * 9 + selX).css("background-color", "red");
+            }
+
+            for (var x = Math.floor(selX / 3) * 3; x < Math.floor(selX / 3) * 3 + 3; x++) {
+                for (var y = Math.floor(selY / 3) * 3; y < Math.floor(selY / 3) * 3 + 3; y++) {
+                    r.push(y * 9 + x);
+                    // $("#grid tr td").eq(y * 9 + x).css("background-color", "teal");
+                }
+            }
+            // $("#grid tr td").eq(selY * 9 + selX).css("background-color", "yellow");
+
+            var out = [];
+            r.forEach(element => {
+                if (!out.includes(element)) {
+                    out.push(element);
+                }
+            });
+            return out;
+        }
+
     }
 
     function keyDown(e) {
@@ -254,15 +298,24 @@
             if ((e.code.startsWith("Digit") && e.code != "Digit0") || (e.code.startsWith("Numpad") && e.code != "Numpad0")) {
                 if (!e.shiftKey) {
                     writeCell(e.code.slice(-1));
+                    visibleNotes(false);
                 } else {
                     smallNumber(e.code.slice(-1))
                 }
             } else if (e.code == "Digit0" || e.code == "Numpad0" || e.code == "Backspace" || e.code == "Delete" || e.code == "Space") {
                 if (isEntered()) {
                     clearCell();
+                    visibleNotes(true);
                 } else if (e.code == "Backspace") {
                     clearNotes();
                 }
+            } else if (e.code == "Enter") {
+                var l = connectedCells();
+                console.log(l);
+                l.forEach(element => {
+                    console.log($("#grid tr td").eq(element));
+                    $("#grid tr td").eq(element).addClass("cell-selected");
+                });
             }
 
         }
