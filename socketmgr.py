@@ -1,5 +1,5 @@
 from app import create_app
-from flask_socketio import SocketIO, send, join_room, leave_room, emit
+from flask_socketio import SocketIO, send, join_room, leave_room, emit, rooms
 from flask_login import current_user
 from gamesdb import games
 from flask.helpers import url_for
@@ -131,14 +131,14 @@ def sudukochanges(data):
             time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
             games[int(room)]['players'][username]['completed'] = time
             
-            #emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
+            emit('completed', {'time': f"{time.total_seconds()}"} ,json=True)
             
             #ALSO send to room!
             
             completiondict = gencompletiondict(room=room)
             print(completiondict)
             
-            emit('tableupdate', completiondict, room=room, json=True)
+            #emit('tableupdate', completiondict, room=room, json=True)
 
             print('sent')
             #broadcast completion!
