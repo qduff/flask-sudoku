@@ -13,10 +13,9 @@
       height: 100%;
       margin: 0; }
       body .page-body {
-        padding: 2rem; }
+        padding: 1.5rem; }
         body .page-body div.tablediv {
           user-select: none;
-          font-size: 180%;
           font-weight: 600;
           color: #93c5d4; }
           body .page-body div.tablediv .immutable-cell {
@@ -55,6 +54,12 @@
                         top: -45%;
                         left: 0%;
                         text-align: left; }
+                        body .page-body div.tablediv span.big-number {
+                          position: relative;
+                          word-break: break-all;
+                          word-wrap: break-word;
+                          font-size: 200%;
+                          text-align: left; }
         body .page-body #myTable {
           background-color: #5e5959;
           border-radius: 5px; }
@@ -122,6 +127,8 @@
         color: #f6e9e9; }
         body header {
           font-family: karla;
+          display: flex;
+          justify-content: space-between;
           width: 100%;
           height: 50px;
           line-height: 50px;
@@ -137,7 +144,11 @@
                 width: auto;
                 height: 100%;
                 float: left;
-                margin: 0 0 0 5%; }
+                margin: 0 0 0 5%;
+                justify-content: flex-start;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden; }
                 body header .menu {
                   justify-content: flex-end;
                   padding: 0;
@@ -146,22 +157,22 @@
                   height: 100%;
                   float: right; }
                   body header .menu ul {
+                    flex: 1;
                     justify-content: flex-end;
                     width: 100%;
                     text-align: center;
                     height: inherit;
                     margin: 0;
                     padding: 0;
-                    display: -webkit-box;
-                    display: -moz-box;
-                    display: -ms-flexbox;
-                    display: -webkit-flex; }
+                    display: flex;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden; }
                     body header .menu ul a {
                       text-align: center;
                       width: 20%;
                       height: inherit;
-                      color: #f6e9e9;
-                      display: inline-block; }
+                      color: #f6e9e9; }
                       body header .menu ul a:hover {
                         background-color: #292626;
                         color: #fff; }
