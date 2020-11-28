@@ -23,8 +23,8 @@
             font-weight: 600;
             color: #e4e0e0; }
             body .page-body div.tablediv table {
-              width: 500px;
-              height: 500px;
+              width: 80vh;
+              height: 80vh;
               border: 1px solid #f6e9e9;
               border-collapse: collapse;
               table-layout: fixed;
@@ -34,7 +34,7 @@
                 border-collapse: collapse;
                 background-color: #454545;
                 text-align: center;
-                height: 56px;
+                height: 10%;
                 padding: 0%;
                 margin-top: 0%;
                 transition: 0.15s; }

@@ -1,8 +1,7 @@
 {% extends "base.html" %} {% block title %}Play{% endblock %} {% block content %}
 
-<div id="leftside" style="width: 80%; height: 100px; float: left;">
+<div id="leftside" style="width: 70%; height: 100px; float: left;">
     <h1 id="loadingtext">Loading...</h1>
-    <h1 id="completiontext" style="display: none;"></h1>
 
     <div class='tablediv' id="tablediv" style="display: none;">
         <table id="grid">
@@ -108,8 +107,9 @@
         </table>
     </div>
 </div>
-<div id="rightside" style="margin-left: 80%; height: 100px;">
-    <h4>Completion status here</h4>
+<div id="rightside" style="margin-left: 70%; height: 100%;">
+    <h2 id="completiontext" style="display: none;"></h2>
+    
     <div id="tablediv">
         <table id="completiontable"></table>
     </div>
