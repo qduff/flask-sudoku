@@ -7,7 +7,7 @@ from werkzeug.urls import iri_to_uri
 
 game = Blueprint('game', __name__)
 
-from gamesdb import games
+from gamesdb import *
 
 @game.route('/hostgame')
 @login_required
@@ -33,12 +33,12 @@ def hostgame_post():
         #Create a room in the games dict
         
         if not password: password = None
-        print(password)
+        #print(password)
         
-        games.update({int(roomcode):{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'timestarted':None,'admin':True}}}})
-        
+        games.update({roomcode:{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'timestarted':None,'role':'admin'}}}})
+        #print(games)
         #redirect to lobby
-        return redirect(url_for('game.lobby',id=roomcode))
+        return redirect(url_for('game.lobby',roomcode=roomcode))
     else:
         return render_template('guesterror.html')
         #return redirect(url_for('main.index'))
@@ -52,7 +52,7 @@ def joingame():
 def joingame_post():
     try:
         #Send to lobby with code
-        return redirect(url_for('game.lobby',id=int(request.form.get('gamecode'))))#+'/'+request.form.get('gamecode'))
+        return redirect(url_for('game.lobby',roomcode=request.form.get('gamecode')))#+'/'+request.form.get('gamecode'))
     except Exception as e:
         flash('Invalid input!')
         return redirect(url_for('game.joingame'))
@@ -60,21 +60,26 @@ def joingame_post():
 @game.route('/authgame/<id>', methods=['POST'])
 def auth_post(id):
     pw = request.form.get('gamepass')
-    if pw == games[int(id)]['password']:
-        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False}})
+    if pw == games[id]['password']:
+        games[id]['players'].update({current_user.id['username']:{'completed':False,'role':'default'}})
     
     return redirect(url_for('game.lobby',id=id)) #not efficitent but works
 
 
-@game.route('/game/<id>')
+@game.route('/game/<roomcode>')
 @login_required
-def lobby(id:int):
+def lobby(roomcode):
+    username = current_user.id['username']
     global games
     
+    if roomcode in games:
+        print('YEAS!')
+    
     try:
-        if int(id) in games:
+        print(f"{games=},{roomcode=}")
+        if gameExists(roomcode):
             #Check if game has started
-            if games[int(id)]['started'] == True:
+            if games[roomcode]['started'] == True:
                 flash('That game has already started!')
                 return redirect(url_for('game.joingame'))
             
@@ -82,24 +87,24 @@ def lobby(id:int):
             else:                
                 
                 #If user has never joined this game, he will be added to dict.
-                if current_user.dict['username'] not in games[int(id)]['players']:
+                if current_user.dict['username'] not in games[roomcode]['players']:
                     
-                    if games[int(id)]['password'] != None:
+                    if games[roomcode]['password'] != None:
                         #Test if user has authed into the games
-                        return render_template('enterpass.html', code=id)
+                        return render_template('enterpass.html', code=roomcode)
                     else:
-                        games[int(id)]['players'].update({current_user.id['username']:{'completed':False,'admin':False,'timestarted':None}})
-                #If he is the admin, then he will get admin stuff!
-                if games[int(id)]['players'][current_user.dict['username']]['admin'] == True:
+                        games[roomcode]['players'].update({current_user.id['username']:{'completed':False,'role':'default','timestarted':None}})
+
+                if playerRole(username, roomcode) == 'admin':
                     admin = True
                 else:
                     admin = False
                 
-                return render_template('lobby.html', gamecode = id, admin = admin,roomname =games[int(id)]['name'])
+                return render_template('lobby.html', gamecode = roomcode, admin = admin,roomname = games[roomcode]['name'])
         else:
             flash('That game ID does not exist!')
             return redirect(url_for('game.joingame'))
-    except:
+    except ValueError:
         flash('That game ID is not valid!')
         return redirect(url_for('game.joingame'))
 
@@ -115,10 +120,10 @@ def playpage(id):
     global games
     try:
     # Check if game exists
-        if int(id) in games:
+        if id in games:
             # check if game has started
-            if games[int(id)]['started'] == True:
-                if current_user.dict['username'] in games[int(id)]['players']:
+            if games[id]['started'] == True:
+                if current_user.dict['username'] in games[id]['players']:
                     return render_template('sudoku.html',gamecode = id)
                 else:
                     return redirect(url_for('game.lobby',id=id))
@@ -129,6 +134,6 @@ def playpage(id):
         else:
             flash('That game ID does not exist!')
             return redirect(url_for('game.joingame'))
-    except:
+    except ValueError:
         flash('That game ID is not valid!')
         return redirect(url_for('game.joingame'))
