@@ -27,11 +27,8 @@ sid_to_user = {}
 def on_join(data):
     username = current_user.dict['username']
     room = data['room']
-    
     if int(room) in games:
         join_room(room)
-        
-        
         print(f'{username} has joined the room')
         if int(room) in games:
             userdict = genuserdict(room)
@@ -116,19 +113,15 @@ def onrequestgamestart(data):
             games[int(
                 room)]['players'][username]['timestarted'] = datetime.datetime.now()
 
-        sudokustring = games[int(room)]['sudoku']
-
         if games[int(room)]['players'][username]['completed'] == False:
-            emit('sudokustr', {'content': sudokustring}, json=True)
-        else:
-            # Covers refresh case
-            time = games[int(room)]['players'][username]['completed']
-            emit('completed', {'time': f"{time.total_seconds()}"}, json=True)
-            
-        completiondict = gencompletiondict(room=room) # send complete table, regardless of correctness
-        emit('tableupdate', completiondict, json=True, room=room)
+            emit('sudokustr', {'content': games[int(room)]['sudoku']}, json=True)
+        else: # Covers refresh case
+            emit('completed', getcompletedjson(room,username) ,json=True)
+
+        # send complete table, so the player has a table (DOES _NOT_ have to be to room but might as well)
+        emit('tableupdate', gencompletiondict(room=room), json=True, room=room)
         
-    else:
+    else: # Does nothing on client side, futureproofing, i guess
         emit('redirect', {'url': f"/"}, json=True)
 
 
@@ -146,26 +139,27 @@ def sudokusubmit(data):
             time = datetime.datetime.now() - games[int(room)]['players'][username]['timestarted']
             games[int(room)]['players'][username]['completed'] = time
             
-            emit('completed', {'time': f"{time.total_seconds()}"} ,json=True)
             
-            #ALSO send to room!
-            
-            
+            emit('completed', getcompletedjson(room,username) ,json=True)
 
-            print('sent')
-            #broadcast completion!
-        
-        completiondict = gencompletiondict(room=room) # send complete table, regardless of correctness
-        emit('tableupdate', completiondict, json=True, room=room)
-            
+        # send complete table, regardless of correctness
+        emit('tableupdate', gencompletiondict(room), json=True, room=room)
             
     else: # If already done (shouldnt happen)
-        emit('completed',{'time':f"{games[int(room)]['players'][username]['completed'].total_seconds()}"}, json=True)
+        emit('completed', getcompletedjson(room,username) ,json=True)
 
 
-def gencompletiondict(room):
+
+def getcompletedjson(room,username):
+    return {'place':f'You came in {1} Place!','time': f"Completed in {round(games[int(room)]['players'][username]['completed'].total_seconds(),1)}s!"}
+    #TODO DO PLACE FUNCTIONALITY
+
+
+def gencompletiondict(room):  # do progress also, and order by completion
     completiondict = {}
     for item in games[int(room)]['players']:
+        print(item)
+        
         if games[int(room)]['players'][item]['admin'] == True:
             role = 'admin'
         else:
@@ -174,10 +168,11 @@ def gencompletiondict(room):
         if games[int(room)]['players'][item]['completed'] == False:
             completed = 'false'
         else:
-            completed = str(games[int(room)]['players'][item]['completed'].total_seconds())
-
-        completiondict[str(item)] = {'role':str(role), 'completed':completed}
-
+            completed = str(round(games[int(room)]['players'][item]['completed'].total_seconds(),1))+'s'
+        
+        tempdict = {'role':str(role), 'completed':completed}
+        print(tempdict)
+        completiondict[str(item)] = tempdict
 
     return completiondict
 

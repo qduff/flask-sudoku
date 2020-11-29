@@ -108,7 +108,9 @@
     </div>
 </div>
 <div id="rightside" style="margin-left: 70%; height: 100%;">
-    <h2 id="completiontext" style="display: none;"></h2>
+    
+    <h2 id="placetext" style="display: none;"></h2>
+    <h3 id="completiontext" style="display: none;"></h2>
     
     <div id="tablediv">
         <table id="completiontable"></table>
@@ -408,7 +410,9 @@
         console.log(jason['time']);
         $('#tablediv').show();
         $('#loadingtext').hide();
-        $('#completiontext').show().text('Completed in ' + jason['time']);
+        $('#completiontext').show().text(jason['time']);
+        $('#placetext').show().text(jason['place']);
+
         completed = true
     });
 
