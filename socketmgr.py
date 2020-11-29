@@ -173,6 +173,7 @@ def gencompletiondict(room):  # do progress also, and order by completion
         tempdict = {'role':str(role), 'completed':completed}
         print(tempdict)
         completiondict[str(item)] = tempdict
+        #TODO Progress indicator on server _and_ client
 
     return completiondict
 
