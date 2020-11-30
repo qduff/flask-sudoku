@@ -41,6 +41,7 @@ def on_join(data):
 def on_leave(data):
     username = current_user.dict['username']
     roomcode = data['room']
+    print(f"{username} wishes to leave")
     
     leave_room(roomcode)
 
@@ -50,17 +51,22 @@ def on_leave(data):
         if playerExists(username, roomcode):
             if playerCount(roomcode) >= 2:
                 if playerRole(username, roomcode) == 'admin':
-                    for username in getPlayers(roomcode):
-                        if playerRole(username,roomcode) == 'admin':
-                            setRole(username,roomcode,'admin')
+                    for usernameiter in getPlayers(roomcode):
+                        madeadmin = False
+                        if playerRole(usernameiter,roomcode) != 'admin' and madeadmin == False:
+                            setRole(usernameiter,roomcode,'admin')
+                            print(f'making {usernameiter} an admin')
+                            madeadmin = True
             else:
                 removeGame(roomcode)
-                                            
+            
+            print(f"removing {username}")                
             removeUser(username, roomcode)
 
               
         if gameExists(roomcode) and playerCount(roomcode) != 0:
             emit('userupdate', generateUserDict(roomcode), room=roomcode, json=True)
+            
         else:
             return False
 
@@ -78,7 +84,9 @@ def onrequestgamestart(data):
                 print('you may start!, sending start')
                 json = {'url': str(url_for('game.playpage', id=roomcode))}
                 json['players'] = generateUserDict(roomcode)
-                games[roomcode]['started'] = True
+                
+                setGameProperty(roomcode,'started',True)
+                #games[roomcode]['started'] = True
                 
                 sudoku, solution = generate()
                 #GEN SUDOKU
@@ -100,14 +108,14 @@ def onrequestgamestart(data):
 def onrequestgamestart(data):
     username = current_user.dict['username']
     roomcode = data['room']
-    
+
 
     if roomcode == "":
         return
 
-    if roomcode in games:
+    if gameExists(roomcode) and getGameProperty(roomcode,'started') == True: 
         
-        join_room(roomcode)
+        join_room(roomcode) 
 
         
         if games[roomcode]['players'][username]['timestarted'] == None:

@@ -3,6 +3,8 @@ games = {}
 #games = Dict()
 
 
+#SET
+
 def addGame(roomcode:str, type:str):
     pass
 
@@ -17,22 +19,23 @@ def removeUser(username:str, roomcode:str): # Do the admining other player heres
     games[roomcode]['players'].pop(username)      
 
 
-
 def setRole(username:str, roomcode:str, role:str):
-    games[roomcode]['players'][username]['admin'] = role
-    
+    setUserProperty(roomcode,username,'role',role)
+
     
 def setGameProperty(roomcode, property, desired):
-    pass
+    games[roomcode][property] = desired
 
-def setUserProperty(roomcode, property, desired):
-    pass
+def setUserProperty(roomcode,username, property, desired):
+    games[roomcode]['players'][username][property] = desired
+
+#GET
 
 def getGameProperty(roomcode, property):
-    pass
+    return games[roomcode][property]
 
-def getUserProperty(roomcode, property):
-    pass
+def getUserProperty(roomcode,username, property):
+    return games[roomcode]['players'][username][property]
 
 
 def gameExists(roomcode) -> bool:
@@ -40,20 +43,16 @@ def gameExists(roomcode) -> bool:
         return True
     else:
         return False
- 
-        
+  
 def getPlayers(roomcode:str):
-    return games[roomcode]['players']
+    return getGameProperty(roomcode,'players')
 
 def playerExists(username:str, roomcode:str) -> bool:
-    if username in games[roomcode]['players']:
-        return True
-    else:
-        return False
+    if username in getPlayers(roomcode): return True
+    else: return False
 
 def playerRole(username:str, roomcode:str) -> str:
-    return games[roomcode]['players'][username]['role']
-
+    return getUserProperty(roomcode,username,'role')
 
 def playerCount(roomcode:int) -> int:
-    return len(games[roomcode]['players'])
+    return len(getPlayers(roomcode))
