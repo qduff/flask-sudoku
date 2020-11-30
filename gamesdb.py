@@ -9,6 +9,7 @@ def addGame(roomcode:str, type:str):
 def addUser(username:str, roomcode:str):
     pass
 
+
 def removeGame(roomcode:str):
     games.pop(roomcode)
 
@@ -16,9 +17,22 @@ def removeUser(username:str, roomcode:str): # Do the admining other player heres
     games[roomcode]['players'].pop(username)      
 
 
-def changeRole(username:str, roomcode:str, role:str):
-    games[roomcode]['players'][username]['admin'] = role
 
+def setRole(username:str, roomcode:str, role:str):
+    games[roomcode]['players'][username]['admin'] = role
+    
+    
+def setGameProperty(roomcode, property, desired):
+    pass
+
+def setUserProperty(roomcode, property, desired):
+    pass
+
+def getGameProperty(roomcode, property):
+    pass
+
+def getUserProperty(roomcode, property):
+    pass
 
 
 def gameExists(roomcode) -> bool:
@@ -28,8 +42,8 @@ def gameExists(roomcode) -> bool:
         return False
  
         
-def players(roomcode:str):
-    print('ok')
+def getPlayers(roomcode:str):
+    return games[roomcode]['players']
 
 def playerExists(username:str, roomcode:str) -> bool:
     if username in games[roomcode]['players']:

@@ -31,7 +31,7 @@ def on_join(data):
         join_room(roomcode)
         print(f'{username} has joined the room')
         if roomcode in games:  # wut
-            userdict = genuserdict(roomcode)
+            userdict = generateUserDict(roomcode)
             emit('userupdate', userdict, room=roomcode, json=True)
         else:
             return False
@@ -48,46 +48,36 @@ def on_leave(data):
         
         #if username in games[roomcode]['players']:
         if playerExists(username, roomcode):
-            #if games[roomcode]['players'][current_user.dict['username']]['admin'] == True:
             if playerCount(roomcode) >= 2:
-
                 if playerRole(username, roomcode) == 'admin':
-
-                    #move admin to antoher playre
-                    
-                    for username in players(roomcode):
-                        #print(games[roomcode]['players'][username]['role'])
+                    for username in getPlayers(roomcode):
                         if playerRole(username,roomcode) == 'admin':
-                            changeRole(username,roomcode,'admin')
-
+                            setRole(username,roomcode,'admin')
             else:
                 removeGame(roomcode)
-                #games.pop(roomcode)#remove game
-                            
+                                            
             removeUser(username, roomcode)
 
               
         if gameExists(roomcode) and playerCount(roomcode) != 0:
-            userdict = genuserdict(roomcode)
-            emit('userupdate',userdict, room=roomcode, json=True)
+            emit('userupdate', generateUserDict(roomcode), room=roomcode, json=True)
         else:
             return False
-        send(username + ' has left the room.', room=roomcode)
 
 
 @socketio.on('requestgamestart')
 def onrequestgamestart(data):
     username = current_user.dict['username']
     roomcode = data['room']
+    
     print('starrt event triggered by '+username)
-    if roomcode in games:
-        nplayers = len(games[roomcode]['players'])
+    if gameExists(roomcode):
+        nplayers = playerCount(roomcode)
         if nplayers >=2:
             if playerRole(username, roomcode) == 'admin':
                 print('you may start!, sending start')
-                url = str(url_for('game.playpage', id=roomcode))
-                json = {'url':url}
-                json['players'] = genuserdict(roomcode)
+                json = {'url': str(url_for('game.playpage', id=roomcode))}
+                json['players'] = generateUserDict(roomcode)
                 games[roomcode]['started'] = True
                 
                 sudoku, solution = generate()
@@ -188,7 +178,7 @@ def gencompletiondict(room):  # do progress also, and order by completion
     return completiondict
 
 
-def genuserdict(room):
+def generateUserDict(room):
     userdict = {}
     for item in games[room]['players']:
         if playerRole(item, room) == 'admin':
