@@ -53,7 +53,7 @@ def on_leave(data):
             removeGame(roomcode)
 
 
-@socketio.on('requestgamestart')
+@socketio.on('requestgamestart')    #make this nice next
 def onrequestgamestart(data):
     username = current_user.dict['username']
     roomcode = data['room']
