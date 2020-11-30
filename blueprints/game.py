@@ -30,14 +30,14 @@ def hostgame_post():
         while roomcode == 0 or roomcode in games:
             roomcode = ''.join(["{}".format(random.randint(1, 9)) for num in range(0, codelen)])
         print(f"New Room ({roomname}) created by {current_user.id['username']}\tCode:{roomcode}")
-        #Create a room in the games dict
+
         
         if not password: password = None
-        #print(password)
+
         
         games.update({roomcode:{'name':roomname,'password':password,'started':False,'playersrequired':2,'players':{current_user.id['username']:{'completed':False,'timestarted':None,'role':'admin'}}}})
-        #print(games)
-        #redirect to lobby
+        #TODO add to ./gamesdb.py
+        
         return redirect(url_for('game.lobby',roomcode=roomcode))
     else:
         return render_template('guesterror.html')
@@ -57,13 +57,18 @@ def joingame_post():
         flash('Invalid input!')
         return redirect(url_for('game.joingame'))
 
-@game.route('/authgame/<id>', methods=['POST'])
-def auth_post(id):
+@game.route('/authgame/<roomcode>', methods=['POST'])
+def auth_post(roomcode):
     pw = request.form.get('gamepass')
-    if pw == games[id]['password']:
-        games[id]['players'].update({current_user.id['username']:{'completed':False,'role':'default'}})
     
-    return redirect(url_for('game.lobby',id=id)) #not efficitent but works
+    print(pw,games[roomcode]['password'] )
+    
+    if pw == games[roomcode]['password']: #TODO Getgameattr
+
+        addUser(current_user.id['username'],roomcode,'default')
+        #games[id]['players'].update({current_user.id['username']:{'completed':False,'role':'default'}})
+    
+    return redirect(url_for('game.lobby',roomcode=roomcode)) #not efficitent but works
 
 
 @game.route('/game/<roomcode>')
@@ -72,8 +77,8 @@ def lobby(roomcode):
     username = current_user.id['username']
     global games
     
-    if roomcode in games:
-        print('YEAS!')
+    #if roomcode in games:
+    #    print('YEAS!')
     
     try:
         print(f"{games=},{roomcode=}")
@@ -87,14 +92,16 @@ def lobby(roomcode):
             else:                
                 
                 #If user has never joined this game, he will be added to dict.
-                if current_user.dict['username'] not in games[roomcode]['players']:
+                if username not in games[roomcode]['players']:
                     
                     if games[roomcode]['password'] != None:
                         #Test if user has authed into the games
-                        return render_template('enterpass.html', code=roomcode)
+                        return render_template('enterpass.html', roomcode=roomcode)
+                        #redirect(url_for('auth.authgame'))                   
                     else:
-                        games[roomcode]['players'].update({current_user.id['username']:{'completed':False,'role':'default','timestarted':None}})
-
+                        #games[roomcode]['players'].update({current_user.id['username']:{'completed':False,'role':'default','timestarted':None}})
+                        addUser(username,roomcode,'default')
+                        
                 if playerRole(username, roomcode) == 'admin':
                     admin = True
                 else:
@@ -114,23 +121,23 @@ def lobby(roomcode):
 def sudokutest():
     return render_template('sudoku.html')
 
-@game.route('/play/<id>')
+@game.route('/play/<roomcode>')
 @login_required
-def playpage(id):
+def playpage(roomcode):
     global games
     try:
     # Check if game exists
-        if id in games:
+        if roomcode in games:
             # check if game has started
-            if games[id]['started'] == True:
-                if current_user.dict['username'] in games[id]['players']:
-                    return render_template('sudoku.html',gamecode = id)
+            if games[roomcode]['started'] == True:
+                if current_user.dict['username'] in games[roomcode]['players']:
+                    return render_template('sudoku.html',gamecode = roomcode)
                 else:
-                    return redirect(url_for('game.lobby',id=id))
+                    return redirect(url_for('game.lobby',roomcode=roomcode))
             else:
                 # If not started, send to lobby with same id
                 flash("That game hasn't started!")
-                return redirect(url_for('game.lobby',id=id))
+                return redirect(url_for('game.lobby',roomcode=roomcode))
         else:
             flash('That game ID does not exist!')
             return redirect(url_for('game.joingame'))

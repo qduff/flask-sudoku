@@ -1,4 +1,7 @@
 #from addict import Dict
+from datetime import timedelta
+
+
 games = {}
 #games = Dict()
 
@@ -8,8 +11,19 @@ games = {}
 def addGame(roomcode:str, type:str):
     pass
 
-def addUser(username:str, roomcode:str):
-    pass
+
+def addUser(username:str, roomcode:str, role:str = 'default'):
+    games[roomcode]['players'].update(
+        {username:
+            {'role': role,
+             'completed':False,
+             'timestarted':None,
+             'timecompleted':None,
+             'timetaken':None
+             }
+        }
+    )
+
 
 
 def removeGame(roomcode:str):

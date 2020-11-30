@@ -63,7 +63,7 @@ def onrequestgamestart(data):
         nplayers = playerCount(roomcode)
         if nplayers >=2:
             if playerRole(username, roomcode) == 'admin':
-                json = {'url': str(url_for('game.playpage', id=roomcode)),'players':generateUserDict(roomcode)}
+                json = {'url': str(url_for('game.playpage', roomcode=roomcode)),'players':generateUserDict(roomcode)}
                 games[roomcode]['sudoku'], games[roomcode]['sudokusol'] = generate() # Automate this
 
                 setGameProperty(roomcode,'started',True)
@@ -87,22 +87,24 @@ def onrequestgamestart(data):
 
     if roomcode == "":
         return
-
-    if gameExists(roomcode) and getGameProperty(roomcode,'started') == True: 
-        join_room(roomcode) 
+    
+    if gameExists(roomcode) and getGameProperty(roomcode, 'started') == True:
+        join_room(roomcode)
 
         if games[roomcode]['players'][username]['timestarted'] == None:
             games[roomcode]['players'][username]['timestarted'] = datetime.datetime.now()
 
         if games[roomcode]['players'][username]['completed'] == False:
-            emit('sudokustr', {'sudoku': games[roomcode]['sudoku'],'autocomplete':'true'}, json=True) # TODO send autocomplete
-        else: # Covers refresh case
-            emit('completed', getcompletedjson(roomcode,username) ,json=True)
+            # TODO send autocomplete
+            emit('sudokustr', {'sudoku': games[roomcode]['sudoku'], 'autocomplete': 'true'}, json=True)
+        else:  # Covers refresh case
+            emit('completed', getcompletedjson(roomcode, username), json=True)
 
         # send complete table, so the player has a table (DOES _NOT_ have to be to room but might as well)
-        emit('tableupdate', gencompletiondict(room=roomcode), json=True, room=roomcode)
-        
-    else: # Does nothing on client side, futureproofing, i guess
+        emit('tableupdate', gencompletiondict(
+            room=roomcode), json=True, room=roomcode)
+
+    else:  # Does nothing on client side, futureproofing, i guess
         emit('redirect', {'url': f"/"}, json=True)
 
 

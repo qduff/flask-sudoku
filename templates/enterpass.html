@@ -3,10 +3,10 @@
 
 {% block content %}
 
-<h1>Room {{code}}</h1>
+<h1>Room {{roomcode}}</h1>
 <h3>Please enter the password to continue. </h3>
 
-<form method="POST" action="/authgame/{{code}}">
+<form method="POST" action="/authgame/{{roomcode}}">
     <div class="form__group field">
         <input class="form__field" type="text" name="gamepass" placeholder="Room Password" autofocus="" required>
         <label for="name" class="form__label">Password</label>
