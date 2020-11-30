@@ -63,20 +63,13 @@ def onrequestgamestart(data):
         nplayers = playerCount(roomcode)
         if nplayers >=2:
             if playerRole(username, roomcode) == 'admin':
-                print('you may start!, sending start')
-                json = {'url': str(url_for('game.playpage', id=roomcode))}
-                json['players'] = generateUserDict(roomcode)
-                
-                setGameProperty(roomcode,'started',True)
-                #games[roomcode]['started'] = True
-                
-                sudoku, solution = generate()
-                #GEN SUDOKU
-                games[roomcode]['sudoku'] = sudoku
-                games[roomcode]['sudokusol'] = solution
+                json = {'url': str(url_for('game.playpage', id=roomcode)),'players':generateUserDict(roomcode)}
+                games[roomcode]['sudoku'], games[roomcode]['sudokusol'] = generate() # Automate this
 
+                setGameProperty(roomcode,'started',True)
 
                 emit('startgame',json, room=roomcode, json=True)
+                
             else: return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
         else: emit('cannotstart',{'msg':f"At least {games[roomcode]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
 
@@ -96,15 +89,13 @@ def onrequestgamestart(data):
         return
 
     if gameExists(roomcode) and getGameProperty(roomcode,'started') == True: 
-        
         join_room(roomcode) 
 
-        
         if games[roomcode]['players'][username]['timestarted'] == None:
             games[roomcode]['players'][username]['timestarted'] = datetime.datetime.now()
 
         if games[roomcode]['players'][username]['completed'] == False:
-            emit('sudokustr', {'sudoku': games[roomcode]['sudoku'],'autocomplete':'true'}, json=True) #TODO send autocomplete
+            emit('sudokustr', {'sudoku': games[roomcode]['sudoku'],'autocomplete':'true'}, json=True) # TODO send autocomplete
         else: # Covers refresh case
             emit('completed', getcompletedjson(roomcode,username) ,json=True)
 
