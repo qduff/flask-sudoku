@@ -23,52 +23,34 @@ socketio = SocketIO(app)
 @socketio.on('join')
 def on_join(data):
     username = current_user.dict['username']
-    
     roomcode = data['room']
-    
     
     if gameExists(roomcode):
         join_room(roomcode)
         print(f'{username} has joined the room')
-        if roomcode in games:  # wut
-            userdict = generateUserDict(roomcode)
-            emit('userupdate', userdict, room=roomcode, json=True)
-        else:
-            return False
+        emit('userupdate', generateUserDict(roomcode), room=roomcode, json=True)
 
 
 @socketio.on('leave')
 def on_leave(data):
     username = current_user.dict['username']
     roomcode = data['room']
-    print(f"{username} wishes to leave")
     
     leave_room(roomcode)
 
-    if gameExists(roomcode):
+    if gameExists(roomcode) and playerExists(username, roomcode):
+        if playerCount(roomcode) >= 2:
+            if playerRole(username, roomcode) == 'admin':
+                for tempuser in getPlayers(roomcode):
+                    madeadmin = False
+                    if playerRole(tempuser, roomcode) != 'admin' and madeadmin == False:
+                        setRole(tempuser, roomcode, 'admin')
+                        madeadmin = True
         
-        #if username in games[roomcode]['players']:
-        if playerExists(username, roomcode):
-            if playerCount(roomcode) >= 2:
-                if playerRole(username, roomcode) == 'admin':
-                    for usernameiter in getPlayers(roomcode):
-                        madeadmin = False
-                        if playerRole(usernameiter,roomcode) != 'admin' and madeadmin == False:
-                            setRole(usernameiter,roomcode,'admin')
-                            print(f'making {usernameiter} an admin')
-                            madeadmin = True
-            else:
-                removeGame(roomcode)
-            
-            print(f"removing {username}")                
-            removeUser(username, roomcode)
-
-              
-        if gameExists(roomcode) and playerCount(roomcode) != 0:
             emit('userupdate', generateUserDict(roomcode), room=roomcode, json=True)
-            
+            removeUser(username, roomcode)
         else:
-            return False
+            removeGame(roomcode)
 
 
 @socketio.on('requestgamestart')
