@@ -124,7 +124,7 @@ def onrequestgamestart(data):
             games[roomcode]['players'][username]['timestarted'] = datetime.datetime.now()
 
         if games[roomcode]['players'][username]['completed'] == False:
-            emit('sudokustr', {'content': games[roomcode]['sudoku']}, json=True)
+            emit('sudokustr', {'sudoku': games[roomcode]['sudoku'],'autocomplete':'true'}, json=True) #TODO send autocomplete
         else: # Covers refresh case
             emit('completed', getcompletedjson(roomcode,username) ,json=True)
 

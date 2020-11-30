@@ -122,6 +122,8 @@
     var selX = null;
     var selY = null;
 
+
+    var autocomplete = false;
     var testmode = false;
     var completed = false;
 
@@ -417,11 +419,14 @@
     });
 
     socket.on("sudokustr", function(jason) {
-        console.log(jason['content']);
+        console.log(jason['sudoku']);
         $('#tablediv').show();
         $('#loadingtext').hide();
-        fillSudoku(jason['content']);
-        console.log('filled')
+        fillSudoku(jason['sudoku']);
+        if (jason['autocomplete'] == 'true'){
+            console.log('autocomplete enabled')
+            autocomplete = true
+        }
     });
 
     socket.on("tableupdate", function(jason) {

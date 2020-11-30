@@ -3,8 +3,6 @@ games = {}
 #games = Dict()
 
 
-
-
 def addGame(roomcode:str, type:str):
     pass
 
