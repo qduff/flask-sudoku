@@ -5,15 +5,16 @@
 <script>
     function showPasswordBox() {
         var checkBox = document.getElementById("myCheck");
-        var text = document.getElementById("passfield");
+        var passworddiv = document.getElementById("usepassword");
       
         // If the checkbox is checked, display the output text
         if (checkBox.checked == true){
-          text.style.display = "inherit";
+            passworddiv.style.display = "block";
         } else {
-          text.style.display = "none";
+            passworddiv.style.display = "none";
         }
       } 
+
 </script>
 
 <h1 class="title">Host game</h1>
@@ -32,18 +33,15 @@
             <label for="name" class="form__label">Room Name</label>
         </div>
 
-        <div id="usepassword" style="padding-bottom: 5px;">
-            <input type="checkbox" id="myCheck" onclick="showPasswordBox()"> Password protect room 
-    
-            <div class="form__group field" id="passfield" style="display:none">
-                <input class="form__field" type="text" name="password" placeholder="Room Password" autofocus="" required>
-                <label for="name" class="form__label">Room Password</label>
-            </div>
-        
+        <input type="checkbox" id="myCheck" onclick="showPasswordBox()"> Password protect room 
+        <div class="form__group field" id="usepassword" style="padding-bottom: 5px; display:none;">
+            <input class="form__field" type="text" name="password" placeholder="Room Password" >
+            <label for="name" class="form__label">Room Password</label>
         </div>
         
         <div class="btn-group">
-            <a href="#" onclick="$(this).closest('form').submit()" class="button">Create Game</a>
+            <input type="submit" style="display: none;">
+            <a  style="margin-top: 5px;" type="submit" href="#" onclick="$(this).closest('form').submit()" class="button">Create Game</a>
         </div>
     </form>
 </div>

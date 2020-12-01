@@ -59,14 +59,14 @@ def joingame_post():
 
 @game.route('/authgame/<roomcode>', methods=['POST'])
 def auth_post(roomcode):
+    username = current_user.id['username']
     pw = request.form.get('gamepass')
     
-    print(pw,games[roomcode]['password'] )
+    #print(pw,games[roomcode]['password'] )
     
     if pw == games[roomcode]['password']: #TODO Getgameattr
 
-        addUser(current_user.id['username'],roomcode,'default')
-        #games[id]['players'].update({current_user.id['username']:{'completed':False,'role':'default'}})
+        addUser(username=username,roomcode=roomcode,role='default')
     
     return redirect(url_for('game.lobby',roomcode=roomcode)) #not efficitent but works
 
