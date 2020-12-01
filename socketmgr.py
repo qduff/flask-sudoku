@@ -63,8 +63,10 @@ def onrequestgamestart(data):
         nplayers = playerCount(roomcode)
         if nplayers >=2:
             if playerRole(username, roomcode) == 'admin':
-                json = {'url': str(url_for('game.playpage', roomcode=roomcode)),'players':generateUserDict(roomcode)}
-                games[roomcode]['sudoku'], games[roomcode]['sudokusol'] = generate() # Automate this
+                json = {'url': str(url_for('game.playpage', roomcode=roomcode)),
+                        'players':generateUserDict(roomcode)}
+                
+                games[roomcode]['sudoku'], games[roomcode]['sudokusol'] = generate() # TODO Automate this 
 
                 setGameProperty(roomcode,'started',True)
 
