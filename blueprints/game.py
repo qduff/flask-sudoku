@@ -69,7 +69,7 @@ def lobby(roomcode):
                 return redirect(url_for('game.joingame'))
             else:                
                 if not playerExists(username=username, roomcode=roomcode):
-                    if getGameProperty('password') != None:
+                    if getGameProperty(roomcode, 'password') != None:
                         return render_template('enterpass.html', roomcode=roomcode)
                     else:
                         addUser(username,roomcode,'default')
@@ -77,7 +77,7 @@ def lobby(roomcode):
                     admin = True
                 else:
                     admin = False
-                return render_template('lobby.html', gamecode = roomcode, admin = admin, roomname = getGameProperty('name'))
+                return render_template('lobby.html', gamecode = roomcode, admin = admin, roomname = getGameProperty(roomcode, 'name'))
         else:
             flash('That game ID does not exist!')
             return redirect(url_for('game.joingame'))
@@ -97,7 +97,7 @@ def playpage(roomcode):
     username =  current_user.dict['username']
     try:
         if gameExists(roomcode):
-            if getGameProperty('started') == True:
+            if getGameProperty(roomcode,'started') == True:
                 if playerExists(username=username, roomcode=roomcode):
                     return render_template('sudoku.html',gamecode = roomcode)
                 else:

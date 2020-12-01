@@ -60,6 +60,10 @@ def setUserProperty(roomcode, username, property, desired):
 
 # GET
 
+def getUserCompletionTime(roomcode,username):
+    return round(getUserProperty(roomcode,username,'timetaken').total_seconds(),1)
+    
+
 def getGameProperty(roomcode, property):
     return games[roomcode][property]
 

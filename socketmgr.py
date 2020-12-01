@@ -6,6 +6,7 @@ from gamesdb import *
 from flask.helpers import url_for
 import datetime
 from sudokutools.generate import generate
+import pprint
 
 app = create_app()
 
@@ -27,8 +28,7 @@ def on_join(data):
     
     if gameExists(roomcode):
         join_room(roomcode)
-        print(f'{username} has joined the room')
-        emit('userupdate', generateUserDict(roomcode), room=roomcode, json=True)
+        emit('userupdate', generatePlayerDict(roomcode), room=roomcode, json=True)
 
 
 @socketio.on('leave')
@@ -37,7 +37,6 @@ def on_leave(data):
     roomcode = data['room']
     
     leave_room(roomcode)
-
     if gameExists(roomcode) and playerExists(username, roomcode):
         if playerCount(roomcode) >= 2:
             if playerRole(username, roomcode) == 'admin':
@@ -47,7 +46,7 @@ def on_leave(data):
                         setRole(tempuser, roomcode, 'admin')
                         madeadmin = True
         
-            emit('userupdate', generateUserDict(roomcode), room=roomcode, json=True)
+            emit('userupdate', generatePlayerDict(roomcode), room=roomcode, json=True)
             removeUser(username, roomcode)
         else:
             removeGame(roomcode)
@@ -64,16 +63,20 @@ def onrequestgamestart(data):
         if nplayers >=2:
             if playerRole(username, roomcode) == 'admin':
                 json = {'url': str(url_for('game.playpage', roomcode=roomcode)),
-                        'players':generateUserDict(roomcode)}
+                        'players':generatePlayerDict(roomcode)}
                 
-                games[roomcode]['sudoku'], games[roomcode]['sudokusol'] = generate() # TODO Automate this 
+                sudoku,sudokusol  = generate() # TODO Automate this 
+
+                setGameProperty(roomcode,'sudoku',sudoku)
+                setGameProperty(roomcode,'sudokusol', sudokusol) 
 
                 setGameProperty(roomcode,'started',True)
 
+                setGameProperty(roomcode,'timestarted', datetime.datetime.now())
+
                 emit('startgame',json, room=roomcode, json=True)
-                
-            else: return emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
-        else: emit('cannotstart',{'msg':f"At least {games[roomcode]['playersrequired']} Players required to start, only {nplayers} in the lobby."}, json=True)
+            else: emit('cannotstart',{'msg':f'You are not an admin.'}, json=True)
+        else: emit('cannotstart',{'msg':f"At least {getGameProperty(roomcode,'playersrequired')} Players required to start, only {nplayers} in the lobby."}, json=True)
 
       
 ###############################################
@@ -93,18 +96,17 @@ def onrequestgamestart(data):
     if gameExists(roomcode) and getGameProperty(roomcode, 'started') == True:
         join_room(roomcode)
 
-        if games[roomcode]['players'][username]['timestarted'] == None:
-            games[roomcode]['players'][username]['timestarted'] = datetime.datetime.now()
+        #if games[roomcode]['players'][username]['timestarted'] == None:
+        #    games[roomcode]['players'][username]['timestarted'] = datetime.datetime.now()
 
-        if games[roomcode]['players'][username]['completed'] == False:
+        if getUserProperty(roomcode,username,'completed') == False:
             # TODO send autocomplete
-            emit('sudokustr', {'sudoku': games[roomcode]['sudoku'], 'autocomplete': 'true'}, json=True)
+            emit('sudokustr', {'sudoku': getGameProperty(roomcode,'sudoku'), 'autocomplete': 'true'}, json=True)
         else:  # Covers refresh case
             emit('completed', getcompletedjson(roomcode, username), json=True)
 
         # send complete table, so the player has a table (DOES _NOT_ have to be to room but might as well)
-        emit('tableupdate', gencompletiondict(
-            room=roomcode), json=True, room=roomcode)
+        emit('tableupdate', gencompletiondict(roomcode=roomcode), json=True, room=roomcode)
 
     else:  # Does nothing on client side, futureproofing, i guess
         emit('redirect', {'url': f"/"}, json=True)
@@ -119,51 +121,58 @@ def sudokusubmit(data):
         return
     
     #check that user has not already completed the sudoku (done), and started
-    if games[roomcode]['players'][username]['completed'] == False:  # does this even work? apparently. 
-        if int(games[roomcode]['sudokusol']) == int(data['string']):
-            time = datetime.datetime.now() - games[roomcode]['players'][username]['timestarted']
-            games[roomcode]['players'][username]['completed'] = time
+    if getUserProperty(roomcode,username,'completed') == False:  # does this even work? apparently.
+         
+        print(getGameProperty(roomcode,'sudokusol'),data['string'] )
+
+        if getGameProperty(roomcode,'sudokusol') == data['string']:
+            print('completed!')
             
+            currenttime = datetime.datetime.now()
+            setUserProperty(roomcode,username,'timecompleted',desired=currenttime)
+            timetaken = currenttime - getGameProperty(roomcode,'timestarted')
+            setUserProperty(roomcode,username,'timetaken',desired=timetaken) 
+            setUserProperty(roomcode,username,'completed',True)
             
             emit('completed', getcompletedjson(roomcode,username) ,json=True)
 
         # send complete table, regardless of correctness
-        emit('tableupdate', gencompletiondict(roomcode), json=True, room=roomcode)
+        emit('tableupdate',gencompletiondict(roomcode) , json=True, room=roomcode)
             
     else: # If already done (shouldnt happen)
         emit('completed', getcompletedjson(roomcode,username) ,json=True)
 
 
 
-def getcompletedjson(room,username):
-    return {'place':f'You came in {1} Place!','time': f"Completed in {round(games[room]['players'][username]['completed'].total_seconds(),1)}s!"}
+def getcompletedjson(roomcode,username):
+    return {'place':f'You came in {1} Place!','time': f"Completed in {getUserCompletionTime(roomcode,username)}s!"}
     #TODO DO PLACE FUNCTIONALITY
 
 
-def gencompletiondict(room):  # do progress also, and order by completion
+def gencompletiondict(roomcode):  # do progress also, and order by completion
     completiondict = {}
-    for item in games[room]['players']:
-        print(item)
-        
-        if playerRole(item, room) == 'admin':
+    #pprint.pprint(games)
+    for username in getPlayers(roomcode):      
+        if playerRole(username, roomcode) == 'admin':
             role = 'admin'
         else:
             role = 'default'
-        
-        if games[room]['players'][item]['completed'] == False:
+            
+        print(getUserProperty(roomcode, username, 'completed'))
+        if getUserProperty(roomcode, username, 'completed') == False:
             completed = 'false'
         else:
-            completed = str(round(games[room]['players'][item]['completed'].total_seconds(),1))+'s'
+            completed = str(getUserCompletionTime(roomcode,username))+'s'
         
-        tempdict = {'role':str(role), 'completed':completed}
-        print(tempdict)
-        completiondict[str(item)] = tempdict
+        tempdict = {'role':role, 'completed':completed}
+        completiondict[username] = tempdict
+        
         #TODO Progress indicator on server _and_ client
 
     return completiondict
 
 
-def generateUserDict(room):
+def generatePlayerDict(room):
     userdict = {}
     for item in games[room]['players']:
         if playerRole(item, room) == 'admin':
