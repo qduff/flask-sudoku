@@ -147,15 +147,13 @@ def sudokusubmit(data):
 
 def getcompletedjson(roomcode,username):
     place = getUserProperty(roomcode,username,'place')
-    return {'place':f'You came in {place} Place!','time': f"Completed in {getUserCompletionTime(roomcode,username)}s!"}
-    
-    #TODO DO PLACE FUNCTIONALITY
+    time = getUserCompletionTime(roomcode,username)
+    return {'place':f'You came in {place} Place!','time': f"Completed in {time}s!"}
 
 
 def gencompletiondict(roomcode):  # do progress also, and order by completion
     completiondict = {}
-    #pprint.pprint(games)
-    for username in getPlayers(roomcode):      
+    for username in getPlayers(roomcode):
         if playerRole(username, roomcode) == 'admin':
             role = 'admin'
         else:
