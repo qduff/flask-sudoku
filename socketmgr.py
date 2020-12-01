@@ -57,7 +57,7 @@ def onrequestgamestart(data):
     username = current_user.dict['username']
     roomcode = data['room']
     
-    print('starrt event triggered by '+username)
+    #print('starrt event triggered by '+username)
     if gameExists(roomcode):
         nplayers = playerCount(roomcode)
         if nplayers >=2:
@@ -122,17 +122,18 @@ def sudokusubmit(data):
     
     #check that user has not already completed the sudoku (done), and started
     if getUserProperty(roomcode,username,'completed') == False:  # does this even work? apparently.
-         
-        print(getGameProperty(roomcode,'sudokusol'),data['string'] )
-
-        if getGameProperty(roomcode,'sudokusol') == data['string']:
-            print('completed!')
-            
+        
+        if getGameProperty(roomcode,'sudokusol') == data['string']:      
             currenttime = datetime.datetime.now()
             setUserProperty(roomcode,username,'timecompleted',desired=currenttime)
             timetaken = currenttime - getGameProperty(roomcode,'timestarted')
             setUserProperty(roomcode,username,'timetaken',desired=timetaken) 
             setUserProperty(roomcode,username,'completed',True)
+            
+            newnumcompleted =  getGameProperty(roomcode,'numcompleted')+1
+            setGameProperty(roomcode,'numcompleted', newnumcompleted) 
+            
+            setUserProperty(roomcode,username,'place', newnumcompleted)
             
             emit('completed', getcompletedjson(roomcode,username) ,json=True)
 
@@ -145,7 +146,9 @@ def sudokusubmit(data):
 
 
 def getcompletedjson(roomcode,username):
-    return {'place':f'You came in {1} Place!','time': f"Completed in {getUserCompletionTime(roomcode,username)}s!"}
+    place = getUserProperty(roomcode,username,'place')
+    return {'place':f'You came in {place} Place!','time': f"Completed in {getUserCompletionTime(roomcode,username)}s!"}
+    
     #TODO DO PLACE FUNCTIONALITY
 
 
@@ -158,7 +161,6 @@ def gencompletiondict(roomcode):  # do progress also, and order by completion
         else:
             role = 'default'
             
-        print(getUserProperty(roomcode, username, 'completed'))
         if getUserProperty(roomcode, username, 'completed') == False:
             completed = 'false'
         else:

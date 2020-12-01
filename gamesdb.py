@@ -20,7 +20,8 @@ def addGame(roomname: str, gametype: str, password: str = None, playersrequired:
              'started': False,
              'timestarted': None,
              'playersrequired': playersrequired,
-             'players': {}
+             'players': {},
+             'numcompleted': 0
              }
          }
     )
@@ -33,7 +34,8 @@ def addUser(username: str, roomcode: str, role: str = 'default'):
             {'role': role,
              'completed': False,
              'timecompleted': None,
-             'timetaken': None
+             'timetaken': None,
+             'place': None
              }
          }
     )
