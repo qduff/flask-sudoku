@@ -432,35 +432,36 @@
     socket.on("tableupdate", function(jason) {
         console.log('tableupdate')
 
+        empty = jason['empty']
+
+
         var j = 0;
 
         var table = document.getElementById("completiontable");
         table.innerHTML = "";
 
-        for (var name in jason) {
+        for (var name in jason['players']) {
             var row = table.insertRow(j);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
+            //var cell3 = row.insertCell(2);
 
             cell1.innerHTML = name;
 
-            if (jason[name]['completed'] == 'false'){
-                cell2.innerHTML = 'Working...' //maybe time idk
+            if (jason['players'][name]['completed'] == 'false'){
+                //cell2.innerHTML = 'Working...' //maybe time idk
+                cell2.innerHTML = jason['players'][name]['filledlen']+'/'+empty;
+
             }
             else{
-                cell2.innerHTML = jason[name]['completed'];
+                cell2.innerHTML = jason['players'][name]['completed'];
             }
 
-            
 
-
+        
             var img = document.createElement("img");
 
-            
-            img.id = "picture"
-            cell3.appendChild(img)
-
+          
             j = j + 1
         
         }

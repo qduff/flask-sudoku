@@ -35,7 +35,8 @@ def addUser(username: str, roomcode: str, role: str = 'default'):
              'completed': False,
              'timecompleted': None,
              'timetaken': None,
-             'place': None
+             'place': None,
+             'latestsubmit':None
              }
          }
     )

@@ -28,7 +28,7 @@ def on_join(data):
     
     if gameExists(roomcode):
         join_room(roomcode)
-        emit('userupdate', generatePlayerDict(roomcode), room=roomcode, json=True)
+        emit('userupdate', lobbydict(roomcode), room=roomcode, json=True)
 
 
 @socketio.on('leave')
@@ -46,7 +46,7 @@ def on_leave(data):
                         setRole(tempuser, roomcode, 'admin')
                         madeadmin = True
         
-            emit('userupdate', generatePlayerDict(roomcode), room=roomcode, json=True)
+            emit('userupdate', lobbydict(roomcode), room=roomcode, json=True)
             removeUser(username, roomcode)
         else:
             removeGame(roomcode)
@@ -63,7 +63,7 @@ def onrequestgamestart(data):
         if nplayers >=2:
             if playerRole(username, roomcode) == 'admin':
                 json = {'url': str(url_for('game.playpage', roomcode=roomcode)),
-                        'players':generatePlayerDict(roomcode)}
+                        'players':lobbydict(roomcode)}
                 
                 sudoku,sudokusol  = generate() # TODO Automate this 
 
@@ -106,7 +106,7 @@ def onrequestgamestart(data):
             emit('completed', getcompletedjson(roomcode, username), json=True)
 
         # send complete table, so the player has a table (DOES _NOT_ have to be to room but might as well)
-        emit('tableupdate', gencompletiondict(roomcode=roomcode), json=True, room=roomcode)
+        emit('tableupdate', completiontabledict(roomcode=roomcode), json=True, room=roomcode)
 
     else:  # Does nothing on client side, futureproofing, i guess
         emit('redirect', {'url': f"/"}, json=True)
@@ -116,12 +116,14 @@ def onrequestgamestart(data):
 def sudokusubmit(data):
     username = current_user.dict['username']
     roomcode = data['room']
+    print('\nsubmityting')
 
     if roomcode == "": 
         return
     
     #check that user has not already completed the sudoku (done), and started
     if getUserProperty(roomcode,username,'completed') == False:  # does this even work? apparently.
+        setUserProperty(roomcode,username, 'latestsubmit', data['string'])
         
         if getGameProperty(roomcode,'sudokusol') == data['string']:      
             currenttime = datetime.datetime.now()
@@ -138,7 +140,7 @@ def sudokusubmit(data):
             emit('completed', getcompletedjson(roomcode,username) ,json=True)
 
         # send complete table, regardless of correctness
-        emit('tableupdate',gencompletiondict(roomcode) , json=True, room=roomcode)
+        emit('tableupdate',completiontabledict(roomcode) , json=True, room=roomcode)
             
     else: # If already done (shouldnt happen)
         emit('completed', getcompletedjson(roomcode,username) ,json=True)
@@ -151,8 +153,13 @@ def getcompletedjson(roomcode,username):
     return {'place':f'You came in {place} Place!','time': f"Completed in {time}s!"}
 
 
-def gencompletiondict(roomcode):  # do progress also, and order by completion
-    completiondict = {}
+def completiontabledict(roomcode):  # do progress also, and order by completion
+    totalnums = len(getGameProperty(roomcode, 'sudokusol'))
+    nonzeronums = len(getGameProperty(roomcode, 'sudoku').strip('0'))
+    numempty = totalnums - nonzeronums
+    
+    completiondict = {'empty': numempty, 'players':{}}
+    
     for username in getPlayers(roomcode):
         if playerRole(username, roomcode) == 'admin':
             role = 'admin'
@@ -164,15 +171,30 @@ def gencompletiondict(roomcode):  # do progress also, and order by completion
         else:
             completed = str(getUserCompletionTime(roomcode,username))+'s'
         
-        tempdict = {'role':role, 'completed':completed}
-        completiondict[username] = tempdict
+        latestsubmit = getUserProperty(roomcode, username, 'latestsubmit')
+        
+        print(f'{username}, {latestsubmit}')
+        
+        if latestsubmit == None:
+            filledlen = 0
+        else:
+            latestsubmit = str(latestsubmit).replace('0','')
+            temp = len(latestsubmit)
+            print(f'{username}{temp}')
+            filledlen = numempty - ( totalnums - temp)
+            
+        print(f"{username} {filledlen=}")
+
+        tempdict = {'role':role, 'completed':completed, 'filledlen':filledlen}
+        
+        completiondict['players'][username] = tempdict
         
         #TODO Progress indicator on server _and_ client
 
     return completiondict
 
 
-def generatePlayerDict(room):
+def lobbydict(room):
     userdict = {}
     for item in games[room]['players']:
         if playerRole(item, room) == 'admin':
