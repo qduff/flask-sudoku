@@ -155,7 +155,7 @@ def getcompletedjson(roomcode,username):
 
 def completiontabledict(roomcode):  # do progress also, and order by completion
     totalnums = len(getGameProperty(roomcode, 'sudokusol'))
-    nonzeronums = len(getGameProperty(roomcode, 'sudoku').strip('0'))
+    nonzeronums = len(str(getGameProperty(roomcode, 'sudoku')).replace('0',''))
     numempty = totalnums - nonzeronums
     print(numempty)
     
