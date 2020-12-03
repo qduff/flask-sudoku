@@ -6,7 +6,6 @@ from gamesdb import *
 from flask.helpers import url_for
 import datetime
 from sudokutools.generate import generate
-import pprint
 
 app = create_app()
 
@@ -116,7 +115,6 @@ def onrequestgamestart(data):
 def sudokusubmit(data):
     username = current_user.dict['username']
     roomcode = data['room']
-    print('\nsubmityting')
 
     if roomcode == "": 
         return
@@ -157,7 +155,6 @@ def completiontabledict(roomcode):  # do progress also, and order by completion
     totalnums = len(getGameProperty(roomcode, 'sudokusol'))
     nonzeronums = len(str(getGameProperty(roomcode, 'sudoku')).replace('0',''))
     numempty = totalnums - nonzeronums
-    print(numempty)
     
     completiondict = {'empty': numempty, 'players':{}}
     
@@ -173,25 +170,17 @@ def completiontabledict(roomcode):  # do progress also, and order by completion
             completed = str(getUserCompletionTime(roomcode,username))+'s'
         
         latestsubmit = getUserProperty(roomcode, username, 'latestsubmit')
-        
-        print(f'{username}, {latestsubmit}')
-        
+                
         if latestsubmit == None:
             filledlen = 0
         else:
             latestsubmit = str(latestsubmit).replace('0','')
-            temp = len(latestsubmit)
-            print(f'{username}{temp}')
-            filledlen = numempty - ( totalnums - temp)
-            
-        print(f"{username} {filledlen=}")
+            filledlen = numempty - ( totalnums - len(latestsubmit)) # works?
 
         tempdict = {'role':role, 'completed':completed, 'filledlen':filledlen}
         
         completiondict['players'][username] = tempdict
         
-        #TODO Progress indicator on server _and_ client
-
     return completiondict
 
 
