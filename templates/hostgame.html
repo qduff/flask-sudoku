@@ -14,7 +14,6 @@
             passworddiv.style.display = "none";
         }
       } 
-
 </script>
 
 <h1 class="title">Host game</h1>
@@ -28,17 +27,37 @@
     {% endwith %}
     
     <form method="POST" action="/hostgame">
-        <div class="form__group field">
-            <input class="form__field" type="username" name="roomname" placeholder="Room Name" autofocus="" required>
-            <label for="name" class="form__label">Room Name</label>
+
+        <div id="left-half" style="float: left; width: 50%;">
+
+            <div class="form__group field">
+                <input class="form__field" type="username" name="roomname" placeholder="Room Name" autofocus="" required>
+                <label for="name" class="form__label">Room Name</label>
+            </div>
+
+            
+            <input type="checkbox" id="myCheck" onclick="showPasswordBox()" style="margin-top: 15px; margin-bottom:10px;"> Password protect room 
+            <div class="form__group field" id="usepassword" style="padding-bottom: 5px; display:none; margin-top:0px;">
+                <input class="form__field" type="text" name="password" placeholder="Room Password" >
+                <label for="name" class="form__label">Room Password</label>
+            </div>
+
         </div>
 
-        <input type="checkbox" id="myCheck" onclick="showPasswordBox()"> Password protect room 
-        <div class="form__group field" id="usepassword" style="padding-bottom: 5px; display:none;">
-            <input class="form__field" type="text" name="password" placeholder="Room Password" >
-            <label for="name" class="form__label">Room Password</label>
-        </div>
         
+        <div id="right-half" style="float: left; width: 50%;">
+
+            <h2>Options</h2>
+            <h3>Difficulty</h3>
+
+            <input type="radio" id="easy" name= "difficulty" value="easy">
+            <label for="easy">Easy</label><br>
+
+            <input type="radio" id="medium" name= "difficulty" value="medium">
+            <label for="easy">Medium</label><br>
+        </div>
+
+        <br>
         <div class="btn-group">
             <input type="submit" style="display: none;">
             <a  style="margin-top: 5px;" type="submit" href="#" onclick="$(this).closest('form').submit()" class="button">Create Game</a>
