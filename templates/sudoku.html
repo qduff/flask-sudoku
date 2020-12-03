@@ -298,6 +298,9 @@
     }
 
     function keyDown(e) {
+        if (e.code == 'Backspace'){
+            e.preventDefault()
+        }
         if (selX !== null && selY !== null) {
             if (!e.altKey) {
                 // Normal movement

@@ -1,53 +1,34 @@
-def generate():
-    sudoku =   [[0, 0, 4,   0, 0, 0,   0, 6, 7],
-                [3, 0, 0,   4, 7, 0,   0, 0, 5],
-                [1, 5, 0,   8, 2, 0,   0, 0, 3],
+# !/usr/bin/python
+import sys
+from sudokutools.Sudoku.Generator import *
 
-                [0, 0, 6,   0, 0, 0,   0, 3, 1],
-                [8, 0, 2,   1, 0, 5,   6, 0, 4],
-                [4, 1, 0,   0, 0, 0,   9, 0, 0],
+# setting difficulties and their cutoffs for each solve method
+difficulties = {
+    'easy': (35, 0), 
+    'medium': (81, 5), 
+    'hard': (81, 10), 
+    'extreme': (81, 15)
+}
 
-                [7, 0, 0,   0, 8, 0,   0, 4, 6],
-                [6, 0, 0,   0, 1, 2,   0, 0, 0],
-                [9, 3, 0,   0, 0, 0,   7, 1, 0]]
+
+def generate(difficulty = 'easy'):
+    difficulty = difficulties[difficulty]
+    gen = Generator()
+    gen.randomize(100)
+
+    solution = str(gen.board.copy())
+
+    gen.reduce_via_logical(difficulty[0])
+
+    if difficulty[1] != 0:
+        gen.reduce_via_random(difficulty[1])
+
+    final = str(gen.board.copy())
+
+    return final, solution
+    # printing out board after reduction
     
-    """ sudoku   = [[0, 0, 0,   5, 9, 3,   1, 6, 7],
-                [3, 6, 9,   4, 7, 1,   8, 2, 5],
-                [1, 5, 7,   8, 2, 6,   4, 9, 3],
+a , b = generate()
 
-                [5, 7, 6,   9, 4, 8,   2, 3, 1],
-                [8, 9, 2,   1, 3, 5,   6, 7, 4],
-                [4, 1, 3,   2, 6, 7,   9, 5, 8],
 
-                [7, 2, 1,   3, 8, 9,   5, 4, 6],
-                [6, 4, 5,   7, 1, 2,   3, 8, 9],
-                [9, 3, 8,   6, 5, 4,   7, 1, 2]] """
-    
-    solution = [[2, 8, 4,   5, 9, 3,   1, 6, 7],
-                [3, 6, 9,   4, 7, 1,   8, 2, 5],
-                [1, 5, 7,   8, 2, 6,   4, 9, 3],
-
-                [5, 7, 6,   9, 4, 8,   2, 3, 1],
-                [8, 9, 2,   1, 3, 5,   6, 7, 4],
-                [4, 1, 3,   2, 6, 7,   9, 5, 8],
-
-                [7, 2, 1,   3, 8, 9,   5, 4, 6],
-                [6, 4, 5,   7, 1, 2,   3, 8, 9],
-                [9, 3, 8,   6, 5, 4,   7, 1, 2]]
-    
-    sudokustr = ''
-    for y in sudoku:
-        for x in y:
-            sudokustr+=str(x)
-    
-    solutionstr = ''
-    for y in solution:
-        for x in y:
-            solutionstr+=str(x)
-            
-
-    return sudokustr, solutionstr
-
-sudoku, solution = generate()
-
-print(sudoku, solution)
+print(a,b)

@@ -1,94 +1,87 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}{% endblock %}</title>
 
-    <title>{% block title %}{% endblock %}</title>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        {% assets "scss_all" %}
+        <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
+        {% endassets %}
+    </head>
 
-    {% assets "scss_all" %}
-    <link rel="stylesheet" href="{{ ASSET_URL }}" type="text/css" />
-    {% endassets %}
-</head>
-
-<body>
-    <header>
-        <figure class="brand">
-            {% if current_user.is_authenticated %}
-                <div class="navbar-item">
-                    Logged in as: &nbsp; <b> {{current_user.dict['username']}}</b>
-                    {% if current_user.is_guest() %}
-                        &nbsp; (guest)
-                    {% endif %}
-                </div>
-            {% endif %}
-        </figure>
-        <nav class="menu">
-            <input type="checkbox" id="menuToggle">
-            <label for="menuToggle" class="menu-icon"><i class="fa fa-bars"></i></label>
-            <ul>
-                <a href="{{ url_for('main.index') }}">
-                    <li>Home</li>
-                </a>
-
+    <body>
+        <header>
+            <figure class="brand">
                 {% if current_user.is_authenticated %}
-                    {% if not current_user.is_guest() %}
-                        <a href="{{ url_for('game.hostgame') }}">
-                            <li>Host Game</li>
+                    <div class="navbar-item">
+                        Logged in as: &nbsp; <b> {{current_user.dict['username']}}</b>
+                        {% if current_user.is_guest() %}
+                            &nbsp; (guest)
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </figure>
+            <nav class="menu">
+                <input type="checkbox" id="menuToggle">
+                <label for="menuToggle" class="menu-icon"><i class="fa fa-bars"></i></label>
+                <ul>
+                    <a href="{{ url_for('main.index') }}">
+                        <li>Home</li>
+                    </a>
+
+                    {% if current_user.is_authenticated %}
+                        {% if not current_user.is_guest() %}
+                            <a href="{{ url_for('game.hostgame') }}">
+                                <li>Host Game</li>
+                            </a>
+                        {%endif%}
+                        
+                        <a href="{{ url_for('game.joingame') }}">
+                            <li>Join Game</li>
+                        </a>
+                        {% if not current_user.is_guest() %}
+                            <a href="{{ url_for('auth.profile') }}">
+                                <li>Profile</li>
+                            </a>
+                        {%endif%}
+
+                        <a href="{{ url_for('auth.logout') }}">
+                            <li>Logout</li>
                         </a>
                     {%endif%}
-                    
-                    <a href="{{ url_for('game.joingame') }}">
-                        <li>Join Game</li>
-                    </a>
-                    {% if not current_user.is_guest() %}
-                        <a href="{{ url_for('auth.profile') }}">
-                            <li>Profile</li>
+
+                    {% if not current_user.is_authenticated %}
+                        <a href="{{ url_for('auth.login') }}">
+                            <li>Log in</li>
+                        </a>
+                        <a href="{{ url_for('auth.signup') }}">
+                            <li>Sign up</li>
                         </a>
                     {%endif%}
+                </ul>
+            </nav>
+        </header>
 
-                    <a href="{{ url_for('auth.logout') }}">
-                        <li>Logout</li>
-                    </a>
-                {%endif%}
-
-                {% if not current_user.is_authenticated %}
-                    <a href="{{ url_for('auth.login') }}">
-                        <li>Log in</li>
-                    </a>
-                    <a href="{{ url_for('auth.signup') }}">
-                        <li>Sign up</li>
-                    </a>
-                {%endif%}
-            </ul>
-        </nav>
-    </header>
-
-    <div class="page-body">
-        {% block content %} {% endblock %}
-    </div>
-
-    <footer class="footer">
-
-        <div class='leftalign'>
-            Sudoku Project by QD and AL
+        <div class="page-body">
+            {% block content %} {% endblock %}
         </div>
-        <div class='rightalign'>
-            ver: beta-0.2.4
-        </div>
-        
-        
-    </footer>
 
-</body>
+        <footer class="footer">
+            <div class='leftalign'>
+                Sudoku Project by QD and AL
+            </div>
+            <div class='rightalign'>
+                ver: beta-0.2.4
+            </div>
+        </footer>
 
-
-
+    </body>
 </html>
