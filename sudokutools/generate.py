@@ -1,5 +1,3 @@
-# !/usr/bin/python
-import sys
 from sudokutools.Sudoku.Generator import *
 
 # setting difficulties and their cutoffs for each solve method
@@ -28,7 +26,3 @@ def generate(difficulty = 'easy'):
     return final, solution
     # printing out board after reduction
     
-a , b = generate()
-
-
-print(a,b)
