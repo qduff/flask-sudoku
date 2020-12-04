@@ -53,7 +53,6 @@ body {
             }
             td {
                 //font-size: 180%;
-
                 border: 1px dashed $col4;
                 border-collapse: collapse;
                 background-color: #454545;
@@ -89,7 +88,6 @@ body {
                 word-break: break-all;
                 word-wrap: break-word;
                 font-size: 200%;
-                
                 text-align: left;
             }
         }
@@ -134,6 +132,10 @@ body {
     //    margin: 0 auto;
     //    width: 500px;
     //}
+    .player-completion {
+        fill-opacity: attr(data-completion-width);
+        fill: $col3;
+    }
     div.btn-group {
         //width: 15rem;
         display: table;
@@ -194,7 +196,6 @@ body {
         li {
             list-style: none;
         }
-
         display: flex;
         justify-content: space-between;
         width: 100%;
@@ -210,20 +211,16 @@ body {
             float: left;
             margin: 0 0 0 5%;
             justify-content: flex-start;
-
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
-
         }
         .menu {
-
             justify-content: flex-end;
             padding: 0;
             padding-right: 15px;
             //display: block;
             //display: flex;
-
             width: 60%;
             height: 100%;
             float: right;
@@ -239,7 +236,6 @@ body {
             padding: 0;
             display: flex;
             //display: block;
-
             white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;

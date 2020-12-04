@@ -448,13 +448,17 @@
 
             cell1.innerHTML = name;
 
+            var d;
+
             if (jason['players'][name]['completed'] == 'false') {
                 //cell2.innerHTML = 'Working...' //maybe time idk
-                cell2.innerHTML = jason['players'][name]['filledlen'] + '/' + empty;
+                d = jason['players'][name]['filledlen'] + '/' + empty;
 
             } else {
-                cell2.innerHTML = jason['players'][name]['completed'];
+                d = jason['players'][name]['completed'];
             }
+
+            cell2.innerHTML = `<span>${d}</span><div class="player-completion" data-completion-width="${}"></div>`;
 
 
 
