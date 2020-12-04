@@ -99,8 +99,7 @@ def onrequestgamestart(data):
         #    games[roomcode]['players'][username]['timestarted'] = datetime.datetime.now()
 
         if getUserProperty(roomcode,username,'completed') == False:
-            # TODO send autocomplete
-            emit('sudokustr', {'sudoku': getGameProperty(roomcode,'sudoku'), 'autocomplete': 'true'}, json=True)
+            emit('sudokustr', {'sudoku': getGameProperty(roomcode,'sudoku'), 'autoclear': getGameProperty(roomcode,'autoclear')}, json=True)
         else:  # Covers refresh case
             emit('completed', getcompletedjson(roomcode, username), json=True)
 

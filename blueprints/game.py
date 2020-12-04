@@ -24,10 +24,13 @@ def hostgame_post():
         username= current_user.id['username']
         password = request.form.get('password')
         roomname = request.form.get('roomname')
+        autoclear = False if (request.form.get('autoclear') == None) else True
+        
+        print(autoclear)
         
         if not password: password = None # unneccessary but whatever
 
-        roomcode = addGame(roomname=roomname,gametype='sudoku',password=password,playersrequired=2, autoclear=True, difficulty=difficulty)
+        roomcode = addGame(roomname=roomname,gametype='sudoku',password=password,playersrequired=2, autoclear=autoclear, difficulty=difficulty)
         addUser(username=username,roomcode=roomcode,role='admin')
                 
         return redirect(url_for('game.lobby',roomcode=roomcode))

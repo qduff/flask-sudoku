@@ -422,11 +422,11 @@
     });
 
     socket.on("sudokustr", function(jason) {
-        console.log(jason['sudoku']);
+        console.log('autocomplete = '+jason['autoclear']);
         $('#tablediv').show();
         $('#loadingtext').hide();
         fillSudoku(jason['sudoku']);
-        if (jason['autocomplete'] == 'true'){
+        if (jason['autoclear'] == 'on'){
             console.log('autocomplete enabled')
             autocomplete = true
         }
