@@ -453,12 +453,20 @@
             if (jason['players'][name]['completed'] == 'false') {
                 //cell2.innerHTML = 'Working...' //maybe time idk
                 d = jason['players'][name]['filledlen'] + '/' + empty;
+                var pos = Math.floor(jason['players'][name]['filledlen'] / empty * 100)
+                cell2.innerHTML = d;
+                cell2.style.backgroundImage = `linear-gradient(to right, yellow ${pos}%, green ${pos}%)`;
+                cell2.style.borderRadius = "10px";
+                // <div class="player-completion-value" style="background-image: linear-gradient(to right, yellow ${pos}%, green ${pos}%);"> </div>
+
+
 
             } else {
-                d = jason['players'][name]['completed'];
+                // d = jason['players'][name]['completed'];
+                cell2.innerHTML = `<span>${jason['players'][name]['completed']}</span><div class="player-completion" width="100%"></div>`;
             }
 
-            cell2.innerHTML = `<span>${d}</span><div class="player-completion" data-completion-width="${}"></div>`;
+
 
 
 

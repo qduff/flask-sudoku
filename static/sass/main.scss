@@ -132,9 +132,11 @@ body {
     //    margin: 0 auto;
     //    width: 500px;
     //}
-    .player-completion {
-        fill-opacity: attr(data-completion-width);
-        fill: $col3;
+    .player-completion-value {
+        background-color: $col4;
+        position: relative;
+        left: 0px;
+        height: 10px;
     }
     div.btn-group {
         //width: 15rem;

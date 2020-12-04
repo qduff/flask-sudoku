@@ -83,9 +83,11 @@
                       border-bottom: 1px solid #dddddd; }
                       body .page-body #myTable tbody tr.active-row {
                         font-weight: bold; }
-      body .player-completion {
-        fill-opacity: attr(data-completion-width);
-        fill: #00ced1; }
+      body .player-completion-value {
+        background-color: #f6e9e9;
+        position: relative;
+        left: 0px;
+        height: 10px; }
         body div.btn-group {
           display: table; }
           body div.btn-group a.button {
