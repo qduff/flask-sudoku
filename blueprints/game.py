@@ -20,13 +20,14 @@ def hostgame():
 @game.route('/hostgame', methods=['POST'])
 def hostgame_post():
     if not current_user.is_guest():
+        difficulty = request.form['difficulty']
         username= current_user.id['username']
         password = request.form.get('password')
         roomname = request.form.get('roomname')
         
         if not password: password = None # unneccessary but whatever
 
-        roomcode = addGame(roomname=roomname,gametype='sudoku',password=password,playersrequired=2, autoclear=True)
+        roomcode = addGame(roomname=roomname,gametype='sudoku',password=password,playersrequired=2, autoclear=True, difficulty=difficulty)
         addUser(username=username,roomcode=roomcode,role='admin')
                 
         return redirect(url_for('game.lobby',roomcode=roomcode))

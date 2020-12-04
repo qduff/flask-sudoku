@@ -64,7 +64,7 @@ def onrequestgamestart(data):
                 json = {'url': str(url_for('game.playpage', roomcode=roomcode)),
                         'players':lobbydict(roomcode)}
                 
-                sudoku,sudokusol  = generate() # TODO Automate this 
+                sudoku,sudokusol  = generate(getGameProperty(roomcode,'difficulty')) # TODO Automate this 
 
                 setGameProperty(roomcode,'sudoku',sudoku)
                 setGameProperty(roomcode,'sudokusol', sudokusol) 
