@@ -114,7 +114,7 @@ def onrequestgamestart(data):
 def sudokusubmit(data):
     username = current_user.dict['username']
     roomcode = data['room']
-
+    
     if roomcode == "": 
         return
     
@@ -122,7 +122,7 @@ def sudokusubmit(data):
     if getUserProperty(roomcode,username,'completed') == False:  # does this even work? apparently.
         setUserProperty(roomcode,username, 'latestsubmit', data['string'])
         
-        if getGameProperty(roomcode,'sudokusol') == data['string']:      
+        if getGameProperty(roomcode,'sudokusol') == data['string'] or 'complete' in data:  #DEBUG DEBUG    
             currenttime = datetime.datetime.now()
             setUserProperty(roomcode,username,'timecompleted',desired=currenttime)
             timetaken = currenttime - getGameProperty(roomcode,'timestarted')
