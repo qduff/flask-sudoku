@@ -11,7 +11,9 @@ difficulties = {
 
 def generate(difficulty = 'easy'):
     difficulty = difficulties[difficulty]
+    
     gen = Generator()
+    
     gen.randomize(100)
 
     solution = str(gen.board.copy())
@@ -24,5 +26,4 @@ def generate(difficulty = 'easy'):
     final = str(gen.board.copy())
 
     return final, solution
-    # printing out board after reduction
     
