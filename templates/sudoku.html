@@ -124,7 +124,7 @@
     var selY = null;
 
 
-    var autocomplete = false;
+    var autoclear = false;
     var testmode = false;
     var completed = false;
 
@@ -426,10 +426,7 @@
         $('#tablediv').show();
         $('#loadingtext').hide();
         fillSudoku(jason['sudoku']);
-        if (jason['autoclear'] == 'on') {
-            console.log('autocomplete enabled')
-            autocomplete = true
-        }
+        autoclear = jason['autoclear']
     });
 
     socket.on("tableupdate", function(jason) {
