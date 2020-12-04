@@ -142,9 +142,10 @@
     function sendAns() {
         socket.emit("submitsudoku", {
             "room": "{{gamecode}}",
-            "string": "284593167369471825157826493576948231892135674413267958721389546645712389938654712"
+            "complete":"",
+            "string":""
         })
-        console.log('sent');
+        
     }
 
     function sendSudoku() {
@@ -452,11 +453,10 @@
             var d;
 
             if (jason['players'][name]['completed'] == 'false') {
-                //cell2.innerHTML = 'Working...' //maybe time idk
                 d = jason['players'][name]['filledlen'] + '/' + empty;
 
             } else {
-                cell0.innerHTML = jason[place]
+                cell0.innerHTML = jason[name]['place']
                 d = jason['players'][name]['completed'];
             }
 
