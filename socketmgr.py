@@ -175,10 +175,11 @@ def completiontabledict(roomcode):  # do progress also, and order by completion
         else:
             latestsubmit = str(latestsubmit).replace('0','')
             filledlen = numempty - ( totalnums - len(latestsubmit)) # works?
-
-        tempdict = {'role':role, 'completed':completed, 'filledlen':filledlen}
         
-        completiondict['players'][username] = tempdict
+        place = getUserProperty(roomcode, username, 'place')
+
+        completiondict['players'][username] = {'role':role, 'completed':completed, 'filledlen':filledlen, 'place':place}
+        
         
     return completiondict
 
