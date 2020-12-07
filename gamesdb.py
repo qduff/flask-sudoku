@@ -6,7 +6,7 @@ games = {}
 #games = Dict()
 
 
-def addGame(roomname: str, gametype: str, password: str = None, playersrequired: int = 2, autoclear:bool = True, difficulty:str = 'medium') -> str:
+def addGame(roomname: str, gametype: str, password: str = None, playersrequired: int = 2, autoclear:bool = True, difficulty:str = 'medium'):
     codelen = 4
     roomcode = 0
     while roomcode == 0 or roomcode in games:

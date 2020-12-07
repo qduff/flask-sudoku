@@ -113,7 +113,7 @@
     <h3 id="completiontext" style="display: none;">
         </h2>
 
-        <div id="tablediv">
+        <div id="sidetablediv">
             <table id="completiontable"></table>
         </div>
 
@@ -456,8 +456,8 @@
                 d = jason['players'][name]['filledlen'] + '/' + empty;
                 var pos = Math.floor(jason['players'][name]['filledlen'] / empty * 100)
                 cell2.innerHTML = d;
-                cell2.style.backgroundImage = `linear-gradient(to right, yellow ${pos}%, green ${pos}%)`;
-                cell2.style.borderRadius = "10px";
+                cell2.style.backgroundImage = `linear-gradient(to right, #292626 ${pos}%, #363333 ${pos}%)`;
+                cell2.style.borderRadius = "5px";
                 // <div class="player-completion-value" style="background-image: linear-gradient(to right, yellow ${pos}%, green ${pos}%);"> </div>
 
 

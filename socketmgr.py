@@ -180,7 +180,6 @@ def completiontabledict(roomcode):  # do progress also, and order by completion
 
         completiondict['players'][username] = {'role':role, 'completed':completed, 'filledlen':filledlen, 'place':place}
         
-        
     return completiondict
 
 

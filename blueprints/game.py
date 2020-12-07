@@ -3,7 +3,6 @@ from flask import Blueprint, render_template, redirect, url_for
 from flask.globals import request
 from flask.helpers import flash
 from flask_login.utils import login_required, current_user
-from werkzeug.urls import iri_to_uri
 
 game = Blueprint('game', __name__)
 
@@ -26,7 +25,6 @@ def hostgame_post():
         roomname = request.form.get('roomname')
         autoclear = False if (request.form.get('autoclear') == None) else True
         
-        print(autoclear)
         
         if not password: password = None # unneccessary but whatever
 
