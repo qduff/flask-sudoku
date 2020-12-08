@@ -132,7 +132,8 @@ def sudokusubmit(data):
             newnumcompleted =  getGameProperty(roomcode,'numcompleted')+1
             setGameProperty(roomcode,'numcompleted', newnumcompleted) 
             
-            setUserProperty(roomcode,username,'place', newnumcompleted)
+            ordinal = lambda n: "%d%s" % (n,"tsnrhtdd"[(n//10%10!=1)*(n%10<4)*n%10::4])
+            setUserProperty(roomcode,username,'place', ordinal(newnumcompleted))
             
             emit('completed', getcompletedjson(roomcode,username) ,json=True)
 

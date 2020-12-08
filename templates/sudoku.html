@@ -464,11 +464,20 @@
             } else {
                 cell0.innerHTML = jason['players'][name]['place']
                 d = jason['players'][name]['completed'];
-                cell2.innerHTML = d;
-                cell2.style.backgroundColor = "#00ced1";
-                cell2.style.borderRadius = "5px";
-                cell2.style.width = "100px";
-                cell2.style.paddingLeft = "10px";
+                if (completed) {
+                    cell2.classList.add('time-cell-self-finished')
+                    cell2.innerHTML = d;
+                    cell2.style.borderRadius = "5px";
+                    cell2.style.width = "100px";
+                    cell2.style.paddingLeft = "10px";
+                }
+                else {
+                    cell2.classList.add('time-cell-finished')
+                    cell2.innerHTML = d;
+                    cell2.style.borderRadius = "5px";
+                    cell2.style.width = "100px";
+                    cell2.style.paddingLeft = "10px";
+                }
             }
 
             //var img = document.createElement("img");
