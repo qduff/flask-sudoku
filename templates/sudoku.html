@@ -454,22 +454,22 @@
 
             if (jason['players'][name]['completed'] == 'false') {
                 d = jason['players'][name]['filledlen'] + '/' + empty;
-                var pos = Math.floor(jason['players'][name]['filledlen'] / empty * 100)
+                var pos = Math.floor(jason['players'][name]['filledlen'] / empty * 100);
+                // cell2.innerHTML = `<span style="margin-left: 10px;">${d}</span>`;
                 cell2.innerHTML = d;
-                cell2.style.backgroundImage = `linear-gradient(to right, yellow ${pos}%, green ${pos}%)`;
-                cell2.style.borderRadius = "10px";
-                // <div class="player-completion-value" style="background-image: linear-gradient(to right, yellow ${pos}%, green ${pos}%);"> </div>
-
-
-
+                cell2.style.backgroundImage = `linear-gradient(to right, #524f4f ${pos}%, #363333 ${pos}%)`;
+                cell2.style.borderRadius = "5px";
+                cell2.style.width = "100px";
+                cell2.style.paddingLeft = "10px";
             } else {
                 cell0.innerHTML = jason['players'][name]['place']
                 d = jason['players'][name]['completed'];
+                cell2.innerHTML = d;
+                cell2.style.backgroundColor = "#00ced1";
+                cell2.style.borderRadius = "5px";
+                cell2.style.width = "100px";
+                cell2.style.paddingLeft = "10px";
             }
-
-            cell2.innerHTML = `<span>${d}</span><div class="player-completion" data-completion-width="${d}"></div>`;
-
-
 
             //var img = document.createElement("img");
 
