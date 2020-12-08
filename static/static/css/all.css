@@ -14,6 +14,22 @@
       margin: 0; }
       body .page-body {
         padding: 1.5rem; }
+        body .page-body div#sidetablediv table {
+          border-collapse: collapse; }
+          body .page-body div#sidetablediv table td:nth-child(1) {
+            border: 1px solid #f6e9e9;
+            padding: 0.5rem;
+            text-align: left;
+            width: 10%; }
+            body .page-body div#sidetablediv table td:nth-child(2) {
+              border: 1px solid #f6e9e9;
+              padding: 0.5rem;
+              text-align: left; }
+              body .page-body div#sidetablediv table td:nth-child(3) {
+                border: 1px solid #f6e9e9;
+                padding: 0.5rem;
+                text-align: left;
+                width: 50%; }
         body .page-body div.tablediv {
           user-select: none;
           font-weight: 600;
@@ -83,7 +99,7 @@
                       border-bottom: 1px solid #dddddd; }
                       body .page-body #myTable tbody tr.active-row {
                         font-weight: bold; }
-      body .player-completion-value {
+      body .player--value {
         background-color: #f6e9e9;
         position: relative;
         left: 0px;

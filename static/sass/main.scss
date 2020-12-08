@@ -34,6 +34,37 @@ body {
     height: 100%;
     margin: 0;
     .page-body {
+        div#sidetablediv {
+            table {
+                border-collapse: collapse;
+            
+              
+              td:nth-child(1) {
+                
+                border: 1px solid $col4;
+                padding: 0.5rem;
+                text-align: left;
+                width: 10%;
+              }
+              td:nth-child(2) {
+                
+                border: 1px solid $col4;
+                padding: 0.5rem;
+                text-align: left;
+              }
+
+              td:nth-child(3) {
+                
+                border: 1px solid $col4;
+                padding: 0.5rem;
+                text-align: left;
+                width:50%;
+              }
+              
+            }
+        }
+
+
         div.tablediv {
             user-select: none;
             font-weight: 600;
@@ -132,7 +163,7 @@ body {
     //    margin: 0 auto;
     //    width: 500px;
     //}
-    .player-completion-value {
+    .player--value {
         background-color: $col4;
         position: relative;
         left: 0px;
