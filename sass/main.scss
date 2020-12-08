@@ -1,0 +1,399 @@
+@font-face {
+    font-family: karla;
+    src: url('/static/fonts/Karla-VariableFont_wght.ttf');
+}
+
+$col1: #363333; // backgrouond dont change
+$col2: #292626; //
+//$col3: #e16428;
+$col3: #00ced1;
+$col4: #f6e9e9;
+$prefilled: #e4e0e0;
+$entered: #93c5d4;
+$tablegrey1: #524f4f;
+$tablegrey2: #5e5959;
+$primary: $col3;
+$secondary: $col3;
+$white: $col4;
+$gray: $col4;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div {
+    color: $col4;
+}
+
+
+@keyframes slide {
+    0% {
+        background-position: 0px;
+      }
+      100% { 
+        background-position: 56px;
+      }
+}
+
+body {
+    font-family: karla;
+    text-align: left;
+    background-color: $col1;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    .page-body {
+        div#sidetablediv {
+            table {
+                border-collapse: collapse;
+            
+              
+              td:nth-child(1) {
+                
+                border: 1px solid $col4;
+                padding: 0.5rem;
+                text-align: left;
+                width: 10%;
+              }
+              td:nth-child(2) {
+                
+                border: 1px solid $col4;
+                padding: 0.5rem;
+                text-align: left;
+              }
+
+              td:nth-child(3) {
+                
+                border: 1px solid $col4;
+                padding: 0.5rem;
+                text-align: left;
+                width:50%;
+              }
+              
+            }
+
+            .time-cell-finished {
+                background-color: #5e5959;
+            }
+
+            .time-cell-self-finished {
+                background: repeating-linear-gradient(-45deg,#5fc52e,#5fc52e 20px, #0fa3b1 20px,#0fa3b1 40px);
+                background-size: 56px 56px;
+                background-position-x:0%;
+                animation: slide .65s linear infinite;
+            }
+            
+        }
+
+
+        div.tablediv {
+            user-select: none;
+            font-weight: 600;
+            color: $entered;
+            .immutable-cell {
+                font-weight: 600;
+                color: $prefilled;
+            }
+            table {
+                width: 80vh;
+                height: 80vh;
+                border: 1px solid $col4;
+                border-collapse: collapse;
+                table-layout: fixed;
+                margin: auto;
+                //margin-top: 5%;
+            }
+            td {
+                //font-size: 180%;
+                border: 1px dashed $col4;
+                border-collapse: collapse;
+                background-color: #454545;
+                text-align: center;
+                height: 10%;
+                padding: 0%;
+                margin-top: 0%;
+                transition: 0.15s;
+            }
+            tr:nth-child(3) td,
+            tr:nth-child(6) td {
+                border-bottom: 2px solid $col4;
+            }
+            td:nth-child(3),
+            td:nth-child(6) {
+                border-right: 2px solid $col4;
+            }
+            .cell-selected {
+                background-color: $tablegrey2 !important;
+            }
+            span.small-number {
+                position: relative;
+                word-break: break-all;
+                word-wrap: break-word;
+                color: $col3;
+                font-size: 10px;
+                top: -45%;
+                left: 0%;
+                text-align: left;
+            }
+            span.big-number {
+                position: relative;
+                word-break: break-all;
+                word-wrap: break-word;
+                font-size: 200%;
+                text-align: left;
+            }
+        }
+        padding: 1.5rem;
+        //This is the page body, where all the subpages will be contained
+        #myTable {
+            background-color: $tablegrey2;
+            border-radius: 5px;
+        }
+        #myTable {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 1.1em;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+        #myTable thead tr {
+            color: #ffffff;
+            text-align: left;
+            height: 50px;
+        }
+        #myTable th,
+        #myTable td {
+            padding: 12px 15px;
+        }
+        #myTable tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        #myTable tbody tr:nth-of-type(even) {
+            background-color: $tablegrey1;
+        }
+        #myTable tbody tr:last-of-type {
+            border-bottom: 1px solid #dddddd;
+        }
+        #myTable tbody tr.active-row {
+            font-weight: bold;
+            //color: #009879;
+        }
+
+
+    }
+    //>#container {
+    //    text-align: left;
+    //    margin: 0 auto;
+    //    width: 500px;
+    //}
+    .player--value {
+        background-color: $col4;
+        position: relative;
+        left: 0px;
+        height: 10px;
+    }
+    div.btn-group {
+        //width: 15rem;
+        display: table;
+        //padding: 5px;
+        a.button {
+            text-align: center;
+            font-weight: 700;
+            display: block;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid gray;
+            background: $col1;
+            color: $col4;
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px;
+            //height: 25px;
+        }
+        a.buttonalt {
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid gray;
+            background: $col1;
+            color: $col4;
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+        a.greybutton {
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 1px solid gray;
+            background: rgb(65, 62, 62);
+            padding: 11px;
+            padding-left: 20px;
+            padding-right: 20px;
+            color: gray;
+            cursor: not-allowed;
+        }
+        a.button:hover,
+        a.buttonalt:hover {
+            background: linear-gradient( rgba(98, 98, 98, 0.25), rgba(145, 136, 136, 0.25));
+            transition: 0.05s; //no works?
+        }
+    }
+    .continue {
+        color: $col4;
+    }
+    header {
+        font-family: karla;
+        a {
+            text-decoration: none;
+        }
+        li {
+            list-style: none;
+        }
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        background-color: $col1;
+        border-bottom: 1px solid lightgrey;
+        .brand {
+            color: $col4;
+            width: auto;
+            height: 100%;
+            float: left;
+            margin: 0 0 0 5%;
+            justify-content: flex-start;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .menu {
+            justify-content: flex-end;
+            padding: 0;
+            padding-right: 15px;
+            //display: block;
+            //display: flex;
+            width: 60%;
+            height: 100%;
+            float: right;
+        }
+        .menu ul {
+            flex: 1;
+            justify-content: flex-end;
+            //float: right;
+            width: 100%;
+            text-align: center;
+            height: inherit;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            //display: block;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+        .menu ul a {
+            text-align: center;
+            width: 20%;
+            height: inherit;
+            color: $col4;
+            //display: inline-block;
+        }
+        .menu ul a:hover {
+            background-color: $col2;
+            color: #fff;
+        }
+        #menuToggle {
+            display: none;
+        }
+        .menu-icon {
+            display: none;
+        }
+    }
+    .form__group {
+        position: relative;
+        padding: 15px 0 0;
+        margin-top: 10px;
+        width: 50%;
+        padding-bottom: 15px;
+    }
+    .form__field {
+        font-family: inherit;
+        width: 100%;
+        border: 0;
+        border-bottom: 2px solid $gray;
+        outline: 0;
+        font-size: 1.3rem;
+        color: $white;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+        &::placeholder {
+            color: transparent;
+        }
+        &:placeholder-shown~.form__label {
+            font-size: 1.3rem;
+            cursor: text;
+            top: 20px;
+        }
+    }
+    .form__label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: $gray;
+    }
+    .form__field:focus {
+        ~.form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: $primary;
+            font-weight: 700;
+        }
+        padding-bottom: 6px;
+        font-weight: 700;
+        border-width: 3px;
+        border-image: linear-gradient(to right,
+        $primary,
+        $secondary);
+        border-image-slice: 1;
+    }
+    /* reset input */
+    .form__field {
+        &:required,
+        &:invalid {
+            box-shadow: none;
+        }
+    }
+}
+
+footer {
+    padding: 5px;
+    border-top: 1px solid $col2;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: $col1;
+    color: black;
+    .leftalign {
+        float: left;
+        padding-left: 10px;
+        text-align: left;
+    }
+    .rightalign {
+        float: right;
+        padding-right: 10px;
+        text-align: right;
+    }
+}

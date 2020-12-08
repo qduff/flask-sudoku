@@ -1,6 +1,8 @@
-# How to use
+# Sudoku game in Flask (Archived)
 
-Simple, just run wsgi.py using python
+## How to use
+
+Simple, just run wsgi.py with python3
 
 ```python ./wsgi.py```
 
